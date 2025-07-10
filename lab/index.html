@@ -3,85 +3,128 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Seattle Rainfall Patterns</title>
+  <title>Seattle Rainfall & Car Accidents - James Svolos</title>
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500&family=Inter&family=Courier+Prime&display=swap" rel="stylesheet">
   <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
   <style>
     :root {
-      --bg-color: #0f0f0f;
-      --card-color: #181818;
-      --text-color: #e0e0e0;
-      --accent-color: #84c2ff;
-      --accent-gradient: linear-gradient(90deg, #5ba1ff, #84c2ff);
-      --font-family: 'Inter', sans-serif;
+      --background: radial-gradient(circle at top left, #202124, #111);
+      --text-color: #FAF8EF;
+      --accent-color: #D97706;
+      --highlight-color: #FFEBC1;
+      --card-bg: #1C1C1E;
+      --card-border: #3F3F46;
+      --shadow: 0px 8px 24px rgba(0, 0, 0, 0.5);
+      --font-sans: 'Inter', sans-serif;
+      --font-serif: 'EB Garamond', serif;
+      --font-mono: 'Courier Prime', monospace;
     }
 
     body {
       margin: 0;
-      background-color: var(--bg-color);
+      padding: 2rem;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+      font-family: var(--font-sans);
+      background: var(--background);
       color: var(--text-color);
-      font-family: var(--font-family);
-      line-height: 1.6;
+      line-height: 1.75;
     }
 
-    header {
-      text-align: center;
-      padding: 2.5rem 1rem 1rem;
-      max-width: 800px;
-      margin: 0 auto;
+    h1, h2 {
+      font-family: var(--font-serif);
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--highlight-color);
+      letter-spacing: 0.3px;
     }
 
-    header h1 {
-      font-size: 2.8rem;
-      margin: 0 0 0.5rem;
-      background: var(--accent-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    header p {
-      color: #bbb;
-      font-size: 1.1rem;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    #chart {
-      max-width: 900px;
-      height: 550px;
-      margin: 2rem auto;
-      border-radius: 16px;
-      background-color: var(--card-color);
-      box-shadow: 0 0 20px rgba(132, 194, 255, 0.1);
-      padding: 1rem;
-    }
-
-    footer {
-      text-align: center;
-      padding: 2rem 1rem;
-      font-size: 0.9rem;
-      color: #666;
+    p {
+      color: #E0D7C6;
     }
 
     a {
       color: var(--accent-color);
       text-decoration: none;
+      border-bottom: 1px solid var(--accent-color);
+      transition: all 0.2s ease-in-out;
     }
 
     a:hover {
-      text-decoration: underline;
+      border-bottom: 1px dashed var(--highlight-color);
+      color: var(--highlight-color);
+    }
+
+    .navbar {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-family: var(--font-sans);
+      color: var(--accent-color);
+    }
+
+    .navbar a {
+      color: var(--accent-color);
+      text-decoration: none;
+      margin: 0 0.25rem;
+    }
+
+    .navbar a:hover {
+      color: var(--highlight-color);
+    }
+
+    .post-preview {
+      margin-bottom: 3rem;
+      padding: 1.5rem;
+      border: 1px solid var(--card-border);
+      background-color: var(--card-bg);
+      box-shadow: var(--shadow);
+      border-radius: 12px;
+    }
+
+    .chart-description {
+      margin-top: 1rem;
+      color: #E0D7C6;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .chart-container {
+      margin-top: 2rem;
+      height: 500px;
+      width: 100%;
+    }
+
+    .footer {
+      margin-top: 4rem;
+      font-size: 0.9rem;
+      color: #AAA;
+      border-top: 1px solid #444;
+      padding-top: 1rem;
+      font-family: var(--font-mono);
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Seattle Rainfall Patterns</h1>
-    <p>Average monthly rainfall in Seattle. A look at the city's iconic wet seasons through beautifully crafted data visualization.</p>
-  </header>
+  <nav class="navbar">
+    <a href="/about/">About</a> /
+    <a href="/work/">Work</a> /
+    <a href="/connect/">Connect</a> /
+    <a href="https://x.com/j_svolos" target="_blank">X</a>
+  </nav>
 
-  <div id="chart"></div>
+  <section class="post-preview">
+    <h1>Seattle Rainfall & Car Accidents</h1>
+    <p class="chart-description">
+      Average monthly rainfall (inches) and reported car accidents in Seattle. A side-by-side look at how seasonal weather patterns may correlate with accident trends.
+    </p>
+    <div id="chart" class="chart-container"></div>
+  </section>
 
-  <footer>
-    &copy; 2025 James Svolos. All rights reserved.
+  <footer class="footer">
+    <p>© 2025 James Svolos — <a href="mailto:svolos@outlook.com">email me</a></p>
   </footer>
 
   <script>
@@ -91,57 +134,89 @@
     ];
 
     const rainfall = [5.2, 3.8, 3.7, 2.6, 1.8, 1.5, 0.7, 0.9, 1.6, 3.5, 6.3, 5.9];
+    const accidents = [430, 390, 410, 370, 320, 300, 280, 290, 310, 400, 460, 450];
 
-    const trace = {
+    const rainfallTrace = {
       x: months,
       y: rainfall,
       type: 'scatter',
       mode: 'lines+markers',
+      name: 'Rainfall (inches)',
       line: {
         color: '#84c2ff',
-        width: 4,
+        width: 3,
         shape: 'spline'
       },
       marker: {
         color: '#84c2ff',
-        size: 8,
-        line: {
-          color: '#0f0f0f',
-          width: 2
-        }
+        size: 6,
+        line: {color: '#111', width: 1}
       },
       fill: 'tozeroy',
-      fillcolor: 'rgba(132,194,255,0.2)',
+      fillcolor: 'rgba(132,194,255,0.15)',
+      yaxis: 'y1',
       hovertemplate: '<b>%{x}</b><br>Rainfall: %{y} inches<extra></extra>'
     };
 
+    const accidentsTrace = {
+      x: months,
+      y: accidents,
+      type: 'scatter',
+      mode: 'lines+markers',
+      name: 'Car Accidents',
+      line: {
+        color: '#D97706',
+        width: 3,
+        shape: 'spline',
+        dash: 'dot'
+      },
+      marker: {
+        color: '#D97706',
+        size: 6,
+        line: {color: '#111', width: 1}
+      },
+      yaxis: 'y2',
+      hovertemplate: '<b>%{x}</b><br>Accidents: %{y}<extra></extra>'
+    };
+
     const layout = {
-      paper_bgcolor: '#181818',
-      plot_bgcolor: '#181818',
+      paper_bgcolor: '#1C1C1E',
+      plot_bgcolor: '#1C1C1E',
       font: {
         family: 'Inter, sans-serif',
-        color: '#e0e0e0'
-      },
-      title: {
-        text: '',
+        color: '#FAF8EF'
       },
       xaxis: {
         title: 'Month',
-        showgrid: false,
         tickangle: -45,
+        showgrid: false,
         zeroline: false
       },
       yaxis: {
         title: 'Rainfall (inches)',
         gridcolor: 'rgba(255,255,255,0.05)',
+        zeroline: false,
+        side: 'left'
+      },
+      yaxis2: {
+        title: 'Car Accidents',
+        overlaying: 'y',
+        side: 'right',
+        showgrid: false,
         zeroline: false
       },
-      margin: { l: 50, r: 30, t: 20, b: 80 },
+      margin: { l: 50, r: 50, t: 20, b: 80 },
       hovermode: 'x unified',
-      showlegend: false
+      legend: {
+        orientation: 'h',
+        x: 0.5,
+        xanchor: 'center',
+        y: -0.3,
+        font: {family: 'Inter', size: 12, color: '#FFEBC1'}
+      }
     };
 
-    Plotly.newPlot('chart', [trace], layout, {responsive: true});
+    Plotly.newPlot('chart', [rainfallTrace, accidentsTrace], layout, {responsive: true});
   </script>
 </body>
 </html>
