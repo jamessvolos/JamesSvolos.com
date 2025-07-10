@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seattle Rainfall & Daylight - James Svolos</title>
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500&family=Inter&family=Courier+Prime&display=swap" rel="stylesheet">
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+  <style>
+    :root {
+      --background: radial-gradient(circle at top left, #202124, #111);
+      --text-color: #FAF8EF;
+      --accent-color: #D97706;
+      --highlight-color: #FFEBC1;
+      --card-bg: #1C1C1E;
+      --card-border: #3F3F46;
+      --shadow: 0px 8px 24px rgba(0, 0, 0, 0.5);
+      --font-sans: 'Inter', sans-serif;
+      --font-serif: 'EB Garamond', serif;
+      --font-mono: 'Courier Prime', monospace;
+    }
+
+    body {
+      margin: 0;
+      padding: 2rem;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+      font-family: var(--font-sans);
+      background: var(--background);
+      color: var(--text-color);
+      line-height: 1.75;
+    }
+
+    h1, h2 {
+      font-family: var(--font-serif);
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--highlight-color);
+      letter-spacing: 0.3px;
+    }
+
+    p {
+      color: #E0D7C6;
+    }
+
+    a {
+      color: var(--accent-color);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent-color);
+      transition: all 0.2s ease-in-out;
+    }
+
+    a:hover {
+      border-bottom: 1px dashed var(--highlight-color);
+      color: var(--highlight-color);
+    }
+
+    .navbar {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-family: var(--font-sans);
+      color: var(--accent-color);
+    }
+
+    .navbar a {
+      color: var(--accent-color);
+      text-decoration: none;
+      margin: 0 0.25rem;
+    }
+
+    .navbar a:hover {
+      color: var(--highlight-color);
+    }
+
+    .post-preview {
+      margin-bottom: 3rem;
+      padding: 1.5rem;
+      border: 1px solid var(--card-border);
+      background-color: var(--card-bg);
+      box-shadow: var(--shadow);
+      border-radius: 12px;
+    }
+
+    .chart-description {
+      margin-top: 1rem;
+      color: #E0D7C6;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .chart-container {
+      margin-top: 2rem;
+      height: 500px;
+      width: 100%;
+    }
+
+    .chart-footnote {
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: #AAA;
+      line-height: 1.6;
+    }
+
+    .footer {
+      margin-top: 4rem;
+      font-size: 0.9rem;
+      color: #AAA;
+      border-top: 1px solid #444;
+      padding-top: 1rem;
+      font-family: var(--font-mono);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/about/">About</a> /
+    <a href="/work/">Work</a> /
+    <a href="/connect/">Connect</a> /
+    <a href="https://x.com/j_svolos" target="_blank">X</a>
+  </nav>
+
+  <section class="post-preview">
+    <h1>Seattle Rainfall & Median Daylight</h1>
+    <p class="chart-description">
+      Average monthly rainfall in inches overlaid with median daylight hours. A look at Seattle's iconic wet seasons and their relationship to seasonal light.
+    </p>
+    <div id="chart" class="chart-container"></div>
+    <p class="chart-footnote">
+      <em>Data sources: NOAA climate normals (rainfall), USNO sunrise/sunset tables (approx. median daylight).</em>
+    </p>
+  </section>
+
+  <footer class="footer">
+    <p>© 2025 James Svolos — <a href="mailto:svolos@outlook.com">email me</a></p>
+  </footer>
+
+  <script>
+    const months = [
+      "January","February","March","April","May","June",
+      "July","August","September","October","November","December"
+    ];
+
+    const rainfall = [5.2, 3.8, 3.7, 2.6, 1.8, 1.5, 0.7, 0.9, 1.6, 3.5, 6.3, 5.9];
+    const daylight = [8.5, 10.0, 12.0, 13.5, 15.0, 16.0, 15.5, 14.0, 12.5, 10.5, 9.0, 8.5];
+
+    const rainfallTrace = {
+      x: months,
+      y: rainfall,
+      type: 'scatter',
+      mode: 'lines+markers',
+      name: 'Rainfall (inches)',
+      line: {
+        color: '#84c2ff',
+        width: 3,
+        shape: 'spline'
+      },
+      marker: {
+        color: '#84c2ff',
+        size: 6,
+        line: {color: '#111', width: 1}
+      },
+      fill: 'tozeroy',
+      fillcolor: 'rgba(132,194,255,0.15)',
+      yaxis: 'y1',
+      hovertemplate: '<b>%{x}</b><br>Rainfall: %{y} inches<extra></extra>'
+    };
+
+    const daylightTrace = {
+      x: months,
+      y: daylight,
+      type: 'scatter',
+      mode: 'lines+markers',
+      name: 'Median Daylight Hours',
+      line: {
+        color: '#D97706',
+        width: 3,
+        shape: 'spline',
+        dash: 'dot'
+      },
+      marker: {
+        color: '#D97706',
+        size: 6,
+        line: {color: '#111', width: 1}
+      },
+      yaxis: 'y2',
+      hovertemplate: '<b>%{x}</b><br>Daylight: %{y} hrs<extra></extra>'
+    };
+
+    const layout = {
+      paper_bgcolor: '#1C1C1E',
+      plot_bgcolor: '#1C1C1E',
+      font: {
+        family: 'Inter, sans-serif',
+        color: '#FAF8EF'
+      },
+      xaxis: {
+        title: 'Month',
+        tickangle: -45,
+        showgrid: false,
+        zeroline: false
+      },
+      yaxis: {
+        title: 'Rainfall (inches)',
+        gridcolor: 'rgba(255,255,255,0.05)',
+        zeroline: false,
+        side: 'left'
+      },
+      yaxis2: {
+        title: 'Median Daylight Hours',
+        overlaying: 'y',
+        side: 'right',
+        showgrid: false,
+        zeroline: false
+      },
+      margin: { l: 50, r: 50, t: 20, b: 80 },
+      hovermode: 'x unified',
+      legend: {
+        orientation: 'h',
+        x: 0.5,
+        xanchor: 'center',
+        y: -0.3,
+        font: {family: 'Inter', size: 12, color: '#FFEBC1'}
+      }
+    };
+
+    Plotly.newPlot('chart', [rainfallTrace, daylightTrace], layout, {responsive: true});
+  </script>
+</body>
+</html>
