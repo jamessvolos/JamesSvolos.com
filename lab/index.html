@@ -134,11 +134,34 @@
     </p>
   </section>
 
+  <section class="post-preview">
+    <h1>Golf performance: expected strokes by handicap</h1>
+    <p class="chart-description">
+      Expected strokes to hole out from key distances (50, 100, Nash, 200 yards) for different handicap levels (Pro, Scratch, 5, 12). Inspired by Mark Broadie’s Every Shot Counts, this visualization shows how skill level impacts scoring efficiency, with higher handicaps requiring more strokes, especially at longer distances.
+    </p>
+    <div id="golf-chart" class="chart-container"></div>
+    <p class="chart-footnote">
+      <em>Data: Hypothetical values inspired by Every Shot Counts by Mark Broadie. Replace with actual data from the book for precise analysis. Design inspired by Edward Tufte’s principles of clear data presentation.</em>
+    </p>
+  </section>
+
+  <section class="post-preview">
+    <h1>Golf performance: putting success by handicap</h1>
+    <p class="chart-description">
+      Probability of making a putt (in percentage) at key distances (5, 10, 15, 20, 25 feet) for different handicap levels (Pro, Scratch, 5, 12). Inspired by Mark Broadie’s Every Shot Counts, this visualization highlights how putting performance varies with skill, with Pros excelling at longer distances.
+    </p>
+    <div id="putting-chart" class="chart-container"></div>
+    <p class="chart-footnote">
+      <em>Data: Hypothetical probabilities inspired by Every Shot Counts by Mark Broadie. Replace with actual data from the book for precise analysis. Design inspired by Edward Tufte’s principles of clear data presentation.</em>
+    </p>
+  </section>
+
   <footer class="footer">
     <p>© 2025 James Svolos — <a href="mailto:svolos@outlook.com">email me</a></p>
   </footer>
 
   <script>
+    // Existing Seattle SAD chart
     const months = [
       "January","February","March","April","May","June",
       "July","August","September","October","November","December"
@@ -228,6 +251,262 @@
     };
 
     Plotly.newPlot('chart', [rainfallTrace, daylightTrace], layout, {responsive: true});
+
+    // Existing Golf Expected Strokes by Handicap chart
+    const distances = [50, 100, 150, 200]; // Key distances in yards
+    const proStrokes = [2.2, 2.5, 2.8, 3.1]; // Expected strokes for Pro
+    const scratchStrokes = [2.3, 2.7, 3.0, 3.4]; // Expected strokes for Scratch
+    const handicap5Strokes = [2.5, 3.0, 3.4, 3.9]; // Expected strokes for 5 handicap
+    const handicap12Strokes = [2.8, 3.4, 4.0, 4.6]; // Expected strokes for 12 handicap
+
+    const proTrace = {
+      x: distances,
+      y: proStrokes,
+      type: 'scatter',
+      mode: 'lines+markers',
+      name: 'Pro',
+      line: {
+        color: '#84c2ff',
+        width: 3,
+        shape: 'spline'
+      },
+      marker: {
+        size: 8,
+        line: {color: '#111', width: 1}
+      },
+      hovertemplate: '<b>%{x} yd</b><br>Pro: %{y} strokes<extra></extra>'
+    };
+
+    const scratchTrace = {
+      x: distances,
+      y: scratchStrokes,
+      type: 'scatter',
+      mode: 'lines+markers',
+      name: 'Scratch',
+      line: {
+        color: '#D97706',
+        width: 3,
+        shape: 'spline'
+      },
+      marker: {
+        size: 8,
+        line: {color: '#111', width: 1}
+      },
+      hovertemplate: '<b>%{x} yd</b><br>Scratch: %{y} strokes<extra></extra>'
+    };
+
+    const handicap5Trace = {
+      x: distances,
+      y: handicap5Strokes,
+      type: 'scatter',
+      mode: 'lines+markers',
+      name: '5 Handicap',
+      line: {
+        color: '#FFEBC1',
+        width: 3,
+        shape: 'spline'
+      },
+      marker: {
+        size: 8,
+        line: {color: '#111', width: 1}
+      },
+      hovertemplate: '<b>%{x} yd</b><br>5 Handicap: %{y} strokes<extra></extra>'
+    };
+
+    const handicap12Trace = {
+      x: distances,
+      y: handicap12Strokes,
+      type: 'scatter',
+      mode: 'lines+markers',
+      name: '12 Handicap',
+      line: {
+        color: '#A3E635',
+        width: 3,
+        shape: 'spline'
+      },
+      marker: {
+        size: 8,
+        line: {color: '#111', width: 1}
+      },
+      hovertemplate: '<b>%{x} yd</b><br>12 Handicap: %{y} strokes<extra></extra>'
+    };
+
+    const golfLayout = {
+      paper_bgcolor: '#1C1C1E',
+      plot_bgcolor: '#1C1C1E',
+      font: {
+        family: 'Inter, sans-serif',
+        color: '#FAF8EF'
+      },
+      xaxis: {
+        title: 'Distance from Hole (yards)',
+        showgrid: false,
+        zeroline: false,
+        tickvals: distances,
+        ticktext: distances.map(d => `${d} yd`)
+      },
+      yaxis: {
+        title: 'Expected Strokes to Hole Out',
+        gridcolor: 'rgba(255,255,255,0.05)',
+        zeroline: false,
+        range: [1.5, Math.max(...handicap12Strokes) + 0.5]
+      },
+      margin: { l: 50, r: 50, t: 20, b: 80 },
+      hovermode: 'x unified',
+      legend: {
+        orientation: 'h',
+        x: 0.5,
+        xanchor: 'center',
+        y: -0.3,
+        font: {family: 'Inter', size: 12, color: '#FFEBC1'}
+      },
+      annotations: [
+        {
+          x: 150,
+          y: handicap12Strokes[2] + 0.2,
+          xref: 'x',
+          yref: 'y',
+          text: 'Larger skill gap at 150 yd',
+          showarrow: true,
+          arrowhead: 2,
+          ax: 20,
+          ay: -30,
+          font: {family: 'Inter', size: 10, color: '#E0D7C6'},
+          arrowcolor: '#E0D7C6'
+        }
+      ]
+    };
+
+    Plotly.newPlot('golf-chart', [proTrace, scratchTrace, handicap5Trace, handicap12Trace], golfLayout, {responsive: true});
+
+    // New Putting Success by Handicap chart
+    const puttDistances = [5, 10, 15, 20, 25]; // Key putting distances in feet
+    const proPuttProb = [95, 50, 25, 15, 10]; // Putt success probability (%) for Pro
+    const scratchPuttProb = [90, 45, 20, 12, 8]; // Putt success probability (%) for Scratch
+    const handicap5PuttProb = [85, 35, 15, 8, 5]; // Putt success probability (%) for 5 handicap
+    const handicap12PuttProb = [75, 25, 10, 5, 3]; // Putt success probability (%) for 12 handicap
+
+    const proPuttTrace = {
+      x: puttDistances,
+      y: proPuttProb,
+      type: 'scatter',
+      mode: 'lines+markers',
+      name: 'Pro',
+      line: {
+        color: '#84c2ff',
+        width: 3,
+        shape: 'spline'
+      },
+      marker: {
+        size: 8,
+        line: {color: '#111', width: 1}
+      },
+      hovertemplate: '<b>%{x} ft</b><br>Pro: %{y}% make<extra></extra>'
+    };
+
+    const scratchPuttTrace = {
+      x: puttDistances,
+      y: scratchPuttProb,
+      type: 'scatter',
+      mode: 'lines+markers',
+      name: 'Scratch',
+      line: {
+        color: '#D97706',
+        width: 3,
+        shape: 'spline'
+      },
+      marker: {
+        size: 8,
+        line: {color: '#111', width: 1}
+      },
+      hovertemplate: '<b>%{x} ft</b><br>Scratch: %{y}% make<extra></extra>'
+    };
+
+    const handicap5PuttTrace = {
+      x: puttDistances,
+      y: handicap5PuttProb,
+      type: 'scatter',
+      mode: 'lines+markers',
+      name: '5 Handicap',
+      line: {
+        color: '#FFEBC1',
+        width: 3,
+        shape: 'spline'
+      },
+      marker: {
+        size: 8,
+        line: {color: '#111', width: 1}
+      },
+      hovertemplate: '<b>%{x} ft</b><br>5 Handicap: %{y}% make<extra></extra>'
+    };
+
+    const handicap12PuttTrace = {
+      x: puttDistances,
+      y: handicap12PuttProb,
+      type: 'scatter',
+      mode: 'lines+markers',
+      name: '12 Handicap',
+      line: {
+        color: '#A3E635',
+        width: 3,
+        shape: 'spline'
+      },
+      marker: {
+        size: 8,
+        line: {color: '#111', width: 1}
+      },
+      hovertemplate: '<b>%{x} ft</b><br>12 Handicap: %{y}% make<extra></extra>'
+    };
+
+    const puttingLayout = {
+      paper_bgcolor: '#1C1C1E',
+      plot_bgcolor: '#1C1C1E',
+      font: {
+        family: 'Inter, sans-serif',
+        color: '#FAF8EF'
+      },
+      xaxis: {
+        title: 'Putt Distance (feet)',
+        showgrid: false,
+        zeroline: false,
+        tickvals: puttDistances,
+        ticktext: puttDistances.map(d => `${d} ft`)
+      },
+      yaxis: {
+        title: 'Probability of Making Putt (%)',
+        gridcolor: 'rgba(255,255,255,0.05)',
+        zeroline: false,
+        range: [0, 100],
+        tickvals: [0, 20, 40, 60, 80, 100],
+        ticktext: ['0%', '20%', '40%', '60%', '80%', '100%']
+      },
+      margin: { l: 50, r: 50, t: 20, b: 80 },
+      hovermode: 'x unified',
+      legend: {
+        orientation: 'h',
+        x: 0.5,
+        xanchor: 'center',
+        y: -0.3,
+        font: {family: 'Inter', size: 12, color: '#FFEBC1'}
+      },
+      annotations: [
+        {
+          x: 15,
+          y: proPuttProb[2] + 5,
+          xref: 'x',
+          yref: 'y',
+          text: 'Skill gap widens beyond 10 ft',
+          showarrow: true,
+          arrowhead: 2,
+          ax: 20,
+          ay: -30,
+          font: {family: 'Inter', size: 10, color: '#E0D7C6'},
+          arrowcolor: '#E0D7C6'
+        }
+      ]
+    };
+
+    Plotly.newPlot('putting-chart', [proPuttTrace, scratchPuttTrace, handicap5PuttTrace, handicap12PuttTrace], puttingLayout, {responsive: true});
   </script>
 </body>
 </html>
