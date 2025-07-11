@@ -1,34 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=/work/">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Redirecting to Work</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="James Svolos: Data science leader specializing in metrics, forecasting, and AI insights for business growth." />
+  <title>James Svolos - Data Science Portfolio</title>
+  <link rel="icon" type="image/png" href="/favicon.png" alt="James Svolos logo">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500&family=Inter&family=Courier+Prime&display=swap" rel="stylesheet">
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
   <style>
+    :root {
+      --background: radial-gradient(circle at top left, #202124, #111);
+      --text-color: #FAF8EF;
+      --accent-color: #D97706;
+      --highlight-color: #FFEBC1;
+      --card-bg: #1C1C1E;
+      --card-border: #3F3F46;
+      --shadow: 0px 8px 24px rgba(0, 0, 0, 0.5);
+      --font-sans: 'Inter', sans-serif;
+      --font-serif: 'EB Garamond', serif;
+      --font-mono: 'Courier Prime', monospace;
+    }
+
     body {
-      background-color: #111;
-      color: #FAF8EF;
-      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 2rem;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+      font-family: var(--font-sans);
+      background: var(--background);
+      color: var(--text-color);
+      line-height: 1.75;
+    }
+
+    h1, h2 {
+      font-family: var(--font-serif);
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--highlight-color);
+      letter-spacing: 0.3px;
+    }
+
+    p {
+      color: #E0D7C6;
+    }
+
+    a {
+      color: var(--accent-color);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent-color);
+      transition: all 0.2s ease-in-out;
+    }
+
+    a:hover {
+      border-bottom: 1px dashed var(--highlight-color);
+      color: var(--highlight-color);
+    }
+
+    .navbar {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-family: var(--font-sans);
+      color: var(--accent-color);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: var(--card-bg);
+      padding: 1rem;
+      box-shadow: var(--shadow);
       display: flex;
-      flex-direction: column;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      height: 100vh;
+    }
+
+    .navbar-logo {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      color: var(--highlight-color);
       margin: 0;
     }
-    a {
-      color: #D97706;
-      text-decoration: none;
-      border-bottom: 1px solid #D97706;
+
+    .navbar-menu {
+      display: flex;
+      justify-content: center;
     }
-    a:hover {
-      border-bottom: 1px dashed #FFEBC1;
-      color: #FFEBC1;
+
+    .navbar a {
+      color: var(--accent-color);
+      text-decoration: none;
+      margin: 0 0.25rem;
+    }
+
+    .navbar a:hover {
+      color: var(--highlight-color);
+    }
+
+    .hamburger {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--accent-color);
+    }
+
+    @media (max-width: 600px) {
+      .navbar-logo {
+        display: none;
+      }
+      .hamburger {
+        display: block;
+      }
+      .navbar-menu {
+        display: none;
+      }
+      .navbar-menu.active {
+        display: flex;
+        flex-direction: column;
+        background-color: var(--card-bg);
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        padding: 1rem;
+        box-shadow: var(--shadow);
+      }
+      .navbar-menu a {
+        margin: 0.5rem 0;
+      }
+    }
+
+    .post-preview {
+      margin-bottom: 3rem;
+      padding: 1.5rem;
+      border: 1px solid var(--card-border);
+      background-color: var(--card-bg);
+      box-shadow: var(--shadow);
+      border-radius: 12px;
+      transition: transform 0.2s;
+    }
+
+    .post-preview:hover {
+      transform: translateY(-5px);
+    }
+
+    .chart-description {
+      margin-top: 1rem;
+      color: #E0D7C6;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .chart-container {
+      margin-top: 2rem;
+      height: 500px;
+      width: 100%;
+    }
+
+    .chart-footnote {
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: #AAA;
+      line-height: 1.6;
+    }
+
+    .footer {
+      margin-top: 4rem;
+      font-size: 0.9rem;
+      color: #AAA;
+      border-top: 1px solid #444;
+      padding-top: 1rem;
+      font-family: var(--font-mono);
+      text-align: center;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background-color: var(--accent-color);
+      color: var(--card-bg);
+      border-radius: 4px;
+      margin-top: 1rem;
+      transition: background-color 0.2s;
+    }
+
+    .cta-button:hover {
+      background-color: var(--highlight-color);
+      color: var(--card-bg);
+      border-bottom: none;
     }
   </style>
 </head>
 <body>
-  <p>Redirecting to <a href="/work/">/work/</a>...</p>
+  <nav class="navbar" aria-label="Main navigation">
+    <span class="navbar-logo">James Svolos</span>
+    <span class="hamburger" onclick="toggleMenu()">☰</span>
+    <div class="navbar-menu" id="navbarMenu">
+      <a href="/about/">about</a> /
+      <a href="/work/">work</a> /
+      <a href="/lab/">lab</a> /
+      <a href="/connect/">connect</a> /
+      <a href="https://x.com/j_svolos" target="_blank">x</a>
+    </div>
+  </nav>
+
+  <section class="post-preview">
+    <h1>Welcome to My Portfolio</h1>
+    <p class="chart-description">
+      As a data science leader, I transform complexity into actionable insights. Explore my work in metrics, forecasting, AI, and visualizations inspired by books like *Every Shot Counts*. Let's connect to discuss how data can drive your business growth.
+    </p>
+    <a href="/connect/" class="cta-button">Schedule a Chat</a>
+  </section>
+
+  <section class="post-preview">
+    <h2>About Me</h2>
+    <p>I specialize in metric development, product growth, and leading teams to turn data into business outcomes. Background in Information Science and Behavioral Psychology from Penn State. Led data science at Microsoft in Security and Productivity.</p>
+    <a href="/about/" class="cta-button">Read Full Bio</a>
+  </section>
+
+  <section class="post-preview">
+    <h2>Work Highlights</h2>
+    <p>Projects on forecasting, data lies, AI illusions, and more. See how I apply data to real-world challenges.</p>
+    <a href="/work/" class="cta-button">View Projects</a>
+  </section>
+
+  <section class="post-preview">
+    <h2>Lab Experiments</h2>
+    <p>Interactive visualizations on golf analytics, Seattle weather, and beyond, using Plotly and Tufte-inspired design.</p>
+    <a href="/lab/" class="cta-button">Explore Lab</a>
+  </section>
+
+  <footer class="footer">
+    <p>© 2025 James Svolos — <a href="mailto:svolos@outlook.com">email me</a></p>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('navbarMenu');
+      menu.classList.toggle('active');
+    }
+  </script>
 </body>
 </html>
