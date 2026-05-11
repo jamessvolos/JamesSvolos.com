@@ -13,8 +13,32 @@
         .accent-coral { color: #e07a5f; }
     </style>
 </head>
-<body>
-    <!-- NAV same as above -->
-    <!-- Connect content -->
+<body class="font-sans text-gray-800">
+    <!-- NAV -->
+    <nav class="sticky top-0 bg-white/95 backdrop-blur-md border-b border-[#5da7c9]/10 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
+            <a href="/" class="text-3xl font-light tracking-tighter accent-blue">james svolos</a>
+            <div class="flex gap-8 text-sm font-medium">
+                <a href="/work/" class="hover:text-[#e07a5f] transition">Work</a>
+                <a href="/lab/" class="hover:text-[#e07a5f] transition">Lab</a>
+                <a href="/about.html" class="hover:text-[#e07a5f] transition">About</a>
+                <a href="/connect.html" class="hover:text-[#e07a5f] transition">Connect</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-2xl mx-auto px-6 py-20">
+        <h1 class="text-5xl font-light tracking-tighter accent-blue mb-12">Let's Connect</h1>
+        <div class="space-y-8">
+            <a href="mailto:svolos@outlook.com" class="flex items-center gap-4 text-xl hover:accent-coral transition">
+                <i class="fa-solid fa-envelope text-3xl"></i>
+                <div>
+                    <p class="font-medium">Email me</p>
+                    <p class="text-gray-600">svolos@outlook.com</p>
+                </div>
+            </a>
+            <!-- Add LinkedIn, Substack, X links here -->
+        </div>
+    </div>
 </body>
 </html>
