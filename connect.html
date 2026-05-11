@@ -4,100 +4,47 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>James Svolos — Connect</title>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500&family=Inter&family=Courier+Prime&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Playfair+Display:wght@500&amp;display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background: radial-gradient(circle at top left, #202124, #111);
-      color: #FAF8EF;
-      margin: 0;
-      padding: 2rem;
-      max-width: 720px;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.75;
-    }
-    h1, h2 {
-      font-family: 'EB Garamond', serif;
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-      color: #FFEBC1;
-      letter-spacing: 0.3px;
-    }
-    a {
-      color: #D97706;
-      text-decoration: none;
-      border-bottom: 1px solid #D97706;
-      transition: all 0.2s ease-in-out;
-    }
-    a:hover {
-      border-bottom: 1px dashed #FFEBC1;
-      color: #FFEBC1;
-    }
-    .navbar {
-      text-align: center;
-      margin-bottom: 2rem;
-      font-family: 'Inter', sans-serif;
-      color: #D97706;
-    }
-    .navbar a {
-      color: #D97706;
-      text-decoration: none;
-      margin: 0 0.25rem;
-    }
-    .navbar a:hover {
-      color: #FFEBC1;
-    }
-    .header {
-      margin-bottom: 2rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 1px dashed #D97706;
-    }
-    .intro {
-      margin-top: 2rem;
-    }
-    .link-list {
-      margin-top: 2rem;
-    }
-    .link-list a {
-      display: block;
-      margin-bottom: 1rem;
-      font-size: 1.1rem;
-    }
-    .footer {
-      margin-top: 4rem;
-      font-size: 0.9rem;
-      color: #AAA;
-      border-top: 1px solid #444;
-      padding-top: 1rem;
-      font-family: 'Courier Prime', monospace;
-      text-align: center;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:wght@500&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2 { font-family: 'Playfair Display', serif; }
   </style>
 </head>
-<body>
-<nav class="navbar">
-  <a href="/about/">About</a> /
-  <a href="/work/">Work</a> /
-  <a href="/connect/">Connect</a> /
-  <a href="https://x.com/j_svolos" target="_blank">X</a>
-</nav>
-  <header class="header">
-    <h1>James Svolos</h1>
-  </header>
-
-  <section class="intro">
-    <p>Let’s connect. You can find me here:</p>
-    <div class="link-list">
-      <a href="https://www.linkedin.com/in/james-svolos-74358559" target="_blank">Connect on LinkedIn</a>
-      <a href="https://substack.com/@jsvolos" target="_blank">Read on Substack</a>
-      <a href="https://medium.com/@j_svolos" target="_blank">Follow on Medium</a>
-      <a href="https://x.com/j_svolos" target="_blank">Follow on X</a>
+<body class="bg-[#f8f4ed] text-slate-800 leading-relaxed">
+  <nav class="max-w-3xl mx-auto px-6 pt-8 flex justify-between items-center">
+    <a href="/" class="text-2xl font-medium tracking-tight">James Svolos</a>
+    <div class="flex gap-x-8 text-sm font-medium">
+      <a href="/about.html" class="hover:text-[#5da7c9] transition-colors">About</a>
+      <a href="/work/" class="hover:text-[#5da7c9] transition-colors">Work</a>
+      <a href="/lab/" class="hover:text-[#5da7c9] transition-colors">Lab</a>
+      <a href="/connect.html" class="hover:text-[#5da7c9] transition-colors">Connect</a>
     </div>
-  </section>
+  </nav>
 
-  <footer class="footer">
-    <p>© 2025 James Svolos — <a href="mailto:svolos@outlook.com">email me</a></p>
+  <main class="max-w-3xl mx-auto px-6 py-16">
+    <h1 class="text-5xl font-medium tracking-tight mb-6">Let's Connect</h1>
+    <p class="text-xl text-slate-600 max-w-md">I'm always open to interesting conversations about data, leadership, and turning insights into action.</p>
+
+    <div class="mt-16 space-y-6">
+      <a href="https://www.linkedin.com/in/james-svolos-74358559" target="_blank" class="block p-6 border border-slate-200 rounded-3xl hover:border-[#5da7c9] hover:bg-white transition-all group">
+        <span class="text-[#5da7c9] font-medium">LinkedIn</span>
+        <p class="text-slate-500 group-hover:text-slate-600">Professional profile and experience</p>
+      </a>
+      <a href="https://substack.com/@jsvolos" target="_blank" class="block p-6 border border-slate-200 rounded-3xl hover:border-[#5da7c9] hover:bg-white transition-all group">
+        <span class="text-[#5da7c9] font-medium">Substack</span>
+        <p class="text-slate-500 group-hover:text-slate-600">Writing on data science, metrics &amp; leadership</p>
+      </a>
+      <a href="https://x.com/j_svolos" target="_blank" class="block p-6 border border-slate-200 rounded-3xl hover:border-[#5da7c9] hover:bg-white transition-all group">
+        <span class="text-[#5da7c9] font-medium">X / Twitter</span>
+        <p class="text-slate-500 group-hover:text-slate-600">Follow my latest thoughts</p>
+      </a>
+    </div>
+  </main>
+
+  <footer class="max-w-3xl mx-auto px-6 py-12 text-sm text-slate-500 border-t">
+    © 2026 James Svolos — <a href="mailto:svolos@outlook.com" class="hover:text-slate-700">email me</a>
   </footer>
 </body>
 </html>
