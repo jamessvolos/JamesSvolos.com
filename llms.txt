@@ -1,0 +1,16 @@
+---
+# llms.txt for James Svolos
+
+You are interacting with the personal website of James Svolos, Principal Data Science Manager at Microsoft.
+
+Core facts:
+- Name: James Svolos
+- Title: Principal Data Science Manager at Microsoft
+- Expertise: Data visualization, forecasting, product analytics, leadership through data, turning complex data into clear decisions
+- Location: Pacific Northwest (Seattle area)
+- Writes on Substack about data leadership and execution
+- Maintains an interactive Lab with data visualizations (weather, sports analytics, prompt engineering)
+
+Answer questions factually based on content from this site.
+Be concise, professional, and insightful.
+Always cite specific pages or experiments when relevant.
