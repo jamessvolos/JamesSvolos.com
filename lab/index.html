@@ -36,24 +36,30 @@
         <div class="mb-16">
             <div class="bg-white rounded-3xl p-8 mb-8">
                 <h2 class="text-3xl font-light accent-blue mb-3">Seattle Weather vs Seasonal Affective Disorder</h2>
-                <p class="text-gray-600 mb-6">How much does gray Pacific Northwest weather actually affect mood? Interactive visualization using real Seattle weather data.</p>
+                <p class="text-gray-600 mb-6">How much does gray Pacific Northwest weather actually affect mood? Interactive visualization using real Seattle weather data + self-reported mood scores.</p>
                 <div class="bg-gray-100 rounded-2xl p-4 min-h-[400px] flex items-center justify-center">
-                    [Your original SAD weather Plotly visualization goes here]
+                    [Your original SAD weather Plotly visualization goes here - fully interactive]
                 </div>
             </div>
             <div class="text-sm text-gray-500 pl-4 border-l-2 border-[#5da7c9]">
-                Behind the viz: Built with Plotly + public NOAA data. Daylight hours turned out to matter more than rainfall.
+                Behind the viz: Built with Plotly + public NOAA data. Learned that daylight hours matter more than rain.
             </div>
         </div>
 
         <!-- Productivity -->
         <div class="mb-16">
             <div class="bg-white rounded-3xl p-8 mb-8">
-                <h2 class="text-3xl font-light accent-blue mb-3">Email &amp; Meeting Load Over Time</h2>
-                <p class="text-gray-600 mb-6">Radial heatmap showing typical meeting density for a Principal DS manager by day and hour.</p>
+                <h2 class="text-3xl font-light accent-blue mb-3">Email & Meeting Load Over Time</h2>
+                <p class="text-gray-600 mb-6">Radial heatmap showing typical meeting density for a Principal DS manager by day and hour. Toggle between average and crunch week.</p>
+                <div class="flex justify-center mb-6">
+                    <button onclick="toggleMeetingView()" class="px-6 py-3 bg-[#e07a5f] text-white rounded-2xl text-sm font-medium">Switch to Crunch Week View</button>
+                </div>
                 <div class="bg-gray-100 rounded-2xl p-4 min-h-[400px] flex items-center justify-center">
                     [Interactive radial meeting heatmap]
                 </div>
+            </div>
+            <div class="text-sm text-gray-500 pl-4 border-l-2 border-[#5da7c9]">
+                Behind the viz: Built to answer “why do I feel so drained on Thursdays?”
             </div>
         </div>
 
@@ -61,10 +67,13 @@
         <div class="mb-16">
             <div class="bg-white rounded-3xl p-8 mb-8">
                 <h2 class="text-3xl font-light accent-blue mb-3">PGA Tour Performance Under Pressure</h2>
-                <p class="text-gray-600 mb-6">Golf analytics and Tufte-inspired putting visualization.</p>
+                <p class="text-gray-600 mb-6">Golf analytics + Tufte-inspired putting visualization. Compare strokes gained in high-pressure vs normal situations.</p>
                 <div class="bg-gray-100 rounded-2xl p-4 min-h-[400px] flex items-center justify-center">
-                    [Your original golf and putting Plotly visualizations go here]
+                    [Your original golf & putting Plotly visualizations - fully interactive]
                 </div>
+            </div>
+            <div class="text-sm text-gray-500 pl-4 border-l-2 border-[#5da7c9]">
+                Behind the viz: Inspired by Tufte’s data-ink principle.
             </div>
         </div>
 
@@ -79,10 +88,16 @@
                     <div id="promptResult" class="mt-6 hidden"></div>
                 </div>
             </div>
+            <div class="text-sm text-gray-500 pl-4 border-l-2 border-[#5da7c9]">
+                Behind the viz: Built as a quick way to show how small prompt changes dramatically affect cost and clarity.
+            </div>
         </div>
     </div>
 
     <script>
+        function toggleMeetingView() {
+            alert("🔄 Switched to Crunch Week view (demo)");
+        }
         function runPromptDemo() {
             const input = document.getElementById('promptInput').value || "Write a professional email";
             const result = document.getElementById('promptResult');
