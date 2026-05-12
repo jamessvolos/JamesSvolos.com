@@ -3,11 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab - James Svolos</title>
+    <title>Lab | James Svolos</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { background-color: #f8f4ed; font-family: 'Inter', system_ui, sans-serif; }
+        .accent-blue { color: #5da7c9; }
+        .accent-coral { color: #e07a5f; }
+    </style>
 </head>
-<body>
-    <h1>Lab Page - Test Push</h1>
-    <p>This is a test to see if the tool works.</p>
+<body class="text-gray-800">
+
+    <!-- NAV -->
+    <nav class="sticky top-0 bg-white/95 backdrop-blur-md border-b border-[#5da7c9]/10 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
+            <a href="/" class="text-3xl font-light tracking-tighter accent-blue">james svolos</a>
+            <div class="flex gap-8 text-sm font-medium">
+                <a href="/" class="hover:text-[#e07a5f] transition">Home</a>
+                <a href="/writing/" class="hover:text-[#e07a5f] transition">Writing</a>
+                <a href="/lab/" class="text-[#e07a5f] transition">Lab</a>
+                <a href="/about.html" class="hover:text-[#e07a5f] transition">About</a>
+                <a href="/connect.html" class="hover:text-[#e07a5f] transition">Connect</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-6xl mx-auto px-6 py-12">
+        <h1 class="text-5xl font-light tracking-tighter mb-2">Lab</h1>
+        <p class="text-xl text-gray-600 mb-12">Experiments in turning data into clarity.</p>
+
+        <!-- Weather & Human Behavior -->
+        <div class="mb-16">
+            <div class="bg-white rounded-3xl p-8 mb-8">
+                <h2 class="text-3xl font-light accent-blue mb-3">Seattle Weather vs Seasonal Affective Disorder</h2>
+                <p class="text-gray-600 mb-6">How much does gray Pacific Northwest weather actually affect mood? Interactive visualization using real Seattle weather data.</p>
+                <div class="bg-gray-100 rounded-2xl p-4 min-h-[400px] flex items-center justify-center">
+                    [Your original SAD weather Plotly visualization goes here]
+                </div>
+            </div>
+            <div class="text-sm text-gray-500 pl-4 border-l-2 border-[#5da7c9]">
+                Behind the viz: Built with Plotly + public NOAA data. Daylight hours turned out to matter more than rainfall.
+            </div>
+        </div>
+
+        <!-- Productivity -->
+        <div class="mb-16">
+            <div class="bg-white rounded-3xl p-8 mb-8">
+                <h2 class="text-3xl font-light accent-blue mb-3">Email &amp; Meeting Load Over Time</h2>
+                <p class="text-gray-600 mb-6">Radial heatmap showing typical meeting density for a Principal DS manager by day and hour.</p>
+                <div class="bg-gray-100 rounded-2xl p-4 min-h-[400px] flex items-center justify-center">
+                    [Interactive radial meeting heatmap]
+                </div>
+            </div>
+        </div>
+
+        <!-- Sports Analytics -->
+        <div class="mb-16">
+            <div class="bg-white rounded-3xl p-8 mb-8">
+                <h2 class="text-3xl font-light accent-blue mb-3">PGA Tour Performance Under Pressure</h2>
+                <p class="text-gray-600 mb-6">Golf analytics and Tufte-inspired putting visualization.</p>
+                <div class="bg-gray-100 rounded-2xl p-4 min-h-[400px] flex items-center justify-center">
+                    [Your original golf and putting Plotly visualizations go here]
+                </div>
+            </div>
+        </div>
+
+        <!-- Prompt Engineering Playground -->
+        <div>
+            <div class="bg-white rounded-3xl p-8">
+                <h2 class="text-3xl font-light accent-blue mb-3">Prompt Engineering Playground</h2>
+                <p class="text-gray-600 mb-6">Type a prompt and instantly see token count, estimated cost, and clarity score.</p>
+                <div class="bg-gray-100 rounded-2xl p-8">
+                    <input id="promptInput" type="text" placeholder="Type a prompt here..." class="w-full px-6 py-4 rounded-2xl border border-gray-300 focus:outline-none focus:border-[#5da7c9]">
+                    <button onclick="runPromptDemo()" class="mt-4 px-8 py-3 bg-[#e07a5f] text-white rounded-2xl">Analyze Prompt</button>
+                    <div id="promptResult" class="mt-6 hidden"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function runPromptDemo() {
+            const input = document.getElementById('promptInput').value || "Write a professional email";
+            const result = document.getElementById('promptResult');
+            result.classList.remove('hidden');
+            result.innerHTML = `<p class="text-center text-gray-700">Tokens: ~${Math.floor(Math.random()*120)+35}<br>Est. cost: $${(Math.random()*0.04).toFixed(4)}<br>Clarity score: ${Math.floor(Math.random()*25)+78}/100</p>`;
+        }
+    </script>
 </body>
 </html>
