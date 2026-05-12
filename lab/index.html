@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab | James Svolos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+        body { font-family: 'Inter', system_ui, sans-serif; background-color: #f8f4ed; }
+        .accent-blue { color: #5da7c9; }
+        .accent-coral { color: #e07a5f; }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- NAV (matches homepage) -->
+    <nav class="sticky top-0 bg-white/95 backdrop-blur-md border-b border-[#5da7c9]/10 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
+            <a href="/" class="text-3xl font-light tracking-tighter accent-blue">james svolos</a>
+            <div class="flex gap-8 text-sm font-medium">
+                <a href="/" class="hover:text-[#e07a5f] transition">Home</a>
+                <a href="/writing.html" class="hover:text-[#e07a5f] transition">Writing</a>
+                <a href="/lab/" class="text-[#e07a5f] transition">Lab</a>
+                <a href="/about.html" class="hover:text-[#e07a5f] transition">About</a>
+                <a href="/connect.html" class="hover:text-[#e07a5f] transition">Connect</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-6xl mx-auto px-6 py-12">
+        <h1 class="text-5xl font-light tracking-tighter mb-2">Lab</h1>
+        <p class="text-xl text-gray-600 mb-12">Experiments in turning data into clarity.</p>
+
+        <!-- 1. Prompt Engineering Playground – TOP as requested -->
+        <div class="mb-16">
+            <div class="bg-white rounded-3xl p-8">
+                <h2 class="text-3xl font-light accent-blue mb-3">Prompt Engineering Playground</h2>
+                <p class="text-gray-600 mb-6">Type a prompt and instantly see token count, estimated cost (GPT-4o), and clarity score.</p>
+                <div class="bg-gray-100 rounded-2xl p-8">
+                    <input id="promptInput" type="text" placeholder="Type a prompt here..." class="w-full px-6 py-4 rounded-2xl border border-gray-300 focus:outline-none focus:border-[#5da7c9] text-lg">
+                    <button onclick="runPromptDemo()" class="mt-6 px-8 py-4 bg-[#e07a5f] hover:bg-[#d16a50] text-white rounded-3xl font-medium flex items-center gap-2">
+                        <i class="fa-solid fa-magic"></i> Analyze Prompt
+                    </button>
+                    <div id="promptResult" class="mt-8 hidden text-center"></div>
+                </div>
+            </div>
+            <div class="text-sm text-gray-500 pl-4 border-l-2 border-[#5da7c9] mt-6">
+                Behind the viz: Real-time token & cost estimator. Shows how small wording changes affect price and output quality.
+            </div>
+        </div>
+
+        <!-- 2. Seattle SAD Weather -->
+        <div class="mb-16">
+            <div class="bg-white rounded-3xl p-8">
+                <h2 class="text-3xl font-light accent-blue mb-3">Seattle Weather vs Seasonal Affective Disorder</h2>
+                <p class="text-gray-600 mb-6">How daylight hours and weather actually affect mood.</p>
+                <div id="sadPlot" class="bg-white rounded-2xl min-h-[420px]"></div>
+            </div>
+            <div class="text-sm text-gray-500 pl-4 border-l-2 border-[#5da7c9] mt-6">
+                Behind the viz: Plotly + NOAA data. Daylight hours matter more than rain.
+            </div>
+        </div>
+
+        <!-- 3. Email & Meeting Load -->
+        <div class="mb-16">
+            <div class="bg-white rounded-3xl p-8">
+                <h2 class="text-3xl font-light accent-blue mb-3">Email & Meeting Load Over Time</h2>
+                <p class="text-gray-600 mb-6">Typical meeting density for a Principal DS manager.</p>
+                <div id="meetingPlot" class="bg-white rounded-2xl min-h-[420px]"></div>
+            </div>
+            <div class="text-sm text-gray-500 pl-4 border-l-2 border-[#5da7c9
