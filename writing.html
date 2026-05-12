@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing | James Svolos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+        body { font-family: 'Inter', system_ui, sans-serif; background-color: #f8f4ed; }
+        .accent-blue { color: #5da7c9; }
+        .accent-coral { color: #e07a5f; }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- NAV (consistent with homepage and lab) -->
+    <nav class="sticky top-0 bg-white/95 backdrop-blur-md border-b border-[#5da7c9]/10 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
+            <a href="/" class="text-3xl font-light tracking-tighter accent-blue">james svolos</a>
+            <div class="flex gap-8 text-sm font-medium">
+                <a href="/" class="hover:text-[#e07a5f] transition">Home</a>
+                <a href="/writing.html" class="text-[#e07a5f] transition">Writing</a>
+                <a href="/lab/" class="hover:text-[#e07a5f] transition">Lab</a>
+                <a href="/about.html" class="hover:text-[#e07a5f] transition">About</a>
+                <a href="/connect.html" class="hover:text-[#e07a5f] transition">Connect</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-6xl mx-auto px-6 py-12">
+        <h1 class="text-5xl font-light tracking-tighter mb-2">Writing</h1>
+        <p class="text-xl text-gray-600 mb-12">Thoughts on data, leadership, and turning complexity into clarity.</p>
+
+        <div class="space-y-8">
+            <!-- Real Substack posts -->
+            <a href="https://jsvolos.substack.com/p/scaling-down-and-executing" target="_blank" class="block bg-white rounded-3xl p-8 hover:shadow-xl transition">
+                <div class="flex justify-between items-baseline">
+                    <p class="text-xs uppercase tracking-widest text-gray-500">Substack</p>
+                    <p class="text-xs text-gray-400">Recent</p>
+                </div>
+                <h2 class="text-2xl font-medium mt-2 mb-3">Why great teams shrink the scope to ship</h2>
+                <p class="text-gray-600">How reducing scope helps teams execute faster and deliver better results.</p>
+            </a>
+
+            <a href="https://jsvolos.substack.com/p/metrics-lag-forecasts-lead" target="_blank" class="block bg-white rounded-3xl p-8 hover:shadow-xl transition">
+                <div class="flex justify-between items-baseline">
+                    <p class="text-xs uppercase tracking-widest text-gray-500">Substack</p>
+                    <p class="text-xs text-gray-400">Recent</p>
+                </div>
+                <h2 class="text-2xl font-medium mt-2 mb-3">Metrics Lag, Forecasts Lead</h2>
+                <p class="text-gray-600">A guide for leaders on using forecasting for early business signals instead of waiting for lagging metrics.</p>
+            </a>
+
+            <a href="https://jsvolos.substack.com/p/tell-me-data-lies-cherry-picking" target="_blank" class="block bg-white rounded-3xl p-8 hover:shadow-xl transition">
+                <div class="flex justify-between items-baseline">
+                    <p class="text-xs uppercase tracking-widest text-gray-500">Substack</p>
+                    <p class="text-xs text-gray-400">Recent</p>
+                </div>
+                <h2 class="text-2xl font-medium mt-2 mb-3">Tell Me Data Lies: Cherry-Picking Timeframes</h2>
+                <p class="text-gray-600">How timeframes alter data stories — and how to spot (and avoid) this common trap.</p>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
