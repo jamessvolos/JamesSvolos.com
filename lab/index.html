@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lab | James Svolos</title>
-    <meta name="description" content="The Lab: interactive data experiments by James Svolos — forecasts vs. lagging metrics, cherry-picked timeframes, a prompt estimator, daylight vs. mood, meeting load, PGA putting, and Strokes Gained.">
+    <meta name="description" content="The Lab: interactive data experiments by James Svolos — forecasts vs. lagging metrics, cherry-picked timeframes, a prompt estimator, daylight vs. mood, meeting load, PGA putting, Strokes Gained, and the decoy effect.">
     <link rel="canonical" href="https://jamessvolos.com/lab/">
     <link rel="icon" type="image/png" href="/favicon.png">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Lab | James Svolos">
-    <meta property="og:description" content="Interactive data experiments: forecasts vs. metrics, cherry-picking, prompt estimator, daylight, meeting load, putting, Strokes Gained.">
+    <meta property="og:description" content="Interactive data experiments: forecasts, cherry-picking, prompt estimator, daylight, meeting load, putting, Strokes Gained, decoy effect.">
     <meta property="og:url" content="https://jamessvolos.com/lab/">
     <meta property="og:image" content="https://jamessvolos.com/favicon.png">
     <meta name="twitter:card" content="summary">
@@ -91,6 +91,11 @@
                 <i class="fa-solid fa-ranking-star text-2xl accent-coral"></i>
                 <p class="font-medium mt-3 leading-snug">Where Strokes Are Won</p>
                 <p class="text-xs text-gray-500 mt-1">drive for show?</p>
+            </a>
+            <a href="#decoy" class="bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
+                <i class="fa-solid fa-scale-unbalanced text-2xl accent-coral"></i>
+                <p class="font-medium mt-3 leading-snug">The Decoy Effect</p>
+                <p class="text-xs text-gray-500 mt-1">irrational by design</p>
             </a>
         </div>
 
@@ -279,6 +284,47 @@
             <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
                 <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> the long game — off the tee plus approach — is where most strokes are lost; putting is the smallest slice. Broadie's most famous, most counterintuitive finding.</p>
                 <p class="text-xs text-gray-500 mt-2">Behind the viz: strokes lost per round vs. a tour pro by category; figures approximated from Mark Broadie's “Every Shot Counts.”</p>
+            </div>
+        </div>
+
+        <!-- 9. The Decoy Effect -->
+        <div id="decoy" class="exp reveal mt-16">
+            <div class="bg-white rounded-3xl p-8">
+                <h2 class="text-3xl font-light accent-blue mb-3">The Decoy Effect</h2>
+                <p class="text-gray-600 mb-6">A famous experiment (Dan Ariely, often retold by Rory Sutherland). Make your choice in each scenario — then see what adding one “useless” option does.</p>
+
+                <div id="decoyStage1">
+                    <p class="font-medium mb-3">Scenario 1 — pick a subscription:</p>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <button class="decoy-opt text-left bg-gray-100 rounded-2xl p-5 border-2 border-transparent transition hover:border-[#5da7c9]" data-k="web">
+                            <span class="block font-medium">Digital only</span><span class="text-gray-500">$59 / year</span>
+                        </button>
+                        <button class="decoy-opt text-left bg-gray-100 rounded-2xl p-5 border-2 border-transparent transition hover:border-[#5da7c9]" data-k="combo">
+                            <span class="block font-medium">Print + Digital</span><span class="text-gray-500">$125 / year</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="decoyStage2" class="hidden mt-8">
+                    <p class="font-medium mb-3">Scenario 2 — same offer, with one option added:</p>
+                    <div class="grid sm:grid-cols-3 gap-4">
+                        <button class="decoy-opt2 text-left bg-gray-100 rounded-2xl p-5 border-2 border-transparent transition hover:border-[#5da7c9]" data-k="web">
+                            <span class="block font-medium">Digital only</span><span class="text-gray-500">$59 / year</span>
+                        </button>
+                        <button class="decoy-opt2 text-left bg-gray-100 rounded-2xl p-5 border-2 border-transparent transition hover:border-[#5da7c9]" data-k="print">
+                            <span class="block font-medium">Print only</span><span class="text-gray-500">$125 / year</span>
+                        </button>
+                        <button class="decoy-opt2 text-left bg-gray-100 rounded-2xl p-5 border-2 border-transparent transition hover:border-[#5da7c9]" data-k="combo">
+                            <span class="block font-medium">Print + Digital</span><span class="text-gray-500">$125 / year</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="decoyResult" class="hidden mt-8"></div>
+            </div>
+            <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
+                <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> a “useless” option you'd never choose can still reshape the choice you do make. Context creates value — design the menu, not just the products.</p>
+                <p class="text-xs text-gray-500 mt-2">Behind the viz: based on Dan Ariely's Economist-subscription experiment (“Predictably Irrational”). Adding the print-only decoy pushed combo sign-ups from 32% to 84%.</p>
             </div>
         </div>
     </div>
@@ -610,6 +656,40 @@
                 });
             });
             drawSgWon('Scratch');
+        })();
+
+        // ---- 9. The Decoy Effect ----
+        (function () {
+            var choice1 = null, choice2 = null;
+            function mark(btn, group) {
+                document.querySelectorAll(group).forEach(function (b) { b.classList.remove('border-[#5da7c9]', 'bg-[#5da7c9]/5'); });
+                btn.classList.add('border-[#5da7c9]', 'bg-[#5da7c9]/5');
+            }
+            function maybeResult() {
+                if (!choice1 || !choice2) return;
+                var label = { web: 'Digital only', print: 'Print only', combo: 'Print + Digital' };
+                var nudged = choice1 === 'web' && choice2 === 'combo';
+                var res = document.getElementById('decoyResult');
+                res.classList.remove('hidden');
+                res.innerHTML =
+                    '<div class="bg-gray-50 rounded-2xl p-6">' +
+                        '<p class="mb-3">You picked <span class="font-medium accent-blue">' + label[choice1] + '</span>, then <span class="font-medium accent-blue">' + label[choice2] + '</span>.</p>' +
+                        (nudged
+                            ? '<p class="text-gray-700">That’s exactly the decoy at work: alone, most people take the cheap digital option. Add a print-only option priced the <em>same</em> as the bundle, and the bundle suddenly looks like a steal — even though nobody wants print-only.</p>'
+                            : '<p class="text-gray-700">Interesting — you resisted the nudge. The print-only “decoy” is designed to make the bundle look like obvious value; most people switch to it.</p>') +
+                        '<div class="grid sm:grid-cols-2 gap-4 mt-5 text-sm">' +
+                            '<div class="bg-white rounded-xl p-4"><p class="text-xs uppercase tracking-widest text-gray-400 mb-1">Without the decoy</p><p>Digital 68% · Bundle <span class="font-medium">32%</span></p></div>' +
+                            '<div class="bg-white rounded-xl p-4"><p class="text-xs uppercase tracking-widest text-gray-400 mb-1">With the decoy</p><p>Digital 16% · Print 0% · Bundle <span class="font-medium accent-coral">84%</span></p></div>' +
+                        '</div>' +
+                        '<p class="text-xs text-gray-500 mt-3">Source: Dan Ariely, “Predictably Irrational.”</p>' +
+                    '</div>';
+            }
+            document.querySelectorAll('.decoy-opt').forEach(function (b) {
+                b.addEventListener('click', function () { choice1 = b.dataset.k; mark(b, '.decoy-opt'); document.getElementById('decoyStage2').classList.remove('hidden'); maybeResult(); });
+            });
+            document.querySelectorAll('.decoy-opt2').forEach(function (b) {
+                b.addEventListener('click', function () { choice2 = b.dataset.k; mark(b, '.decoy-opt2'); maybeResult(); });
+            });
         })();
     </script>
 </body>
