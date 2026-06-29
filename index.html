@@ -122,21 +122,20 @@
         </div>
     </section>
 
-    <!-- FEATURED EXPERIMENT (interactive teaser) -->
+    <!-- FEATURED INTERACTIVE: You Draw It -->
     <section class="max-w-6xl mx-auto px-6 pt-20 reveal">
         <div class="flex items-baseline justify-between mb-8">
-            <h2 class="text-3xl font-light accent-blue">Try it: Prompt analyzer</h2>
+            <h2 class="text-3xl font-light accent-blue">You draw it</h2>
             <a href="/lab/" class="text-sm font-medium text-gray-500 hover:text-[#e07a5f] transition">More in the Lab →</a>
         </div>
         <div class="bg-white rounded-3xl p-8">
-            <p class="text-gray-600 mb-6">A taste of the Lab — type a prompt and get a real token, cost, and clarity estimate.</p>
-            <div class="bg-gray-100 rounded-2xl p-6 md:p-8">
-                <textarea id="hpPrompt" rows="2" placeholder="e.g. Summarize this report in 5 bullets for an executive audience." class="w-full px-5 py-3 rounded-2xl border border-gray-300 focus:outline-none focus:border-[#5da7c9] text-lg resize-y"></textarea>
-                <button onclick="hpAnalyze()" class="mt-5 px-7 py-3 bg-[#e07a5f] hover:bg-[#d16a50] text-white rounded-3xl font-medium inline-flex items-center gap-2 transition">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> Analyze
-                </button>
-                <div id="hpResult" class="mt-6 hidden grid sm:grid-cols-3 gap-4 text-center"></div>
+            <p class="text-gray-600 mb-6">Here's a product metric through June. <span class="font-medium">Drag across the shaded area</span> to draw where you think it went next — then reveal what actually happened.</p>
+            <canvas id="drawCanvas" class="w-full rounded-2xl bg-gray-50" style="height:340px; touch-action:none; cursor:crosshair;"></canvas>
+            <div class="mt-5 flex flex-wrap gap-3">
+                <button id="drawReveal" class="px-7 py-3 bg-[#e07a5f] hover:bg-[#d16a50] text-white rounded-3xl font-medium transition">Reveal actual</button>
+                <button id="drawReset" class="px-7 py-3 border-2 border-[#5da7c9] text-[#5da7c9] hover:bg-[#5da7c9]/5 rounded-3xl font-medium transition">Reset</button>
             </div>
+            <p id="drawVerdict" class="mt-5 text-gray-700"></p>
         </div>
     </section>
 
@@ -157,15 +156,15 @@
                 <p class="font-medium mt-3 leading-snug">Cherry-Picking</p>
                 <p class="text-xs text-gray-500 mt-1">timeframes lie</p>
             </a>
-            <a href="/lab/#daylight" class="bg-white rounded-3xl p-6 card-hover">
-                <i class="fa-solid fa-sun text-2xl accent-coral"></i>
-                <p class="font-medium mt-3 leading-snug">Daylight vs. Mood</p>
-                <p class="text-xs text-gray-500 mt-1">pick a city</p>
+            <a href="/lab/#sg" class="bg-white rounded-3xl p-6 card-hover">
+                <i class="fa-solid fa-flag text-2xl accent-coral"></i>
+                <p class="font-medium mt-3 leading-snug">Strokes Gained</p>
+                <p class="text-xs text-gray-500 mt-1">build a shot</p>
             </a>
-            <a href="/lab/#golf" class="bg-white rounded-3xl p-6 card-hover">
-                <i class="fa-solid fa-golf-ball-tee text-2xl accent-coral"></i>
-                <p class="font-medium mt-3 leading-snug">PGA Putting</p>
-                <p class="text-xs text-gray-500 mt-1">drag the distance</p>
+            <a href="/lab/#decoy" class="bg-white rounded-3xl p-6 card-hover">
+                <i class="fa-solid fa-scale-unbalanced text-2xl accent-coral"></i>
+                <p class="font-medium mt-3 leading-snug">The Decoy Effect</p>
+                <p class="text-xs text-gray-500 mt-1">irrational by design</p>
             </a>
         </div>
     </section>
@@ -244,33 +243,76 @@
         draw();
     })();
 
-    function hpTokens(text) {
-        var chars = text.length, words = (text.trim().match(/\S+/g) || []).length;
-        return Math.max(1, Math.round((chars / 4 + words * 1.33) / 2));
-    }
-    function hpClarity(text) {
-        var t = text.trim(); if (!t) return 0;
-        var s = 70, lo = t.toLowerCase(), words = (t.match(/\S+/g) || []).length;
-        if (/\d/.test(t)) s += 6;
-        if (/(bullet|list|table|json|paragraph|markdown|step|email|summary)/.test(lo)) s += 8;
-        if (/(executive|audience|customer|engineer|reader|leader|manager|for a)/.test(lo)) s += 8;
-        if (words >= 8 && words <= 60) s += 6;
-        var vague = (lo.match(/\b(thing|things|stuff|some|maybe|nice|good|etc|various)\b/g) || []).length;
-        s -= vague * 6;
-        if (words < 6) s -= 12;
-        return Math.max(0, Math.min(100, Math.round(s)));
-    }
-    function hpAnalyze() {
-        var v = document.getElementById('hpPrompt').value || '';
-        var tokens = hpTokens(v), cost = (tokens / 1e6) * 2.50, score = hpClarity(v);
-        var color = score >= 80 ? '#16a34a' : (score >= 60 ? '#e07a5f' : '#dc2626');
-        var el = document.getElementById('hpResult');
-        el.classList.remove('hidden');
-        el.innerHTML =
-            '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-400">Est. tokens</p><p class="text-3xl font-medium mt-1">' + tokens.toLocaleString() + '</p></div>' +
-            '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-400">Est. input cost</p><p class="text-3xl font-medium mt-1 accent-coral">$' + cost.toFixed(5) + '</p></div>' +
-            '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-400">Clarity score</p><p class="text-3xl font-medium mt-1" style="color:' + color + '">' + score + '/100</p></div>';
-    }
+    // ---- You Draw It (canvas) ----
+    (function () {
+        var cv = document.getElementById('drawCanvas');
+        if (!cv) return;
+        var ctx = cv.getContext('2d');
+        var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        var known = [40, 46, 52, 57, 61, 64];
+        var actual = known.concat([63, 58, 50, 44, 41, 42]);
+        var yMin = 30, yMax = 75;
+        var pad = { l: 36, r: 14, t: 16, b: 26 };
+        var user = known.slice(); for (var i = 6; i < 12; i++) user[i] = null;
+        var revealed = false, drawing = false, lastM = 5, W, H, dpr;
+        function setup() {
+            dpr = window.devicePixelRatio || 1;
+            W = cv.clientWidth; H = cv.clientHeight;
+            cv.width = W * dpr; cv.height = H * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            draw();
+        }
+        function xPx(m) { return pad.l + (m / 11) * (W - pad.l - pad.r); }
+        function yPx(v) { return pad.t + (1 - (v - yMin) / (yMax - yMin)) * (H - pad.t - pad.b); }
+        function pxV(py) { var v = yMin + (1 - (py - pad.t) / (H - pad.t - pad.b)) * (yMax - yMin); return Math.max(yMin, Math.min(yMax, v)); }
+        function pxM(px) { return Math.max(0, Math.min(11, Math.round((px - pad.l) / (W - pad.l - pad.r) * 11))); }
+        function plot(arr, from, to, color, w, dash) {
+            ctx.beginPath(); ctx.setLineDash(dash || []); var started = false;
+            for (var m = from; m <= to; m++) { if (arr[m] == null) continue; var X = xPx(m), Y = yPx(arr[m]); if (!started) { ctx.moveTo(X, Y); started = true; } else ctx.lineTo(X, Y); }
+            ctx.strokeStyle = color; ctx.lineWidth = w; ctx.stroke(); ctx.setLineDash([]);
+        }
+        function draw() {
+            ctx.clearRect(0, 0, W, H);
+            ctx.fillStyle = 'rgba(93,167,201,0.06)';
+            ctx.fillRect(xPx(5), pad.t, xPx(11) - xPx(5), H - pad.t - pad.b);
+            ctx.font = '11px Inter, sans-serif'; ctx.fillStyle = '#9ca3af';
+            [30, 45, 60, 75].forEach(function (v) { var Y = yPx(v); ctx.strokeStyle = '#eee'; ctx.beginPath(); ctx.moveTo(pad.l, Y); ctx.lineTo(W - pad.r, Y); ctx.stroke(); ctx.fillText(v, 6, Y + 3); });
+            for (var m = 0; m < 12; m += 2) ctx.fillText(MONTHS[m], xPx(m) - 8, H - 8);
+            plot(known, 0, 5, '#5da7c9', 3);
+            ctx.fillStyle = '#5da7c9'; ctx.beginPath(); ctx.arc(xPx(5), yPx(known[5]), 4, 0, 7); ctx.fill();
+            var u = user.slice(); u[5] = known[5];
+            plot(u, 5, 11, '#e07a5f', 3);
+            if (revealed) plot(actual, 5, 11, '#16a34a', 3, [5, 4]);
+        }
+        function setAt(px, py) {
+            var m = pxM(px); if (m < 6) m = 6; var v = pxV(py);
+            if (Math.abs(m - lastM) > 1) {
+                var v0 = (user[lastM] != null ? user[lastM] : known[5]);
+                var lo = Math.min(lastM, m), hi = Math.max(lastM, m);
+                for (var k = lo + 1; k < hi; k++) { var t = (k - lastM) / (m - lastM); user[k] = v0 + t * (v - v0); }
+            }
+            user[m] = v; lastM = m; draw();
+        }
+        function pos(e) { var r = cv.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
+        cv.addEventListener('pointerdown', function (e) { drawing = true; lastM = 5; var p = pos(e); setAt(p.x, p.y); });
+        cv.addEventListener('pointermove', function (e) { if (!drawing) return; var p = pos(e); setAt(p.x, p.y); });
+        window.addEventListener('pointerup', function () { drawing = false; });
+        document.getElementById('drawReveal').addEventListener('click', function () {
+            var last = known[5];
+            for (var m = 6; m < 12; m++) { if (user[m] == null) user[m] = last; else last = user[m]; }
+            revealed = true; draw();
+            var end = Math.round(user[11]), up = user[11] > known[5];
+            document.getElementById('drawVerdict').innerHTML =
+                'You guessed it would end near <span class="font-medium">' + end + '</span>. It actually fell to <span class="font-medium accent-coral">' + actual[11] + '</span>. ' +
+                (up ? 'Like most people, you extrapolated the trend upward — the hardest part of forecasting is sensing the turn.' : 'Nicely done — you sensed the turn most people miss.');
+        });
+        document.getElementById('drawReset').addEventListener('click', function () {
+            for (var m = 6; m < 12; m++) user[m] = null; revealed = false; lastM = 5;
+            document.getElementById('drawVerdict').innerHTML = ''; draw();
+        });
+        window.addEventListener('resize', setup);
+        setup();
+    })();
 
     (function () {
         var FEED = 'https://jsvolos.substack.com/feed';
