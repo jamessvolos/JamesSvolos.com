@@ -8,7 +8,6 @@
     <meta name="keywords" content="data science executive, director of data science, VP analytics, data science leader, Microsoft, product analytics, forecasting, James Svolos">
     <link rel="canonical" href="https://jamessvolos.com/">
     <link rel="icon" type="image/png" href="/favicon.png">
-    <!-- Open Graph / Twitter -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="James Svolos | Data Science Leader & Executive — Microsoft">
     <meta property="og:description" content="Builds and leads data science teams at Microsoft that turn complexity into clear decisions.">
@@ -25,8 +24,13 @@
         body { font-family: 'Inter', system-ui, sans-serif; background-color: #f8f4ed; }
         .accent-blue { color: #5da7c9; }
         .accent-coral { color: #e07a5f; }
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+        .reveal.reveal-in { opacity: 1; transform: none; }
+        @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+        .hero-wrap { position: relative; overflow: hidden; }
+        #heroCanvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .5; }
+        .hero-inner { position: relative; z-index: 1; }
     </style>
-    <!-- Person schema for SEO -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -37,10 +41,7 @@
       "worksFor": { "@type": "Organization", "name": "Microsoft" },
       "knowsAbout": ["Data Science Leadership", "Data Science Strategy", "Data Visualization", "Forecasting", "Product Analytics", "Team Leadership", "Executive Decision Support"],
       "alumniOf": { "@type": "CollegeOrUniversity", "name": "Pennsylvania State University" },
-      "sameAs": [
-        "https://www.linkedin.com/in/james-svolos-74358559",
-        "https://jsvolos.substack.com"
-      ]
+      "sameAs": ["https://www.linkedin.com/in/james-svolos-74358559", "https://jsvolos.substack.com"]
     }
     </script>
 </head>
@@ -60,8 +61,9 @@
     </nav>
 
     <!-- HERO -->
-    <header class="hero-bg py-28">
-        <div class="max-w-4xl mx-auto px-6 text-center">
+    <header class="hero-bg hero-wrap py-28">
+        <canvas id="heroCanvas" aria-hidden="true"></canvas>
+        <div class="hero-inner max-w-4xl mx-auto px-6 text-center">
             <h1 class="text-6xl md:text-7xl font-light tracking-tighter leading-none mb-6">
                 Hi, I'm James.<br>
                 I work on data problems at Microsoft.
@@ -81,7 +83,7 @@
     </header>
 
     <!-- IMPACT BAND -->
-    <section class="max-w-6xl mx-auto px-6 pt-16">
+    <section class="max-w-6xl mx-auto px-6 pt-16 reveal">
         <div class="grid sm:grid-cols-3 gap-6 text-center">
             <div class="bg-white rounded-3xl p-8 card-hover">
                 <p class="text-4xl font-light accent-coral">Trillions</p>
@@ -96,18 +98,84 @@
                 <p class="text-sm text-gray-600 mt-2">work that drives growth, reduces risk, and earns leadership trust</p>
             </div>
         </div>
-        <p class="text-center mt-8">
-            <a href="/about.html" class="text-sm font-medium text-[#5da7c9] hover:text-[#e07a5f] transition">How I lead &amp; what I work on →</a>
-        </p>
+    </section>
+
+    <!-- WHAT I DO -->
+    <section class="max-w-6xl mx-auto px-6 pt-20 reveal">
+        <h2 class="text-3xl font-light accent-blue mb-8 text-center">What I do</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+            <a href="/about.html" class="block bg-white rounded-3xl p-8 card-hover">
+                <i class="fa-solid fa-users-line text-2xl accent-coral"></i>
+                <h3 class="text-xl font-medium mt-4 mb-2">Lead teams</h3>
+                <p class="text-gray-600 text-sm">Build and grow data science teams, set strategy, and partner with product and exec leaders.</p>
+            </a>
+            <a href="/lab/" class="block bg-white rounded-3xl p-8 card-hover">
+                <i class="fa-solid fa-chart-line text-2xl accent-coral"></i>
+                <h3 class="text-xl font-medium mt-4 mb-2">Forecast the future</h3>
+                <p class="text-gray-600 text-sm">Turn signals into forecasts that give leaders an early, confident read on what's next.</p>
+            </a>
+            <a href="/lab/" class="block bg-white rounded-3xl p-8 card-hover">
+                <i class="fa-solid fa-wand-magic-sparkles text-2xl accent-coral"></i>
+                <h3 class="text-xl font-medium mt-4 mb-2">Make data clear</h3>
+                <p class="text-gray-600 text-sm">Translate complex data into visualizations and decisions anyone in the room can act on.</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- FEATURED EXPERIMENT (interactive teaser) -->
+    <section class="max-w-6xl mx-auto px-6 pt-20 reveal">
+        <div class="flex items-baseline justify-between mb-8">
+            <h2 class="text-3xl font-light accent-blue">Try it: Prompt analyzer</h2>
+            <a href="/lab/" class="text-sm font-medium text-gray-500 hover:text-[#e07a5f] transition">More in the Lab →</a>
+        </div>
+        <div class="bg-white rounded-3xl p-8">
+            <p class="text-gray-600 mb-6">A taste of the Lab — type a prompt and get a real token, cost, and clarity estimate.</p>
+            <div class="bg-gray-100 rounded-2xl p-6 md:p-8">
+                <textarea id="hpPrompt" rows="2" placeholder="e.g. Summarize this report in 5 bullets for an executive audience." class="w-full px-5 py-3 rounded-2xl border border-gray-300 focus:outline-none focus:border-[#5da7c9] text-lg resize-y"></textarea>
+                <button onclick="hpAnalyze()" class="mt-5 px-7 py-3 bg-[#e07a5f] hover:bg-[#d16a50] text-white rounded-3xl font-medium inline-flex items-center gap-2 transition">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Analyze
+                </button>
+                <div id="hpResult" class="mt-6 hidden grid sm:grid-cols-3 gap-4 text-center"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LAB PREVIEW -->
+    <section class="max-w-6xl mx-auto px-6 pt-20 reveal">
+        <div class="flex items-baseline justify-between mb-8">
+            <h2 class="text-3xl font-light accent-blue">From the Lab</h2>
+            <a href="/lab/" class="text-sm font-medium text-gray-500 hover:text-[#e07a5f] transition">All experiments →</a>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <a href="/lab/#forecast" class="bg-white rounded-3xl p-6 card-hover">
+                <i class="fa-solid fa-chart-line text-2xl accent-coral"></i>
+                <p class="font-medium mt-3 leading-snug">Forecasts Lead</p>
+                <p class="text-xs text-gray-500 mt-1">vs. lagging metrics</p>
+            </a>
+            <a href="/lab/#cherry" class="bg-white rounded-3xl p-6 card-hover">
+                <i class="fa-solid fa-crop-simple text-2xl accent-coral"></i>
+                <p class="font-medium mt-3 leading-snug">Cherry-Picking</p>
+                <p class="text-xs text-gray-500 mt-1">timeframes lie</p>
+            </a>
+            <a href="/lab/#daylight" class="bg-white rounded-3xl p-6 card-hover">
+                <i class="fa-solid fa-sun text-2xl accent-coral"></i>
+                <p class="font-medium mt-3 leading-snug">Daylight vs. Mood</p>
+                <p class="text-xs text-gray-500 mt-1">pick a city</p>
+            </a>
+            <a href="/lab/#golf" class="bg-white rounded-3xl p-6 card-hover">
+                <i class="fa-solid fa-golf-ball-tee text-2xl accent-coral"></i>
+                <p class="font-medium mt-3 leading-snug">PGA Putting</p>
+                <p class="text-xs text-gray-500 mt-1">drag the distance</p>
+            </a>
+        </div>
     </section>
 
     <!-- FEATURED WRITING -->
-    <div class="max-w-6xl mx-auto px-6 py-20">
+    <div class="max-w-6xl mx-auto px-6 pt-20 pb-4 reveal">
         <div class="flex items-baseline justify-between mb-8">
             <h2 class="text-3xl font-light accent-blue">Featured Writing</h2>
             <a href="/writing.html" class="text-sm font-medium text-gray-500 hover:text-[#e07a5f] transition">All writing →</a>
         </div>
-        <!-- Static fallback cards; replaced with the live latest 3 if the Substack feed loads. -->
         <div id="featuredWriting" class="grid md:grid-cols-3 gap-6">
             <a href="https://jsvolos.substack.com/p/scaling-down-and-executing" target="_blank" rel="noopener" class="block bg-white rounded-3xl p-8 card-hover">
                 <p class="text-xs uppercase tracking-widest text-gray-500 mb-3">Substack</p>
@@ -127,51 +195,103 @@
         </div>
     </div>
 
-    <footer class="bg-white border-t border-[#5da7c9]/10 py-12">
-        <div class="max-w-6xl mx-auto px-6 text-center text-sm text-gray-500">
-            © James Svolos
+    <!-- CLOSING CTA -->
+    <section class="max-w-6xl mx-auto px-6 py-20 reveal">
+        <div class="bg-[#5da7c9] rounded-3xl p-12 text-center text-white">
+            <h2 class="text-3xl md:text-4xl font-light mb-4">Let's solve a hard data problem together.</h2>
+            <p class="text-white/90 max-w-xl mx-auto mb-8">Building a data-driven org, or just want to compare notes on forecasting and leadership? I'd love to talk.</p>
+            <a href="/connect.html" class="inline-flex items-center justify-center gap-2 px-10 py-4 bg-white text-[#5da7c9] hover:bg-gray-100 rounded-3xl font-medium transition">
+                <i class="fa-solid fa-paper-plane"></i> Get in touch
+            </a>
         </div>
+    </section>
+
+    <footer class="bg-white border-t border-[#5da7c9]/10 py-12">
+        <div class="max-w-6xl mx-auto px-6 text-center text-sm text-gray-500">© James Svolos</div>
     </footer>
 
-    <!-- Dynamically pull the latest Substack posts into Featured Writing.
-         Progressive enhancement: the static cards above remain if this fails. -->
     <script>
+    (function () {
+        var els = document.querySelectorAll('.reveal');
+        if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('reveal-in'); }); return; }
+        var io = new IntersectionObserver(function (en) {
+            en.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('reveal-in'); io.unobserve(e.target); } });
+        }, { threshold: 0.12 });
+        els.forEach(function (e) { io.observe(e); });
+    })();
+
+    (function () {
+        var c = document.getElementById('heroCanvas');
+        if (!c || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        var ctx = c.getContext('2d'), w, h, t = 0;
+        function size() { w = c.width = c.offsetWidth; h = c.height = c.offsetHeight; }
+        size(); window.addEventListener('resize', size);
+        var lines = [{ color: 'rgba(93,167,201,0.45)', amp: 0.10, freq: 1.4, sp: 0.012, off: 0 },
+                     { color: 'rgba(224,122,95,0.40)', amp: 0.07, freq: 2.1, sp: 0.018, off: 2 }];
+        function draw() {
+            ctx.clearRect(0, 0, w, h);
+            lines.forEach(function (L) {
+                ctx.beginPath();
+                for (var x = 0; x <= w; x += 6) {
+                    var p = x / w;
+                    var y = h * (0.55 + L.amp * Math.sin(p * Math.PI * L.freq + t * L.sp * 60 + L.off) + 0.04 * Math.sin(p * Math.PI * 5 + t * 0.02 * 60));
+                    if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                }
+                ctx.strokeStyle = L.color; ctx.lineWidth = 2; ctx.stroke();
+            });
+            t += 1; requestAnimationFrame(draw);
+        }
+        draw();
+    })();
+
+    function hpTokens(text) {
+        var chars = text.length, words = (text.trim().match(/\S+/g) || []).length;
+        return Math.max(1, Math.round((chars / 4 + words * 1.33) / 2));
+    }
+    function hpClarity(text) {
+        var t = text.trim(); if (!t) return 0;
+        var s = 70, lo = t.toLowerCase(), words = (t.match(/\S+/g) || []).length;
+        if (/\d/.test(t)) s += 6;
+        if (/(bullet|list|table|json|paragraph|markdown|step|email|summary)/.test(lo)) s += 8;
+        if (/(executive|audience|customer|engineer|reader|leader|manager|for a)/.test(lo)) s += 8;
+        if (words >= 8 && words <= 60) s += 6;
+        var vague = (lo.match(/\b(thing|things|stuff|some|maybe|nice|good|etc|various)\b/g) || []).length;
+        s -= vague * 6;
+        if (words < 6) s -= 12;
+        return Math.max(0, Math.min(100, Math.round(s)));
+    }
+    function hpAnalyze() {
+        var v = document.getElementById('hpPrompt').value || '';
+        var tokens = hpTokens(v), cost = (tokens / 1e6) * 2.50, score = hpClarity(v);
+        var color = score >= 80 ? '#16a34a' : (score >= 60 ? '#e07a5f' : '#dc2626');
+        var el = document.getElementById('hpResult');
+        el.classList.remove('hidden');
+        el.innerHTML =
+            '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-400">Est. tokens</p><p class="text-3xl font-medium mt-1">' + tokens.toLocaleString() + '</p></div>' +
+            '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-400">Est. input cost</p><p class="text-3xl font-medium mt-1 accent-coral">$' + cost.toFixed(5) + '</p></div>' +
+            '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-400">Clarity score</p><p class="text-3xl font-medium mt-1" style="color:' + color + '">' + score + '/100</p></div>';
+    }
+
     (function () {
         var FEED = 'https://jsvolos.substack.com/feed';
         var PROXY = 'https://api.allorigins.win/raw?url=';
         var container = document.getElementById('featuredWriting');
         if (!container) return;
-
-        function esc(s) {
-            return (s || '').replace(/[&<>"']/g, function (c) {
-                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
-            });
-        }
-
+        function esc(s) { return (s || '').replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
         function excerpt(html, max) {
-            var tmp = document.createElement('div');
-            tmp.innerHTML = html || '';
+            var tmp = document.createElement('div'); tmp.innerHTML = html || '';
             var text = (tmp.textContent || '').replace(/\s+/g, ' ').trim();
             if (text.length > max) text = text.slice(0, max).replace(/\s+\S*$/, '') + '…';
             return text;
         }
-
-        function fmtDate(str) {
-            var d = new Date(str);
-            return isNaN(d) ? '' : d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-        }
-
+        function fmtDate(str) { var d = new Date(str); return isNaN(d) ? '' : d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }); }
         function card(post) {
             return '<a href="' + esc(post.link) + '" target="_blank" rel="noopener" class="block bg-white rounded-3xl p-8 card-hover">' +
-                '<div class="flex items-baseline justify-between mb-3">' +
-                    '<p class="text-xs uppercase tracking-widest text-gray-500">Substack</p>' +
-                    (post.date ? '<p class="text-xs text-gray-400">' + esc(post.date) + '</p>' : '') +
-                '</div>' +
+                '<div class="flex items-baseline justify-between mb-3"><p class="text-xs uppercase tracking-widest text-gray-500">Substack</p>' +
+                (post.date ? '<p class="text-xs text-gray-400">' + esc(post.date) + '</p>' : '') + '</div>' +
                 '<h3 class="text-xl font-medium mb-3 leading-snug">' + esc(post.title) + '</h3>' +
-                '<p class="text-gray-600 text-sm">' + esc(post.excerpt) + '</p>' +
-            '</a>';
+                '<p class="text-gray-600 text-sm">' + esc(post.excerpt) + '</p></a>';
         }
-
         fetch(PROXY + encodeURIComponent(FEED))
             .then(function (r) { if (!r.ok) throw new Error('feed ' + r.status); return r.text(); })
             .then(function (xml) {
@@ -181,19 +301,12 @@
                 if (!items.length) throw new Error('no items');
                 var get = function (el, tag) { var n = el.querySelector(tag); return n ? n.textContent : ''; };
                 var posts = items.map(function (it) {
-                    return {
-                        title: get(it, 'title'),
-                        link: get(it, 'link'),
-                        date: fmtDate(get(it, 'pubDate')),
-                        excerpt: excerpt(get(it, 'description') || get(it, 'encoded'), 130)
-                    };
+                    return { title: get(it, 'title'), link: get(it, 'link'), date: fmtDate(get(it, 'pubDate')),
+                             excerpt: excerpt(get(it, 'description') || get(it, 'encoded'), 130) };
                 });
                 container.innerHTML = posts.map(card).join('');
             })
-            .catch(function (e) {
-                // Leave the static fallback cards in place.
-                if (window.console) console.warn('Featured Writing: live feed unavailable, using fallback.', e);
-            });
+            .catch(function (e) { if (window.console) console.warn('Featured Writing: live feed unavailable, using fallback.', e); });
     })();
     </script>
 </body>
