@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lab | James Svolos</title>
-    <meta name="description" content="The Lab: interactive data experiments by James Svolos — a real prompt token & cost estimator, Seattle daylight vs. mood, meeting-load heatmap, and PGA putting analytics.">
+    <meta name="description" content="The Lab: interactive data experiments by James Svolos — a real prompt token & cost estimator, daylight vs. mood across cities, a meeting-load heatmap, and PGA putting analytics.">
     <link rel="canonical" href="https://jamessvolos.com/lab/">
     <link rel="icon" type="image/png" href="/favicon.png">
     <meta property="og:type" content="website">
@@ -21,6 +21,14 @@
         body { font-family: 'Inter', system-ui, sans-serif; background-color: #f8f4ed; }
         .accent-blue { color: #5da7c9; }
         .accent-coral { color: #e07a5f; }
+        .exp { scroll-margin-top: 100px; }
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+        .reveal.reveal-in { opacity: 1; transform: none; }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+        }
+        html { scroll-behavior: smooth; }
+        .seg-btn.active { background:#5da7c9; color:#fff; }
     </style>
 </head>
 <body class="text-gray-800">
@@ -41,10 +49,34 @@
 
     <div class="max-w-6xl mx-auto px-6 py-12">
         <h1 class="text-5xl font-light tracking-tighter mb-2">Lab</h1>
-        <p class="text-xl text-gray-600 mb-12">Experiments in turning data into clarity.</p>
+        <p class="text-xl text-gray-600 mb-10">Interactive experiments in turning data into clarity. Click in — every one responds to you.</p>
+
+        <!-- GALLERY NAV -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
+            <a href="#prompt" class="group bg-white rounded-3xl p-6 card-tile transition hover:-translate-y-1 hover:shadow-xl">
+                <i class="fa-solid fa-wand-magic-sparkles text-2xl accent-coral"></i>
+                <p class="font-medium mt-3 leading-snug">Prompt Playground</p>
+                <p class="text-xs text-gray-500 mt-1">tokens · cost · clarity</p>
+            </a>
+            <a href="#daylight" class="group bg-white rounded-3xl p-6 card-tile transition hover:-translate-y-1 hover:shadow-xl">
+                <i class="fa-solid fa-sun text-2xl accent-coral"></i>
+                <p class="font-medium mt-3 leading-snug">Daylight vs. Mood</p>
+                <p class="text-xs text-gray-500 mt-1">pick a city</p>
+            </a>
+            <a href="#meeting" class="group bg-white rounded-3xl p-6 card-tile transition hover:-translate-y-1 hover:shadow-xl">
+                <i class="fa-solid fa-calendar-week text-2xl accent-coral"></i>
+                <p class="font-medium mt-3 leading-snug">Meeting Load</p>
+                <p class="text-xs text-gray-500 mt-1">by seniority</p>
+            </a>
+            <a href="#golf" class="group bg-white rounded-3xl p-6 card-tile transition hover:-translate-y-1 hover:shadow-xl">
+                <i class="fa-solid fa-golf-ball-tee text-2xl accent-coral"></i>
+                <p class="font-medium mt-3 leading-snug">PGA Putting</p>
+                <p class="text-xs text-gray-500 mt-1">drag the distance</p>
+            </a>
+        </div>
 
         <!-- 1. Prompt Engineering Playground -->
-        <div class="mb-16">
+        <div id="prompt" class="exp reveal mb-16">
             <div class="bg-white rounded-3xl p-8">
                 <h2 class="text-3xl font-light accent-blue mb-3">Prompt Engineering Playground</h2>
                 <p class="text-gray-600 mb-6">Type a prompt and see an estimated token count, API cost, and a clarity score computed from the actual text.</p>
@@ -56,44 +88,70 @@
                     <div id="promptResult" class="mt-8 hidden"></div>
                 </div>
             </div>
-            <div class="text-sm text-gray-500 pl-4 border-l-2 border-[#5da7c9] mt-6">
-                Behind the viz: Tokens are estimated with the common ~4-characters-per-token heuristic blended with a word count. Cost uses published GPT-4o input pricing ($2.50 / 1M tokens). The clarity score is a transparent rubric that rewards specifics (numbers, an explicit format, a named audience) and penalizes vague filler and run-on sentences.
+            <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
+                <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> small wording changes move cost and clarity more than people expect — specificity is cheap leverage.</p>
+                <p class="text-xs text-gray-500 mt-2">Behind the viz: tokens use the ~4-chars-per-token heuristic blended with word count; cost uses published GPT-4o input pricing ($2.50 / 1M tokens); clarity is a transparent rubric rewarding specifics and penalizing vague filler.</p>
             </div>
         </div>
 
-        <!-- 2. Seattle SAD Weather -->
-        <div class="mb-16">
+        <!-- 2. Daylight vs Mood -->
+        <div id="daylight" class="exp reveal mb-16">
             <div class="bg-white rounded-3xl p-8">
-                <h2 class="text-3xl font-light accent-blue mb-3">Seattle Daylight vs. Mood</h2>
-                <p class="text-gray-600 mb-6">How daylight hours track with seasonal mood across the year in Seattle.</p>
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-3">
+                    <h2 class="text-3xl font-light accent-blue">Daylight vs. Mood</h2>
+                    <label class="text-sm text-gray-600">City:
+                        <select id="citySelect" class="ml-2 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#5da7c9]">
+                            <option value="Seattle">Seattle</option>
+                            <option value="London">London</option>
+                            <option value="Phoenix">Phoenix</option>
+                            <option value="Anchorage">Anchorage</option>
+                        </select>
+                    </label>
+                </div>
+                <p class="text-gray-600 mb-6">How daylight hours track with a seasonal mood index across the year.</p>
                 <div id="sadPlot" class="min-h-[420px]"></div>
             </div>
-            <div class="text-sm text-gray-500 pl-4 border-l-2 border-[#5da7c9] mt-6">
-                Behind the viz: Monthly daylight hours for Seattle (47.6°N) plotted against a normalized seasonal mood index. The two move together — daylight, not rainfall, is the stronger signal for seasonal mood.
+            <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
+                <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> the higher the latitude, the wilder the swing — daylight, not rainfall, is the stronger signal for seasonal mood.</p>
+                <p class="text-xs text-gray-500 mt-2">Behind the viz: monthly daylight hours by latitude; the mood index is a modeled value that tracks trailing daylight (normalized 0–100).</p>
             </div>
         </div>
 
-        <!-- 3. Email & Meeting Load -->
-        <div class="mb-16">
+        <!-- 3. Meeting Load -->
+        <div id="meeting" class="exp reveal mb-16">
             <div class="bg-white rounded-3xl p-8">
-                <h2 class="text-3xl font-light accent-blue mb-3">Meeting Load Through the Week</h2>
-                <p class="text-gray-600 mb-6">Meeting density by day and hour for a typical Principal DS manager.</p>
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-3">
+                    <h2 class="text-3xl font-light accent-blue">Meeting Load Through the Week</h2>
+                    <div class="inline-flex rounded-xl border border-gray-300 overflow-hidden text-sm">
+                        <button class="seg-btn px-4 py-2" data-role="0.55">IC</button>
+                        <button class="seg-btn px-4 py-2 border-l border-gray-300" data-role="0.8">Manager</button>
+                        <button class="seg-btn px-4 py-2 border-l border-gray-300 active" data-role="1">Principal</button>
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-6">Meeting density by day and hour — toggle the seniority level.</p>
                 <div id="meetingPlot" class="min-h-[420px]"></div>
             </div>
-            <div class="text-sm text-gray-500 pl-4 border-l-2 border-[#5da7c9] mt-6">
-                Behind the viz: A day-by-hour heatmap of meeting density. Mid-week afternoons run hottest — which answers “why do I feel drained on Thursdays?”
+            <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
+                <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> the calendar fills as you climb — mid-week afternoons run hottest, which is why Thursdays feel draining.</p>
+                <p class="text-xs text-gray-500 mt-2">Behind the viz: a day-by-hour heatmap of meeting density, scaled by a seniority factor.</p>
             </div>
         </div>
 
         <!-- 4. PGA Tour Performance -->
-        <div>
+        <div id="golf" class="exp reveal">
             <div class="bg-white rounded-3xl p-8">
                 <h2 class="text-3xl font-light accent-blue mb-3">PGA Tour Putting: Make % by Distance</h2>
                 <p class="text-gray-600 mb-6">How quickly a made putt becomes a coin flip as distance grows.</p>
+                <div class="bg-gray-100 rounded-2xl p-5 mb-6 flex items-center gap-4">
+                    <span class="text-sm text-gray-600 whitespace-nowrap">Distance:</span>
+                    <input id="puttSlider" type="range" min="3" max="30" value="8" step="1" class="flex-1 accent-[#e07a5f]">
+                    <span class="text-sm font-medium whitespace-nowrap"><span id="puttDist">8</span> ft → <span id="puttPct" class="accent-coral">50%</span> made</span>
+                </div>
                 <div id="golfPlot" class="min-h-[420px]"></div>
             </div>
-            <div class="text-sm text-gray-500 pl-4 border-l-2 border-[#5da7c9] mt-6">
-                Behind the viz: Tour make-percentage by putt distance, drawn in a minimal, Tufte-inspired style. The 50/50 line lands right around eight feet.
+            <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
+                <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> the 50/50 line lands right around eight feet — beyond that, pros are managing risk, not expecting makes.</p>
+                <p class="text-xs text-gray-500 mt-2">Behind the viz: Tour make-percentage by putt distance, drawn in a minimal, Tufte-inspired style.</p>
             </div>
         </div>
     </div>
@@ -105,94 +163,103 @@
     </footer>
 
     <script>
-        // ---- Shared coastal palette ----
-        const BLUE = '#5da7c9';
-        const CORAL = '#e07a5f';
-        const baseLayout = {
+        var BLUE = '#5da7c9';
+        var CORAL = '#e07a5f';
+        var hasPlotly = typeof Plotly !== 'undefined';
+        var baseLayout = {
             font: { family: 'Inter, system-ui, sans-serif', color: '#374151' },
             paper_bgcolor: 'rgba(0,0,0,0)',
             plot_bgcolor: 'rgba(0,0,0,0)',
             margin: { t: 20, r: 20, b: 50, l: 55 }
         };
-        const config = { displayModeBar: false, responsive: true };
+        var config = { displayModeBar: false, responsive: true };
 
-        // ---- 1. Prompt estimator (real computation) ----
+        (function () {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function (e) { e.classList.add('reveal-in'); });
+                return;
+            }
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (en) {
+                    if (en.isIntersecting) { en.target.classList.add('reveal-in'); io.unobserve(en.target); }
+                });
+            }, { threshold: 0.12 });
+            els.forEach(function (e) { io.observe(e); });
+        })();
+
         function estimateTokens(text) {
-            const chars = text.length;
-            const words = (text.trim().match(/\S+/g) || []).length;
-            // Blend the ~4 chars/token heuristic with ~1.33 tokens/word.
-            const byChars = chars / 4;
-            const byWords = words * 1.33;
+            var chars = text.length;
+            var words = (text.trim().match(/\S+/g) || []).length;
+            var byChars = chars / 4;
+            var byWords = words * 1.33;
             return Math.max(1, Math.round((byChars + byWords) / 2));
         }
-
         function clarityScore(text) {
-            const t = text.trim();
+            var t = text.trim();
             if (!t) return { score: 0, notes: ['Empty prompt.'] };
-            let score = 70;
-            const notes = [];
-            const lower = t.toLowerCase();
-            const words = (t.match(/\S+/g) || []).length;
-
-            // Reward specifics
+            var score = 70; var notes = [];
+            var lower = t.toLowerCase();
+            var words = (t.match(/\S+/g) || []).length;
             if (/\d/.test(t)) { score += 6; notes.push('+ includes specific numbers'); }
             if (/(bullet|list|table|json|paragraph|markdown|step|email|summary)/.test(lower)) { score += 8; notes.push('+ specifies an output format'); }
             if (/(executive|audience|customer|engineer|reader|leader|manager|for a)/.test(lower)) { score += 8; notes.push('+ names an audience or role'); }
             if (words >= 8 && words <= 60) { score += 6; notes.push('+ well-scoped length'); }
-
-            // Penalize vagueness and run-ons
-            const vague = (lower.match(/\b(thing|things|stuff|some|maybe|nice|good|etc|various|kind of|sort of)\b/g) || []).length;
+            var vague = (lower.match(/\b(thing|things|stuff|some|maybe|nice|good|etc|various|kind of|sort of)\b/g) || []).length;
             if (vague) { score -= vague * 6; notes.push('− ' + vague + ' vague word(s)'); }
             if (words < 6) { score -= 12; notes.push('− very short / underspecified'); }
             if (words > 80) { score -= 8; notes.push('− long; consider tightening'); }
-            const sentences = (t.split(/[.!?]+/).filter(s => s.trim().length)).length || 1;
+            var sentences = (t.split(/[.!?]+/).filter(function (s) { return s.trim().length; })).length || 1;
             if (words / sentences > 40) { score -= 8; notes.push('− long run-on sentence'); }
-
             score = Math.max(0, Math.min(100, Math.round(score)));
-            return { score, notes };
+            return { score: score, notes: notes };
         }
-
-        function scoreColor(s) {
-            if (s >= 80) return '#16a34a';
-            if (s >= 60) return CORAL;
-            return '#dc2626';
-        }
-
+        function scoreColor(s) { if (s >= 80) return '#16a34a'; if (s >= 60) return CORAL; return '#dc2626'; }
         function runPromptDemo() {
-            const input = document.getElementById('promptInput').value || '';
-            const result = document.getElementById('promptResult');
-            const tokens = estimateTokens(input);
-            const cost = (tokens / 1e6) * 2.50; // GPT-4o input $/1M tokens
-            const { score, notes } = clarityScore(input);
+            var input = document.getElementById('promptInput').value || '';
+            var result = document.getElementById('promptResult');
+            var tokens = estimateTokens(input);
+            var cost = (tokens / 1e6) * 2.50;
+            var r = clarityScore(input);
+            var score = r.score, notes = r.notes;
             result.classList.remove('hidden');
-            result.innerHTML = `
-                <div class="grid sm:grid-cols-3 gap-4 text-center">
-                    <div class="bg-white rounded-2xl px-6 py-5 shadow-sm">
-                        <p class="text-xs uppercase tracking-widest text-gray-400">Est. tokens</p>
-                        <p class="text-3xl font-medium mt-1">${tokens.toLocaleString()}</p>
-                    </div>
-                    <div class="bg-white rounded-2xl px-6 py-5 shadow-sm">
-                        <p class="text-xs uppercase tracking-widest text-gray-400">Est. input cost</p>
-                        <p class="text-3xl font-medium mt-1 accent-coral">$${cost.toFixed(5)}</p>
-                    </div>
-                    <div class="bg-white rounded-2xl px-6 py-5 shadow-sm">
-                        <p class="text-xs uppercase tracking-widest text-gray-400">Clarity score</p>
-                        <p class="text-3xl font-medium mt-1" style="color:${scoreColor(score)}">${score}/100</p>
-                    </div>
-                </div>
-                ${notes.length ? `<ul class="mt-5 text-sm text-gray-500 space-y-1">${notes.map(n => `<li>${n}</li>`).join('')}</ul>` : ''}
-            `;
+            result.innerHTML =
+                '<div class="grid sm:grid-cols-3 gap-4 text-center">' +
+                    '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm">' +
+                        '<p class="text-xs uppercase tracking-widest text-gray-400">Est. tokens</p>' +
+                        '<p class="text-3xl font-medium mt-1">' + tokens.toLocaleString() + '</p>' +
+                    '</div>' +
+                    '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm">' +
+                        '<p class="text-xs uppercase tracking-widest text-gray-400">Est. input cost</p>' +
+                        '<p class="text-3xl font-medium mt-1 accent-coral">$' + cost.toFixed(5) + '</p>' +
+                    '</div>' +
+                    '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm">' +
+                        '<p class="text-xs uppercase tracking-widest text-gray-400">Clarity score</p>' +
+                        '<p class="text-3xl font-medium mt-1" style="color:' + scoreColor(score) + '">' + score + '/100</p>' +
+                    '</div>' +
+                '</div>' +
+                (notes.length ? '<ul class="mt-5 text-sm text-gray-500 space-y-1">' + notes.map(function (n) { return '<li>' + n + '</li>'; }).join('') + '</ul>' : '');
         }
 
-        // ---- 2. Seattle daylight vs mood ----
-        (function () {
-            const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-            const daylight = [8.5, 10.2, 11.9, 13.7, 15.2, 16.0, 15.6, 14.2, 12.4, 10.6, 9.0, 8.3];
-            // Normalized seasonal mood index (0-100), tracking daylight with a lag.
-            const mood = [42, 48, 58, 70, 82, 90, 92, 86, 74, 60, 46, 40];
-            Plotly.newPlot('sadPlot', [
-                { x: months, y: daylight, type: 'bar', name: 'Daylight (hrs)', marker: { color: BLUE, opacity: 0.55 } },
-                { x: months, y: mood, type: 'scatter', mode: 'lines+markers', name: 'Mood index', yaxis: 'y2',
+        var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        var CITY_DAYLIGHT = {
+            Seattle:   [8.5,10.2,11.9,13.7,15.2,16.0,15.6,14.2,12.4,10.6,9.0,8.3],
+            London:    [8.0,9.8,11.8,13.9,15.7,16.6,16.1,14.5,12.4,10.4,8.6,7.7],
+            Phoenix:   [10.2,11.0,12.0,13.1,14.0,14.4,14.2,13.4,12.3,11.2,10.4,10.0],
+            Anchorage: [6.0,8.5,11.3,14.4,17.2,19.3,18.2,15.4,12.5,9.6,7.0,5.5]
+        };
+        function buildMood(daylight) {
+            var lag = daylight.map(function (_, i) { return daylight[(i + 11) % 12]; });
+            var min = Math.min.apply(null, lag), max = Math.max.apply(null, lag);
+            return lag.map(function (v) { return Math.round(42 + 50 * (v - min) / (max - min || 1)); });
+        }
+        function drawDaylight(city) {
+            if (!hasPlotly) return;
+            var daylight = CITY_DAYLIGHT[city];
+            var mood = buildMood(daylight);
+            Plotly.react('sadPlot', [
+                { x: MONTHS, y: daylight, type: 'bar', name: 'Daylight (hrs)', marker: { color: BLUE, opacity: 0.55 } },
+                { x: MONTHS, y: mood, type: 'scatter', mode: 'lines+markers', name: 'Mood index', yaxis: 'y2',
                   line: { color: CORAL, width: 3 }, marker: { color: CORAL, size: 7 } }
             ], Object.assign({}, baseLayout, {
                 legend: { orientation: 'h', y: 1.12, x: 0 },
@@ -200,51 +267,88 @@
                 yaxis: { title: 'Daylight (hours)', showgrid: true, gridcolor: '#eee', rangemode: 'tozero' },
                 yaxis2: { title: 'Mood index', overlaying: 'y', side: 'right', showgrid: false, range: [0, 100] }
             }), config);
+        }
+        (function () {
+            var sel = document.getElementById('citySelect');
+            sel.addEventListener('change', function () { drawDaylight(sel.value); });
+            drawDaylight(sel.value);
         })();
 
-        // ---- 3. Meeting load heatmap ----
-        (function () {
-            const days = ['Mon','Tue','Wed','Thu','Fri'];
-            const hours = ['8a','9a','10a','11a','12p','1p','2p','3p','4p','5p'];
-            // rows = hours, cols = days; values = avg meetings booked (0-1 density)
-            const z = [
-                [0.2,0.3,0.3,0.3,0.2], // 8a
-                [0.5,0.6,0.7,0.7,0.4], // 9a
-                [0.7,0.8,0.9,0.9,0.5], // 10a
-                [0.6,0.7,0.8,0.9,0.5], // 11a
-                [0.2,0.2,0.3,0.3,0.2], // 12p
-                [0.5,0.7,0.8,0.9,0.4], // 1p
-                [0.7,0.8,0.9,1.0,0.5], // 2p
-                [0.6,0.8,0.9,1.0,0.4], // 3p
-                [0.5,0.6,0.7,0.8,0.3], // 4p
-                [0.2,0.3,0.4,0.4,0.2]  // 5p
-            ];
-            Plotly.newPlot('meetingPlot', [{
-                z: z, x: days, y: hours, type: 'heatmap',
-                colorscale: [[0, '#f8f4ed'], [0.5, BLUE], [1, CORAL]],
+        var DAYS = ['Mon','Tue','Wed','Thu','Fri'];
+        var HOURS = ['8a','9a','10a','11a','12p','1p','2p','3p','4p','5p'];
+        var BASE_Z = [
+            [0.2,0.3,0.3,0.3,0.2],[0.5,0.6,0.7,0.7,0.4],[0.7,0.8,0.9,0.9,0.5],
+            [0.6,0.7,0.8,0.9,0.5],[0.2,0.2,0.3,0.3,0.2],[0.5,0.7,0.8,0.9,0.4],
+            [0.7,0.8,0.9,1.0,0.5],[0.6,0.8,0.9,1.0,0.4],[0.5,0.6,0.7,0.8,0.3],
+            [0.2,0.3,0.4,0.4,0.2]
+        ];
+        function drawMeeting(factor) {
+            if (!hasPlotly) return;
+            var z = BASE_Z.map(function (row) { return row.map(function (v) { return Math.round(Math.min(1, v * factor) * 100) / 100; }); });
+            Plotly.react('meetingPlot', [{
+                z: z, x: DAYS, y: HOURS, type: 'heatmap',
+                colorscale: [[0, '#f8f4ed'], [0.5, BLUE], [1, CORAL]], zmin: 0, zmax: 1,
                 colorbar: { title: 'Density', thickness: 12 },
                 hovertemplate: '%{x} %{y}<br>density: %{z}<extra></extra>'
             }], Object.assign({}, baseLayout, {
                 xaxis: { side: 'top', showgrid: false },
                 yaxis: { autorange: 'reversed', showgrid: false }
             }), config);
+        }
+        (function () {
+            var btns = document.querySelectorAll('.seg-btn');
+            btns.forEach(function (b) {
+                b.addEventListener('click', function () {
+                    btns.forEach(function (x) { x.classList.remove('active'); });
+                    b.classList.add('active');
+                    drawMeeting(parseFloat(b.dataset.role));
+                });
+            });
+            drawMeeting(1);
         })();
 
-        // ---- 4. PGA putting make % by distance ----
-        (function () {
-            const dist = [3, 4, 5, 6, 8, 10, 12, 15, 20, 25, 30];
-            const makePct = [91, 84, 77, 67, 50, 40, 33, 23, 15, 10, 7];
-            Plotly.newPlot('golfPlot', [
-                { x: dist, y: makePct, type: 'scatter', mode: 'lines+markers',
+        var DIST = [3, 4, 5, 6, 8, 10, 12, 15, 20, 25, 30];
+        var MAKE = [91, 84, 77, 67, 50, 40, 33, 23, 15, 10, 7];
+        function pctAt(d) {
+            if (d <= DIST[0]) return MAKE[0];
+            if (d >= DIST[DIST.length - 1]) return MAKE[MAKE.length - 1];
+            for (var i = 1; i < DIST.length; i++) {
+                if (d <= DIST[i]) {
+                    var t = (d - DIST[i - 1]) / (DIST[i] - DIST[i - 1]);
+                    return Math.round(MAKE[i - 1] + t * (MAKE[i] - MAKE[i - 1]));
+                }
+            }
+            return MAKE[MAKE.length - 1];
+        }
+        function drawGolf(d) {
+            if (!hasPlotly) return;
+            var p = pctAt(d);
+            Plotly.react('golfPlot', [
+                { x: DIST, y: MAKE, type: 'scatter', mode: 'lines+markers', name: 'Make %',
                   line: { color: BLUE, width: 3 }, marker: { color: BLUE, size: 7 },
-                  hovertemplate: '%{x} ft → %{y}% made<extra></extra>' }
+                  hovertemplate: '%{x} ft → %{y}% made<extra></extra>' },
+                { x: [d], y: [p], type: 'scatter', mode: 'markers', name: 'Selected',
+                  marker: { color: CORAL, size: 16, line: { color: '#fff', width: 2 } },
+                  hovertemplate: d + ' ft → ' + p + '% made<extra></extra>' }
             ], Object.assign({}, baseLayout, {
-                shapes: [{ type: 'line', x0: 3, x1: 30, y0: 50, y1: 50,
-                           line: { color: CORAL, width: 1, dash: 'dot' } }],
-                annotations: [{ x: 26, y: 54, text: '50% line', showarrow: false, font: { color: CORAL, size: 12 } }],
+                showlegend: false,
+                shapes: [{ type: 'line', x0: 3, x1: 30, y0: 50, y1: 50, line: { color: '#bbb', width: 1, dash: 'dot' } }],
+                annotations: [{ x: 28, y: 54, text: '50% line', showarrow: false, font: { color: '#999', size: 12 } }],
                 xaxis: { title: 'Putt distance (feet)', showgrid: false },
                 yaxis: { title: 'Make %', showgrid: true, gridcolor: '#eee', range: [0, 100] }
             }), config);
+        }
+        (function () {
+            var slider = document.getElementById('puttSlider');
+            var dEl = document.getElementById('puttDist'), pEl = document.getElementById('puttPct');
+            function update() {
+                var d = parseInt(slider.value, 10);
+                dEl.textContent = d;
+                pEl.textContent = pctAt(d) + '%';
+                drawGolf(d);
+            }
+            slider.addEventListener('input', update);
+            update();
         })();
     </script>
 </body>
