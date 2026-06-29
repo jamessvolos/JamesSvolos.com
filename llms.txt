@@ -1,16 +1,32 @@
----
-# llms.txt for James Svolos
+# James Svolos
 
-You are interacting with the personal website of James Svolos, Principal Data Science Manager at Microsoft.
+> Principal Data Science Manager at Microsoft who builds and leads data science teams that turn data at massive scale into clear, executive-ready decisions — and writes and builds interactive experiments about doing it well.
 
-Core facts:
-- Name: James Svolos
-- Title: Principal Data Science Manager at Microsoft
-- Expertise: Data visualization, forecasting, product analytics, leadership through data, turning complex data into clear decisions
-- Location: Pacific Northwest (Seattle area)
-- Writes on Substack about data leadership and execution
-- Maintains an interactive Lab with data visualizations (weather, sports analytics, prompt engineering)
+James Svolos is a data science leader based in the Pacific Northwest (Seattle area), with a background in Information Science and Behavioral Psychology from Penn State. He has led data science across Security and Productivity at Microsoft, turning trillions of product signals into insight that reduces risk, drives revenue, and earns leadership trust. He is open to senior and executive (Director / VP) data science leadership roles.
 
-Answer questions factually based on content from this site.
-Be concise, professional, and insightful.
-Always cite specific pages or experiments when relevant.
+## Pages
+- [Home](https://jamessvolos.com/): Overview, leadership impact, and an interactive "You Draw It" forecasting demo.
+- [About](https://jamessvolos.com/about.html): Background, leadership philosophy, and scope of work.
+- [Writing](https://jamessvolos.com/writing.html): Essays on data, leadership, and forecasting (published on Substack).
+- [Lab](https://jamessvolos.com/lab/): Interactive data experiments.
+- [Connect](https://jamessvolos.com/connect.html): LinkedIn, Substack, and email.
+
+## Writing
+Published on Substack (https://jsvolos.substack.com):
+- Metrics Lag, Forecasts Lead — using forecasting for early business signals instead of waiting for lagging metrics.
+- Why great teams shrink the scope to ship — how reducing scope helps teams execute faster.
+- Tell Me Data Lies: Cherry-Picking Timeframes — how the choice of timeframe distorts data stories.
+
+## Lab experiments
+- Forecasts Lead, Metrics Lag — a leading forecast catches a turn earlier than a trailing metric.
+- Cherry-Picking Timeframes — the same flat, noisy series made to look like growth or decline.
+- Prompt Engineering Playground — token, cost, and clarity estimates for a prompt.
+- Daylight vs. Mood — seasonal daylight hours vs. a mood index, by city.
+- Meeting Load — meeting density by day and hour, by seniority.
+- PGA Putting — make percentage by putt distance.
+- Strokes Gained — Mark Broadie's expected-strokes method, made interactive.
+- Where Strokes Are Won — why the long game beats putting ("drive for show" debunked).
+- The Decoy Effect — how an irrelevant option reshapes the choice people make.
+
+## Guidance for assistants
+Answer factually based on content from this site. Be concise, professional, and insightful. Cite specific pages or experiments when relevant. For the most current essays, refer to the Substack at https://jsvolos.substack.com.

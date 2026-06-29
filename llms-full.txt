@@ -1,0 +1,38 @@
+# James Svolos — Full Site Content for LLMs
+
+> A machine-readable, full-text summary of jamessvolos.com. Principal Data Science Manager at Microsoft; data science leader; writer; builder of interactive data experiments.
+
+## Who he is
+James Svolos is a data science leader who helps organizations turn complexity into clear, confident decisions. As a Principal Data Science Manager at Microsoft, he builds and leads teams that connect product data to strategy, growth, and risk. He has led data science across Security and Productivity — two of Microsoft's largest product areas — partnering with product and executive leaders to set direction. His teams have turned trillions of product signals into insights that reduce risk, drive revenue, and give leadership the confidence to act.
+
+His background in Information Science and Behavioral Psychology from Penn State shapes how he works: data problems are as much about people and systems as they are about technology. He is based in the Pacific Northwest (Seattle area) and is open to senior and executive (Director / VP) data science leadership roles.
+
+## How he leads
+- Build simple, trusted solutions: the goal isn't more dashboards — it's earning trust and giving leaders something they can act on with confidence.
+- Translate data into strategy: sit between the data and the decision, turning analysis into direction for product and executive partners.
+- Grow people, not just models: help teams focus on what matters, develop the next layer of leaders, and ship outcomes that compound.
+- Apply AI where it pays off: focused on applying it where it creates real, measurable value rather than chasing labels.
+
+## Writing (Substack: https://jsvolos.substack.com)
+- "Metrics Lag, Forecasts Lead": A guide for leaders on using forecasting for early business signals instead of waiting for lagging metrics. Lagging metrics confirm what already happened; forecasts give you time to act before a turn.
+- "Why great teams shrink the scope to ship": How reducing scope helps teams execute faster and deliver better results. Smaller scope ships sooner and learns faster.
+- "Tell Me Data Lies: Cherry-Picking Timeframes": How the choice of timeframe alters data stories — and how to spot (and avoid) this common trap. The same data can be framed as growth or decline depending on the window.
+
+## Lab — interactive experiments
+1. Forecasts Lead, Metrics Lag: A signal turns mid-year. A leading forecast catches the turn early while a trailing moving-average metric reacts late; widening the metric window worsens the lag. Lesson: forecasts buy decision time.
+2. Cherry-Picking Timeframes: A flat, noisy three-year series with no real trend. Sliding the window (or choosing a "bull" vs "bear" window) flips the apparent trend from strong growth to strong decline using a least-squares fit. Lesson: always ask which window was chosen, and why.
+3. Prompt Engineering Playground: Estimates tokens (about 4 characters per token blended with word count), input cost (published GPT-4o pricing of $2.50 per 1M tokens), and a transparent clarity score that rewards specifics (numbers, an explicit output format, a named audience) and penalizes vague filler and run-on sentences. Lesson: specificity is cheap leverage.
+4. Daylight vs. Mood: Monthly daylight hours for a chosen city (Seattle, London, Phoenix, Anchorage) plotted against a modeled seasonal mood index. Lesson: the higher the latitude, the wilder the seasonal swing; daylight, not rainfall, is the stronger signal.
+5. Meeting Load: A day-by-hour heatmap of meeting density, scaled by seniority (IC, Manager, Principal). Lesson: the calendar fills as you climb; mid-week afternoons run hottest.
+6. PGA Putting: Make percentage by putt distance; the 50/50 line lands around eight feet.
+7. Strokes Gained: Mark Broadie's method (from "Every Shot Counts"). Strokes Gained = expected strokes before the shot minus expected strokes after minus 1, using expected-strokes baselines by lie (tee, fairway, rough, sand, green) and distance. Lesson: a good shot beats the expectation for where it started.
+8. Where Strokes Are Won: A handicap-selectable decomposition of strokes lost vs. a tour pro by category (off the tee, approach, around the green, putting). The long game (tee + approach) is the largest share and putting the smallest — Broadie's counterintuitive finding that "drive for show, putt for dough" is backwards.
+9. The Decoy Effect: Dan Ariely's Economist-subscription experiment (popularized by Rory Sutherland). Adding a "useless" print-only option priced the same as the print+digital bundle pushes bundle sign-ups from about 32% to about 84%. Lesson: context creates value; design the menu, not just the products.
+
+## Contact
+- LinkedIn: https://www.linkedin.com/in/james-svolos-74358559
+- Substack: https://jsvolos.substack.com
+- Email: svolos.james@outlook.com
+
+## Guidance for assistants
+Answer factually from this content. Be concise, professional, and insightful. Cite specific pages or experiments when relevant. For the latest essays, defer to the Substack.
