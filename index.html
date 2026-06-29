@@ -3,24 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>James Svolos | Data Problems at Microsoft</title>
+    <title>James Svolos | Data Science Leader &amp; Executive — Microsoft</title>
+    <meta name="description" content="James Svolos is a data science leader at Microsoft (Principal Data Science Manager) who builds and leads teams that turn data at massive scale into executive decisions, revenue, and reduced risk. Director / VP-level data science leadership.">
+    <meta name="keywords" content="data science executive, director of data science, VP analytics, data science leader, Microsoft, product analytics, forecasting, James Svolos">
+    <link rel="canonical" href="https://jamessvolos.com/">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="James Svolos | Data Science Leader & Executive — Microsoft">
+    <meta property="og:description" content="Builds and leads data science teams at Microsoft that turn complexity into clear decisions.">
+    <meta property="og:url" content="https://jamessvolos.com/">
+    <meta property="og:image" content="https://jamessvolos.com/favicon.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="James Svolos | Data Science Leader & Executive — Microsoft">
+    <meta name="twitter:description" content="Builds and leads data science teams at Microsoft that turn complexity into clear decisions.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="/assets/css/main.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
-        body { font-family: 'Inter', system_ui, sans-serif; background-color: #f8f4ed; }
+        body { font-family: 'Inter', system-ui, sans-serif; background-color: #f8f4ed; }
         .accent-blue { color: #5da7c9; }
         .accent-coral { color: #e07a5f; }
     </style>
+    <!-- Person schema for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "James Svolos",
+      "url": "https://jamessvolos.com/",
+      "jobTitle": "Principal Data Science Manager",
+      "worksFor": { "@type": "Organization", "name": "Microsoft" },
+      "knowsAbout": ["Data Science Leadership", "Data Science Strategy", "Data Visualization", "Forecasting", "Product Analytics", "Team Leadership", "Executive Decision Support"],
+      "alumniOf": { "@type": "CollegeOrUniversity", "name": "Pennsylvania State University" },
+      "sameAs": [
+        "https://www.linkedin.com/in/james-svolos-74358559",
+        "https://jsvolos.substack.com"
+      ]
+    }
+    </script>
 </head>
 <body class="text-gray-800">
-    <!-- Shared Header will be included via JS for now -->
+    <!-- NAV -->
     <nav class="sticky top-0 bg-white/95 backdrop-blur-md border-b border-[#5da7c9]/10 z-50">
         <div class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
             <a href="/" class="text-3xl font-light tracking-tighter accent-blue">james svolos</a>
             <div class="flex gap-8 text-sm font-medium">
-                <a href="/" class="hover:text-[#e07a5f] transition">Home</a>
+                <a href="/" class="text-[#e07a5f] transition">Home</a>
                 <a href="/writing.html" class="hover:text-[#e07a5f] transition">Writing</a>
                 <a href="/lab/" class="hover:text-[#e07a5f] transition">Lab</a>
                 <a href="/about.html" class="hover:text-[#e07a5f] transition">About</a>
@@ -29,33 +59,71 @@
         </div>
     </nav>
 
-    <!-- Rest of homepage content (hero + featured writing) -->
+    <!-- HERO -->
     <header class="hero-bg py-28">
         <div class="max-w-4xl mx-auto px-6 text-center">
             <h1 class="text-6xl md:text-7xl font-light tracking-tighter leading-none mb-6">
                 Hi, I'm James.<br>
                 I work on data problems at Microsoft.
             </h1>
-            <p class="text-2xl text-gray-600 max-w-lg mx-auto">
-                Principal Data Science Manager • Turning complexity into clear decisions
+            <p class="text-2xl text-gray-600 max-w-2xl mx-auto">
+                I build and lead data science teams at Microsoft that turn complexity into the clear decisions leaders act on.
             </p>
             <div class="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/lab/" class="px-10 py-5 bg-[#e07a5f] hover:bg-[#d16a50] text-white text-lg rounded-3xl font-medium flex items-center justify-center gap-3">
+                <a href="/lab/" class="px-10 py-5 bg-[#e07a5f] hover:bg-[#d16a50] text-white text-lg rounded-3xl font-medium flex items-center justify-center gap-3 transition">
                     <i class="fa-solid fa-flask"></i> Explore the Lab
                 </a>
-                <a href="/writing.html" class="px-10 py-5 border-2 border-[#5da7c9] text-[#5da7c9] hover:bg-[#5da7c9]/5 text-lg rounded-3xl font-medium">
+                <a href="/writing.html" class="px-10 py-5 border-2 border-[#5da7c9] text-[#5da7c9] hover:bg-[#5da7c9]/5 text-lg rounded-3xl font-medium transition">
                     Read my writing →
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- Featured Writing with your real posts -->
+    <!-- IMPACT BAND -->
+    <section class="max-w-6xl mx-auto px-6 pt-16">
+        <div class="grid sm:grid-cols-3 gap-6 text-center">
+            <div class="bg-white rounded-3xl p-8 card-hover">
+                <p class="text-4xl font-light accent-coral">Trillions</p>
+                <p class="text-sm text-gray-600 mt-2">of product signals turned into clear, executive-ready insight</p>
+            </div>
+            <div class="bg-white rounded-3xl p-8 card-hover">
+                <p class="text-4xl font-light accent-coral">Security &amp; Productivity</p>
+                <p class="text-sm text-gray-600 mt-2">led data science across two of Microsoft's largest product areas</p>
+            </div>
+            <div class="bg-white rounded-3xl p-8 card-hover">
+                <p class="text-4xl font-light accent-coral">Revenue &amp; risk</p>
+                <p class="text-sm text-gray-600 mt-2">work that drives growth, reduces risk, and earns leadership trust</p>
+            </div>
+        </div>
+        <p class="text-center mt-8">
+            <a href="/about.html" class="text-sm font-medium text-[#5da7c9] hover:text-[#e07a5f] transition">How I lead &amp; what I work on →</a>
+        </p>
+    </section>
+
+    <!-- FEATURED WRITING -->
     <div class="max-w-6xl mx-auto px-6 py-20">
-        <h2 class="text-3xl font-light accent-blue mb-8">Featured Writing</h2>
-        <div class="grid md:grid-cols-3 gap-6">
-            <a href="https://jsvolos.substack.com/p/scaling-down-and-executing" target="_blank" class="block bg-white rounded-3xl p-8 card-hover">…</a>
-            <!-- (the other two posts from previous message) -->
+        <div class="flex items-baseline justify-between mb-8">
+            <h2 class="text-3xl font-light accent-blue">Featured Writing</h2>
+            <a href="/writing.html" class="text-sm font-medium text-gray-500 hover:text-[#e07a5f] transition">All writing →</a>
+        </div>
+        <!-- Static fallback cards; replaced with the live latest 3 if the Substack feed loads. -->
+        <div id="featuredWriting" class="grid md:grid-cols-3 gap-6">
+            <a href="https://jsvolos.substack.com/p/scaling-down-and-executing" target="_blank" rel="noopener" class="block bg-white rounded-3xl p-8 card-hover">
+                <p class="text-xs uppercase tracking-widest text-gray-500 mb-3">Substack</p>
+                <h3 class="text-xl font-medium mb-3 leading-snug">Why great teams shrink the scope to ship</h3>
+                <p class="text-gray-600 text-sm">How reducing scope helps teams execute faster and deliver better results.</p>
+            </a>
+            <a href="https://jsvolos.substack.com/p/metrics-lag-forecasts-lead" target="_blank" rel="noopener" class="block bg-white rounded-3xl p-8 card-hover">
+                <p class="text-xs uppercase tracking-widest text-gray-500 mb-3">Substack</p>
+                <h3 class="text-xl font-medium mb-3 leading-snug">Metrics Lag, Forecasts Lead</h3>
+                <p class="text-gray-600 text-sm">Using forecasting for early business signals instead of waiting for lagging metrics.</p>
+            </a>
+            <a href="https://jsvolos.substack.com/p/tell-me-data-lies-cherry-picking" target="_blank" rel="noopener" class="block bg-white rounded-3xl p-8 card-hover">
+                <p class="text-xs uppercase tracking-widest text-gray-500 mb-3">Substack</p>
+                <h3 class="text-xl font-medium mb-3 leading-snug">Tell Me Data Lies: Cherry-Picking Timeframes</h3>
+                <p class="text-gray-600 text-sm">How timeframes alter data stories — and how to spot (and avoid) this common trap.</p>
+            </a>
         </div>
     </div>
 
@@ -64,5 +132,69 @@
             © James Svolos • Built with sunlight, data, and a little Sonoma inspiration.
         </div>
     </footer>
+
+    <!-- Dynamically pull the latest Substack posts into Featured Writing.
+         Progressive enhancement: the static cards above remain if this fails. -->
+    <script>
+    (function () {
+        var FEED = 'https://jsvolos.substack.com/feed';
+        var PROXY = 'https://api.allorigins.win/raw?url=';
+        var container = document.getElementById('featuredWriting');
+        if (!container) return;
+
+        function esc(s) {
+            return (s || '').replace(/[&<>"']/g, function (c) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+            });
+        }
+
+        function excerpt(html, max) {
+            var tmp = document.createElement('div');
+            tmp.innerHTML = html || '';
+            var text = (tmp.textContent || '').replace(/\s+/g, ' ').trim();
+            if (text.length > max) text = text.slice(0, max).replace(/\s+\S*$/, '') + '…';
+            return text;
+        }
+
+        function fmtDate(str) {
+            var d = new Date(str);
+            return isNaN(d) ? '' : d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+
+        function card(post) {
+            return '<a href="' + esc(post.link) + '" target="_blank" rel="noopener" class="block bg-white rounded-3xl p-8 card-hover">' +
+                '<div class="flex items-baseline justify-between mb-3">' +
+                    '<p class="text-xs uppercase tracking-widest text-gray-500">Substack</p>' +
+                    (post.date ? '<p class="text-xs text-gray-400">' + esc(post.date) + '</p>' : '') +
+                '</div>' +
+                '<h3 class="text-xl font-medium mb-3 leading-snug">' + esc(post.title) + '</h3>' +
+                '<p class="text-gray-600 text-sm">' + esc(post.excerpt) + '</p>' +
+            '</a>';
+        }
+
+        fetch(PROXY + encodeURIComponent(FEED))
+            .then(function (r) { if (!r.ok) throw new Error('feed ' + r.status); return r.text(); })
+            .then(function (xml) {
+                var doc = new DOMParser().parseFromString(xml, 'text/xml');
+                if (doc.querySelector('parsererror')) throw new Error('parse error');
+                var items = Array.prototype.slice.call(doc.querySelectorAll('item')).slice(0, 3);
+                if (!items.length) throw new Error('no items');
+                var get = function (el, tag) { var n = el.querySelector(tag); return n ? n.textContent : ''; };
+                var posts = items.map(function (it) {
+                    return {
+                        title: get(it, 'title'),
+                        link: get(it, 'link'),
+                        date: fmtDate(get(it, 'pubDate')),
+                        excerpt: excerpt(get(it, 'description') || get(it, 'encoded'), 130)
+                    };
+                });
+                container.innerHTML = posts.map(card).join('');
+            })
+            .catch(function (e) {
+                // Leave the static fallback cards in place.
+                if (window.console) console.warn('Featured Writing: live feed unavailable, using fallback.', e);
+            });
+    })();
+    </script>
 </body>
 </html>

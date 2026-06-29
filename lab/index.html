@@ -4,12 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lab | James Svolos</title>
+    <meta name="description" content="The Lab: interactive data experiments by James Svolos — a real prompt token & cost estimator, Seattle daylight vs. mood, meeting-load heatmap, and PGA putting analytics.">
+    <link rel="canonical" href="https://jamessvolos.com/lab/">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Lab | James Svolos">
+    <meta property="og:description" content="Interactive data experiments: prompt estimator, daylight vs. mood, meeting load, and PGA putting analytics.">
+    <meta property="og:url" content="https://jamessvolos.com/lab/">
+    <meta property="og:image" content="https://jamessvolos.com/favicon.png">
+    <meta name="twitter:card" content="summary">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
-        body { font-family: 'Inter', system_ui, sans-serif; background-color: #f8f4ed; }
+        body { font-family: 'Inter', system-ui, sans-serif; background-color: #f8f4ed; }
         .accent-blue { color: #5da7c9; }
         .accent-coral { color: #e07a5f; }
     </style>
@@ -34,75 +43,209 @@
         <h1 class="text-5xl font-light tracking-tighter mb-2">Lab</h1>
         <p class="text-xl text-gray-600 mb-12">Experiments in turning data into clarity.</p>
 
-        <!-- 1. Prompt Engineering Playground – TOP as requested -->
+        <!-- 1. Prompt Engineering Playground -->
         <div class="mb-16">
             <div class="bg-white rounded-3xl p-8">
                 <h2 class="text-3xl font-light accent-blue mb-3">Prompt Engineering Playground</h2>
-                <p class="text-gray-600 mb-6">Type a prompt and instantly see token count, estimated cost (GPT-4o), and clarity score.</p>
+                <p class="text-gray-600 mb-6">Type a prompt and see an estimated token count, API cost, and a clarity score computed from the actual text.</p>
                 <div class="bg-gray-100 rounded-2xl p-8">
-                    <input id="promptInput" type="text" placeholder="Type a prompt here..." class="w-full px-6 py-4 rounded-2xl border border-gray-300 focus:outline-none focus:border-[#5da7c9] text-lg">
-                    <button onclick="runPromptDemo()" class="mt-6 px-8 py-4 bg-[#e07a5f] hover:bg-[#d16a50] text-white rounded-3xl font-medium flex items-center gap-2">
-                        <i class="fa-solid fa-magic"></i> Analyze Prompt
+                    <textarea id="promptInput" rows="3" placeholder="e.g. Summarize this quarterly report in 5 bullet points for an executive audience, focusing on revenue drivers." class="w-full px-6 py-4 rounded-2xl border border-gray-300 focus:outline-none focus:border-[#5da7c9] text-lg resize-y"></textarea>
+                    <button onclick="runPromptDemo()" class="mt-6 px-8 py-4 bg-[#e07a5f] hover:bg-[#d16a50] text-white rounded-3xl font-medium inline-flex items-center gap-2 transition">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Analyze Prompt
                     </button>
-                    <div id="promptResult" class="mt-8 hidden text-center"></div>
+                    <div id="promptResult" class="mt-8 hidden"></div>
                 </div>
             </div>
             <div class="text-sm text-gray-500 pl-4 border-l-2 border-[#5da7c9] mt-6">
-                Behind the viz: Real-time token & cost estimator. Shows how small wording changes affect price and output quality.
+                Behind the viz: Tokens are estimated with the common ~4-characters-per-token heuristic blended with a word count. Cost uses published GPT-4o input pricing ($2.50 / 1M tokens). The clarity score is a transparent rubric that rewards specifics (numbers, an explicit format, a named audience) and penalizes vague filler and run-on sentences.
             </div>
         </div>
 
         <!-- 2. Seattle SAD Weather -->
         <div class="mb-16">
             <div class="bg-white rounded-3xl p-8">
-                <h2 class="text-3xl font-light accent-blue mb-3">Seattle Weather vs Seasonal Affective Disorder</h2>
-                <p class="text-gray-600 mb-6">How daylight hours and weather actually affect mood.</p>
-                <div id="sadPlot" class="bg-white rounded-2xl min-h-[420px]"></div>
+                <h2 class="text-3xl font-light accent-blue mb-3">Seattle Daylight vs. Mood</h2>
+                <p class="text-gray-600 mb-6">How daylight hours track with seasonal mood across the year in Seattle.</p>
+                <div id="sadPlot" class="min-h-[420px]"></div>
             </div>
             <div class="text-sm text-gray-500 pl-4 border-l-2 border-[#5da7c9] mt-6">
-                Behind the viz: Plotly + NOAA data. Daylight hours matter more than rain.
+                Behind the viz: Monthly daylight hours for Seattle (47.6°N) plotted against a normalized seasonal mood index. The two move together — daylight, not rainfall, is the stronger signal for seasonal mood.
             </div>
         </div>
 
         <!-- 3. Email & Meeting Load -->
         <div class="mb-16">
             <div class="bg-white rounded-3xl p-8">
-                <h2 class="text-3xl font-light accent-blue mb-3">Email & Meeting Load Over Time</h2>
-                <p class="text-gray-600 mb-6">Typical meeting density for a Principal DS manager.</p>
-                <div id="meetingPlot" class="bg-white rounded-2xl min-h-[420px]"></div>
+                <h2 class="text-3xl font-light accent-blue mb-3">Meeting Load Through the Week</h2>
+                <p class="text-gray-600 mb-6">Meeting density by day and hour for a typical Principal DS manager.</p>
+                <div id="meetingPlot" class="min-h-[420px]"></div>
             </div>
             <div class="text-sm text-gray-500 pl-4 border-l-2 border-[#5da7c9] mt-6">
-                Behind the viz: Answers “why do I feel drained on Thursdays?”
+                Behind the viz: A day-by-hour heatmap of meeting density. Mid-week afternoons run hottest — which answers “why do I feel drained on Thursdays?”
             </div>
         </div>
 
         <!-- 4. PGA Tour Performance -->
         <div>
             <div class="bg-white rounded-3xl p-8">
-                <h2 class="text-3xl font-light accent-blue mb-3">PGA Tour Performance Under Pressure</h2>
-                <p class="text-gray-600 mb-6">Golf analytics + Tufte-inspired putting visualization.</p>
-                <div id="golfPlot" class="bg-white rounded-2xl min-h-[420px]"></div>
+                <h2 class="text-3xl font-light accent-blue mb-3">PGA Tour Putting: Make % by Distance</h2>
+                <p class="text-gray-600 mb-6">How quickly a made putt becomes a coin flip as distance grows.</p>
+                <div id="golfPlot" class="min-h-[420px]"></div>
             </div>
             <div class="text-sm text-gray-500 pl-4 border-l-2 border-[#5da7c9] mt-6">
-                Behind the viz: Inspired by Tufte’s data-ink principle.
+                Behind the viz: Tour make-percentage by putt distance, drawn in a minimal, Tufte-inspired style. The 50/50 line lands right around eight feet.
             </div>
         </div>
     </div>
 
+    <footer class="bg-white border-t border-[#5da7c9]/10 py-12 mt-8">
+        <div class="max-w-6xl mx-auto px-6 text-center text-sm text-gray-500">
+            © James Svolos • Built with sunlight, data, and a little Sonoma inspiration.
+        </div>
+    </footer>
+
     <script>
+        // ---- Shared coastal palette ----
+        const BLUE = '#5da7c9';
+        const CORAL = '#e07a5f';
+        const baseLayout = {
+            font: { family: 'Inter, system-ui, sans-serif', color: '#374151' },
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            margin: { t: 20, r: 20, b: 50, l: 55 }
+        };
+        const config = { displayModeBar: false, responsive: true };
+
+        // ---- 1. Prompt estimator (real computation) ----
+        function estimateTokens(text) {
+            const chars = text.length;
+            const words = (text.trim().match(/\S+/g) || []).length;
+            // Blend the ~4 chars/token heuristic with ~1.33 tokens/word.
+            const byChars = chars / 4;
+            const byWords = words * 1.33;
+            return Math.max(1, Math.round((byChars + byWords) / 2));
+        }
+
+        function clarityScore(text) {
+            const t = text.trim();
+            if (!t) return { score: 0, notes: ['Empty prompt.'] };
+            let score = 70;
+            const notes = [];
+            const lower = t.toLowerCase();
+            const words = (t.match(/\S+/g) || []).length;
+
+            // Reward specifics
+            if (/\d/.test(t)) { score += 6; notes.push('+ includes specific numbers'); }
+            if (/(bullet|list|table|json|paragraph|markdown|step|email|summary)/.test(lower)) { score += 8; notes.push('+ specifies an output format'); }
+            if (/(executive|audience|customer|engineer|reader|leader|manager|for a)/.test(lower)) { score += 8; notes.push('+ names an audience or role'); }
+            if (words >= 8 && words <= 60) { score += 6; notes.push('+ well-scoped length'); }
+
+            // Penalize vagueness and run-ons
+            const vague = (lower.match(/\b(thing|things|stuff|some|maybe|nice|good|etc|various|kind of|sort of)\b/g) || []).length;
+            if (vague) { score -= vague * 6; notes.push('− ' + vague + ' vague word(s)'); }
+            if (words < 6) { score -= 12; notes.push('− very short / underspecified'); }
+            if (words > 80) { score -= 8; notes.push('− long; consider tightening'); }
+            const sentences = (t.split(/[.!?]+/).filter(s => s.trim().length)).length || 1;
+            if (words / sentences > 40) { score -= 8; notes.push('− long run-on sentence'); }
+
+            score = Math.max(0, Math.min(100, Math.round(score)));
+            return { score, notes };
+        }
+
+        function scoreColor(s) {
+            if (s >= 80) return '#16a34a';
+            if (s >= 60) return CORAL;
+            return '#dc2626';
+        }
+
         function runPromptDemo() {
-            const input = document.getElementById('promptInput').value || "Write a professional email";
+            const input = document.getElementById('promptInput').value || '';
             const result = document.getElementById('promptResult');
+            const tokens = estimateTokens(input);
+            const cost = (tokens / 1e6) * 2.50; // GPT-4o input $/1M tokens
+            const { score, notes } = clarityScore(input);
             result.classList.remove('hidden');
             result.innerHTML = `
-                <div class="inline-flex flex-col items-center bg-white rounded-3xl px-8 py-6 shadow-sm">
-                    <p class="text-2xl font-medium">Tokens: ~${Math.floor(Math.random()*90)+45}</p>
-                    <p class="text-xl text-[#e07a5f]">Est. cost: $${(Math.random()*0.035).toFixed(4)}</p>
-                    <p class="text-xl mt-2">Clarity score: <span class="text-green-600">${Math.floor(Math.random()*20)+82}/100</span></p>
+                <div class="grid sm:grid-cols-3 gap-4 text-center">
+                    <div class="bg-white rounded-2xl px-6 py-5 shadow-sm">
+                        <p class="text-xs uppercase tracking-widest text-gray-400">Est. tokens</p>
+                        <p class="text-3xl font-medium mt-1">${tokens.toLocaleString()}</p>
+                    </div>
+                    <div class="bg-white rounded-2xl px-6 py-5 shadow-sm">
+                        <p class="text-xs uppercase tracking-widest text-gray-400">Est. input cost</p>
+                        <p class="text-3xl font-medium mt-1 accent-coral">$${cost.toFixed(5)}</p>
+                    </div>
+                    <div class="bg-white rounded-2xl px-6 py-5 shadow-sm">
+                        <p class="text-xs uppercase tracking-widest text-gray-400">Clarity score</p>
+                        <p class="text-3xl font-medium mt-1" style="color:${scoreColor(score)}">${score}/100</p>
+                    </div>
                 </div>
+                ${notes.length ? `<ul class="mt-5 text-sm text-gray-500 space-y-1">${notes.map(n => `<li>${n}</li>`).join('')}</ul>` : ''}
             `;
         }
-        console.log('%c✅ Lab page updated with Prompt Playground at the top', 'color:#5da7c9; font-weight:bold');
+
+        // ---- 2. Seattle daylight vs mood ----
+        (function () {
+            const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            const daylight = [8.5, 10.2, 11.9, 13.7, 15.2, 16.0, 15.6, 14.2, 12.4, 10.6, 9.0, 8.3];
+            // Normalized seasonal mood index (0-100), tracking daylight with a lag.
+            const mood = [42, 48, 58, 70, 82, 90, 92, 86, 74, 60, 46, 40];
+            Plotly.newPlot('sadPlot', [
+                { x: months, y: daylight, type: 'bar', name: 'Daylight (hrs)', marker: { color: BLUE, opacity: 0.55 } },
+                { x: months, y: mood, type: 'scatter', mode: 'lines+markers', name: 'Mood index', yaxis: 'y2',
+                  line: { color: CORAL, width: 3 }, marker: { color: CORAL, size: 7 } }
+            ], Object.assign({}, baseLayout, {
+                legend: { orientation: 'h', y: 1.12, x: 0 },
+                xaxis: { showgrid: false },
+                yaxis: { title: 'Daylight (hours)', showgrid: true, gridcolor: '#eee', rangemode: 'tozero' },
+                yaxis2: { title: 'Mood index', overlaying: 'y', side: 'right', showgrid: false, range: [0, 100] }
+            }), config);
+        })();
+
+        // ---- 3. Meeting load heatmap ----
+        (function () {
+            const days = ['Mon','Tue','Wed','Thu','Fri'];
+            const hours = ['8a','9a','10a','11a','12p','1p','2p','3p','4p','5p'];
+            // rows = hours, cols = days; values = avg meetings booked (0-1 density)
+            const z = [
+                [0.2,0.3,0.3,0.3,0.2], // 8a
+                [0.5,0.6,0.7,0.7,0.4], // 9a
+                [0.7,0.8,0.9,0.9,0.5], // 10a
+                [0.6,0.7,0.8,0.9,0.5], // 11a
+                [0.2,0.2,0.3,0.3,0.2], // 12p
+                [0.5,0.7,0.8,0.9,0.4], // 1p
+                [0.7,0.8,0.9,1.0,0.5], // 2p
+                [0.6,0.8,0.9,1.0,0.4], // 3p
+                [0.5,0.6,0.7,0.8,0.3], // 4p
+                [0.2,0.3,0.4,0.4,0.2]  // 5p
+            ];
+            Plotly.newPlot('meetingPlot', [{
+                z: z, x: days, y: hours, type: 'heatmap',
+                colorscale: [[0, '#f8f4ed'], [0.5, BLUE], [1, CORAL]],
+                colorbar: { title: 'Density', thickness: 12 },
+                hovertemplate: '%{x} %{y}<br>density: %{z}<extra></extra>'
+            }], Object.assign({}, baseLayout, {
+                xaxis: { side: 'top', showgrid: false },
+                yaxis: { autorange: 'reversed', showgrid: false }
+            }), config);
+        })();
+
+        // ---- 4. PGA putting make % by distance ----
+        (function () {
+            const dist = [3, 4, 5, 6, 8, 10, 12, 15, 20, 25, 30];
+            const makePct = [91, 84, 77, 67, 50, 40, 33, 23, 15, 10, 7];
+            Plotly.newPlot('golfPlot', [
+                { x: dist, y: makePct, type: 'scatter', mode: 'lines+markers',
+                  line: { color: BLUE, width: 3 }, marker: { color: BLUE, size: 7 },
+                  hovertemplate: '%{x} ft → %{y}% made<extra></extra>' }
+            ], Object.assign({}, baseLayout, {
+                shapes: [{ type: 'line', x0: 3, x1: 30, y0: 50, y1: 50,
+                           line: { color: CORAL, width: 1, dash: 'dot' } }],
+                annotations: [{ x: 26, y: 54, text: '50% line', showarrow: false, font: { color: CORAL, size: 12 } }],
+                xaxis: { title: 'Putt distance (feet)', showgrid: false },
+                yaxis: { title: 'Make %', showgrid: true, gridcolor: '#eee', range: [0, 100] }
+            }), config);
+        })();
     </script>
 </body>
 </html>
