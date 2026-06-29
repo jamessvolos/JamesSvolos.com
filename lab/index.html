@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lab | James Svolos</title>
-    <meta name="description" content="The Lab: interactive data experiments by James Svolos — forecasts vs. lagging metrics, cherry-picked timeframes, a prompt estimator, daylight vs. mood, meeting load, and PGA putting analytics.">
+    <meta name="description" content="The Lab: interactive data experiments by James Svolos — forecasts vs. lagging metrics, cherry-picked timeframes, a prompt estimator, daylight vs. mood, meeting load, PGA putting, and Strokes Gained.">
     <link rel="canonical" href="https://jamessvolos.com/lab/">
     <link rel="icon" type="image/png" href="/favicon.png">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Lab | James Svolos">
-    <meta property="og:description" content="Interactive data experiments: forecasts vs. metrics, cherry-picking, prompt estimator, daylight, meeting load, putting.">
+    <meta property="og:description" content="Interactive data experiments: forecasts vs. metrics, cherry-picking, prompt estimator, daylight, meeting load, putting, Strokes Gained.">
     <meta property="og:url" content="https://jamessvolos.com/lab/">
     <meta property="og:image" content="https://jamessvolos.com/favicon.png">
     <meta name="twitter:card" content="summary">
@@ -27,6 +27,7 @@
         @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
         html { scroll-behavior: smooth; }
         .seg-btn.active { background:#5da7c9; color:#fff; }
+        .hcp-btn.active { background:#5da7c9; color:#fff; }
     </style>
 </head>
 <body class="text-gray-800">
@@ -50,7 +51,7 @@
         <p class="text-xl text-gray-600 mb-10">Interactive experiments in turning data into clarity. Click in — every one responds to you.</p>
 
         <!-- GALLERY NAV -->
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-16">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
             <a href="#forecast" class="bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
                 <i class="fa-solid fa-chart-line text-2xl accent-coral"></i>
                 <p class="font-medium mt-3 leading-snug">Forecasts Lead</p>
@@ -80,6 +81,16 @@
                 <i class="fa-solid fa-golf-ball-tee text-2xl accent-coral"></i>
                 <p class="font-medium mt-3 leading-snug">PGA Putting</p>
                 <p class="text-xs text-gray-500 mt-1">drag the distance</p>
+            </a>
+            <a href="#sg" class="bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
+                <i class="fa-solid fa-flag text-2xl accent-coral"></i>
+                <p class="font-medium mt-3 leading-snug">Strokes Gained</p>
+                <p class="text-xs text-gray-500 mt-1">build a shot</p>
+            </a>
+            <a href="#sgwon" class="bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
+                <i class="fa-solid fa-ranking-star text-2xl accent-coral"></i>
+                <p class="font-medium mt-3 leading-snug">Where Strokes Are Won</p>
+                <p class="text-xs text-gray-500 mt-1">drive for show?</p>
             </a>
         </div>
 
@@ -204,6 +215,70 @@
             <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
                 <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> the 50/50 line lands right around eight feet — beyond that, pros are managing risk, not expecting makes.</p>
                 <p class="text-xs text-gray-500 mt-2">Behind the viz: Tour make-percentage by putt distance, drawn in a minimal, Tufte-inspired style.</p>
+            </div>
+        </div>
+
+        <!-- 7. Strokes Gained explainer -->
+        <div id="sg" class="exp reveal mb-16 mt-16">
+            <div class="bg-white rounded-3xl p-8">
+                <h2 class="text-3xl font-light accent-blue mb-3">Strokes Gained: build a shot</h2>
+                <p class="text-gray-600 mb-6">Every spot on the course has an expected number of strokes to hole out. Strokes Gained = (expected before) − (expected after) − 1. Build a shot and see what it was worth.</p>
+                <div class="bg-gray-100 rounded-2xl p-6 grid md:grid-cols-2 gap-6">
+                    <div>
+                        <p class="text-sm font-medium mb-2">Ball starts</p>
+                        <select id="sgFromLie" class="w-full px-3 py-2 rounded-xl border border-gray-300 mb-3 focus:outline-none focus:border-[#5da7c9]">
+                            <option value="tee">Tee</option>
+                            <option value="fairway" selected>Fairway</option>
+                            <option value="rough">Rough</option>
+                            <option value="sand">Sand</option>
+                            <option value="green">Green</option>
+                        </select>
+                        <label class="text-sm text-gray-600">Distance <span id="sgFromUnit">(yards)</span>
+                            <input id="sgFromDist" type="number" value="150" class="w-full px-3 py-2 rounded-xl border border-gray-300 mt-1 focus:outline-none focus:border-[#5da7c9]">
+                        </label>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium mb-2">Ball ends</p>
+                        <select id="sgToLie" class="w-full px-3 py-2 rounded-xl border border-gray-300 mb-3 focus:outline-none focus:border-[#5da7c9]">
+                            <option value="holed">Holed</option>
+                            <option value="green" selected>Green</option>
+                            <option value="fairway">Fairway</option>
+                            <option value="rough">Rough</option>
+                            <option value="sand">Sand</option>
+                        </select>
+                        <label class="text-sm text-gray-600">Distance <span id="sgToUnit">(feet)</span>
+                            <input id="sgToDist" type="number" value="8" class="w-full px-3 py-2 rounded-xl border border-gray-300 mt-1 focus:outline-none focus:border-[#5da7c9]">
+                        </label>
+                    </div>
+                </div>
+                <button onclick="runSG()" class="mt-6 px-8 py-4 bg-[#e07a5f] hover:bg-[#d16a50] text-white rounded-3xl font-medium inline-flex items-center gap-2 transition"><i class="fa-solid fa-flag"></i> Compute Strokes Gained</button>
+                <div id="sgResult" class="mt-8 hidden grid sm:grid-cols-3 gap-4 text-center"></div>
+            </div>
+            <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
+                <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> a “good” shot is simply one that beats the expectation for where you started — that's all Strokes Gained measures.</p>
+                <p class="text-xs text-gray-500 mt-2">Behind the viz: expected-strokes baselines approximated from Mark Broadie's PGA Tour data (“Every Shot Counts”). Green distances are in feet; all others in yards.</p>
+            </div>
+        </div>
+
+        <!-- 8. Where strokes are won -->
+        <div id="sgwon" class="exp reveal">
+            <div class="bg-white rounded-3xl p-8">
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-3">
+                    <h2 class="text-3xl font-light accent-blue">Where Strokes Are Won</h2>
+                    <div class="inline-flex rounded-xl border border-gray-300 overflow-hidden text-sm">
+                        <button class="hcp-btn px-4 py-2 active" data-hcp="Scratch">Scratch</button>
+                        <button class="hcp-btn px-4 py-2 border-l border-gray-300" data-hcp="5">5 hcp</button>
+                        <button class="hcp-btn px-4 py-2 border-l border-gray-300" data-hcp="10">10 hcp</button>
+                        <button class="hcp-btn px-4 py-2 border-l border-gray-300" data-hcp="15">15 hcp</button>
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-6">“Drive for show, putt for dough”? Pick a handicap and see where the strokes versus a tour pro actually go.</p>
+                <div id="sgwonPlot" class="min-h-[420px]"></div>
+                <p id="sgwonNote" class="text-center text-lg font-medium mt-4"></p>
+            </div>
+            <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
+                <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> the long game — off the tee plus approach — is where most strokes are lost; putting is the smallest slice. Broadie's most famous, most counterintuitive finding.</p>
+                <p class="text-xs text-gray-500 mt-2">Behind the viz: strokes lost per round vs. a tour pro by category; figures approximated from Mark Broadie's “Every Shot Counts.”</p>
             </div>
         </div>
     </div>
@@ -465,6 +540,76 @@
             function update() { var d = parseInt(slider.value, 10); dEl.textContent = d; pEl.textContent = pctAt(d) + '%'; drawGolf(d); }
             slider.addEventListener('input', update);
             update();
+        })();
+
+        // ---- 7. Strokes Gained explainer ----
+        var SG_TABLES = {
+            green:   [[3,1.04],[4,1.13],[5,1.23],[6,1.34],[8,1.50],[10,1.61],[15,1.78],[20,1.87],[25,1.94],[30,1.98],[40,2.06],[50,2.13],[60,2.21],[90,2.40]],
+            fairway: [[20,2.40],[40,2.60],[60,2.65],[80,2.75],[100,2.80],[120,2.85],[140,2.91],[160,2.98],[180,3.08],[200,3.19],[220,3.32],[240,3.45],[260,3.55],[280,3.65],[300,3.71]],
+            rough:   [[20,2.59],[40,2.78],[60,2.91],[80,3.02],[100,3.08],[120,3.15],[140,3.23],[160,3.31],[180,3.42],[200,3.53],[220,3.66],[240,3.79]],
+            sand:    [[10,2.53],[20,2.65],[30,2.82],[40,2.92],[60,3.06],[80,3.16],[100,3.25]],
+            tee:     [[300,3.74],[350,3.85],[400,3.99],[450,4.10],[500,4.55],[550,4.71]]
+        };
+        function interpTable(tbl, x) {
+            if (x <= tbl[0][0]) return tbl[0][1];
+            if (x >= tbl[tbl.length - 1][0]) return tbl[tbl.length - 1][1];
+            for (var i = 1; i < tbl.length; i++) {
+                if (x <= tbl[i][0]) { var t = (x - tbl[i - 1][0]) / (tbl[i][0] - tbl[i - 1][0]); return tbl[i - 1][1] + t * (tbl[i][1] - tbl[i - 1][1]); }
+            }
+            return tbl[tbl.length - 1][1];
+        }
+        function sgBaseline(lie, dist) { if (lie === 'holed') return 0; var tbl = SG_TABLES[lie]; return tbl ? interpTable(tbl, dist) : 0; }
+        function sgUnit(lie) { return lie === 'green' ? '(feet)' : '(yards)'; }
+        function runSG() {
+            var fl = document.getElementById('sgFromLie').value, fd = parseFloat(document.getElementById('sgFromDist').value) || 0;
+            var tl = document.getElementById('sgToLie').value, td = parseFloat(document.getElementById('sgToDist').value) || 0;
+            var bBefore = sgBaseline(fl, fd), bAfter = tl === 'holed' ? 0 : sgBaseline(tl, td);
+            var sg = bBefore - bAfter - 1;
+            var color = sg >= 0 ? '#16a34a' : '#dc2626';
+            var el = document.getElementById('sgResult');
+            el.classList.remove('hidden');
+            el.innerHTML =
+                '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-400">Expected before</p><p class="text-3xl font-medium mt-1">' + bBefore.toFixed(2) + '</p></div>' +
+                '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-400">Expected after</p><p class="text-3xl font-medium mt-1">' + bAfter.toFixed(2) + '</p></div>' +
+                '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-400">Strokes gained</p><p class="text-3xl font-medium mt-1" style="color:' + color + '">' + (sg >= 0 ? '+' : '') + sg.toFixed(2) + '</p></div>';
+        }
+        (function () {
+            var fl = document.getElementById('sgFromLie'), tl = document.getElementById('sgToLie');
+            var fu = document.getElementById('sgFromUnit'), tu = document.getElementById('sgToUnit'), td = document.getElementById('sgToDist');
+            fl.addEventListener('change', function () { fu.textContent = sgUnit(fl.value); });
+            tl.addEventListener('change', function () {
+                if (tl.value === 'holed') { tu.textContent = ''; td.disabled = true; td.value = ''; }
+                else { td.disabled = false; if (!td.value) td.value = tl.value === 'green' ? '8' : '30'; tu.textContent = sgUnit(tl.value); }
+            });
+        })();
+
+        // ---- 8. Where strokes are won ----
+        var SG_CATS = ['Off the tee', 'Approach', 'Around green', 'Putting'];
+        var SG_DECOMP = { 'Scratch': [0.6, 1.4, 0.6, 0.9], '5': [1.4, 3.2, 1.3, 1.6], '10': [2.3, 5.0, 2.2, 2.5], '15': [3.2, 7.0, 3.2, 3.4] };
+        function drawSgWon(hcp) {
+            var d = SG_DECOMP[hcp], total = d[0] + d[1] + d[2] + d[3];
+            var longPct = Math.round((d[0] + d[1]) / total * 100), puttPct = Math.round(d[3] / total * 100);
+            document.getElementById('sgwonNote').innerHTML = 'Long game (tee + approach) = <span class="accent-coral">' + longPct + '%</span> of the gap. Putting is just ' + puttPct + '%.';
+            if (!hasPlotly) return;
+            Plotly.react('sgwonPlot', [{
+                x: SG_CATS, y: d, type: 'bar',
+                marker: { color: [BLUE, CORAL, BLUE, '#cbd5e1'] },
+                hovertemplate: '%{x}<br>%{y} strokes lost / round<extra></extra>'
+            }], Object.assign({}, baseLayout, {
+                xaxis: { showgrid: false },
+                yaxis: { title: 'Strokes lost per round vs. tour pro', showgrid: true, gridcolor: '#eee', rangemode: 'tozero' }
+            }), config);
+        }
+        (function () {
+            var btns = document.querySelectorAll('.hcp-btn');
+            btns.forEach(function (b) {
+                b.addEventListener('click', function () {
+                    btns.forEach(function (x) { x.classList.remove('active'); });
+                    b.classList.add('active');
+                    drawSgWon(b.dataset.hcp);
+                });
+            });
+            drawSgWon('Scratch');
         })();
     </script>
 </body>
