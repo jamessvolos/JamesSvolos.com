@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>James Svolos | Data Science Leader &amp; Executive — Microsoft</title>
+    <title>James Svolos | Data Science Leader — Microsoft</title>
     <meta name="description" content="James Svolos is a data science leader at Microsoft (Principal Data Science Manager) who builds and leads teams that turn data at massive scale into executive decisions, revenue, and reduced risk. Director / VP-level data science leadership.">
     <meta name="keywords" content="data science executive, director of data science, VP analytics, data science leader, Microsoft, product analytics, forecasting, James Svolos">
     <link rel="canonical" href="https://jamessvolos.com/">
     <link rel="icon" type="image/png" href="/favicon.png">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="James Svolos | Data Science Leader & Executive — Microsoft">
+    <meta property="og:title" content="James Svolos | Data Science Leader — Microsoft">
     <meta property="og:description" content="Builds and leads data science teams at Microsoft that turn complexity into clear decisions.">
     <meta property="og:url" content="https://jamessvolos.com/">
     <meta property="og:image" content="https://jamessvolos.com/favicon.png">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="James Svolos | Data Science Leader & Executive — Microsoft">
+    <meta name="twitter:title" content="James Svolos | Data Science Leader — Microsoft">
     <meta name="twitter:description" content="Builds and leads data science teams at Microsoft that turn complexity into clear decisions.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -234,7 +234,7 @@
                 ctx.beginPath();
                 for (var x = 0; x <= w; x += 6) {
                     var p = x / w;
-                    var y = h * (0.55 + L.amp * Math.sin(p * Math.PI * L.freq + t * L.sp * 60 + L.off) + 0.04 * Math.sin(p * Math.PI * 5 + t * 0.02 * 60));
+                    var y = h * (0.55 + L.amp * Math.sin(p * Math.PI * L.freq + t * L.sp + L.off) + 0.04 * Math.sin(p * Math.PI * 5 + t * 0.006));
                     if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
                 }
                 ctx.strokeStyle = L.color; ctx.lineWidth = 2; ctx.stroke();
