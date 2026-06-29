@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lab | James Svolos</title>
-    <meta name="description" content="The Lab: interactive data experiments by James Svolos — a real prompt token & cost estimator, daylight vs. mood across cities, a meeting-load heatmap, and PGA putting analytics.">
+    <meta name="description" content="The Lab: interactive data experiments by James Svolos — forecasts vs. lagging metrics, cherry-picked timeframes, a prompt estimator, daylight vs. mood, meeting load, and PGA putting analytics.">
     <link rel="canonical" href="https://jamessvolos.com/lab/">
     <link rel="icon" type="image/png" href="/favicon.png">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Lab | James Svolos">
-    <meta property="og:description" content="Interactive data experiments: prompt estimator, daylight vs. mood, meeting load, and PGA putting analytics.">
+    <meta property="og:description" content="Interactive data experiments: forecasts vs. metrics, cherry-picking, prompt estimator, daylight, meeting load, putting.">
     <meta property="og:url" content="https://jamessvolos.com/lab/">
     <meta property="og:image" content="https://jamessvolos.com/favicon.png">
     <meta name="twitter:card" content="summary">
@@ -24,9 +24,7 @@
         .exp { scroll-margin-top: 100px; }
         .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
         .reveal.reveal-in { opacity: 1; transform: none; }
-        @media (prefers-reduced-motion: reduce) {
-            .reveal { opacity: 1; transform: none; transition: none; }
-        }
+        @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
         html { scroll-behavior: smooth; }
         .seg-btn.active { background:#5da7c9; color:#fff; }
     </style>
@@ -52,30 +50,84 @@
         <p class="text-xl text-gray-600 mb-10">Interactive experiments in turning data into clarity. Click in — every one responds to you.</p>
 
         <!-- GALLERY NAV -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
-            <a href="#prompt" class="group bg-white rounded-3xl p-6 card-tile transition hover:-translate-y-1 hover:shadow-xl">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-16">
+            <a href="#forecast" class="bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
+                <i class="fa-solid fa-chart-line text-2xl accent-coral"></i>
+                <p class="font-medium mt-3 leading-snug">Forecasts Lead</p>
+                <p class="text-xs text-gray-500 mt-1">vs. lagging metrics</p>
+            </a>
+            <a href="#cherry" class="bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
+                <i class="fa-solid fa-crop-simple text-2xl accent-coral"></i>
+                <p class="font-medium mt-3 leading-snug">Cherry-Picking</p>
+                <p class="text-xs text-gray-500 mt-1">timeframes lie</p>
+            </a>
+            <a href="#prompt" class="bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
                 <i class="fa-solid fa-wand-magic-sparkles text-2xl accent-coral"></i>
                 <p class="font-medium mt-3 leading-snug">Prompt Playground</p>
                 <p class="text-xs text-gray-500 mt-1">tokens · cost · clarity</p>
             </a>
-            <a href="#daylight" class="group bg-white rounded-3xl p-6 card-tile transition hover:-translate-y-1 hover:shadow-xl">
+            <a href="#daylight" class="bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
                 <i class="fa-solid fa-sun text-2xl accent-coral"></i>
                 <p class="font-medium mt-3 leading-snug">Daylight vs. Mood</p>
                 <p class="text-xs text-gray-500 mt-1">pick a city</p>
             </a>
-            <a href="#meeting" class="group bg-white rounded-3xl p-6 card-tile transition hover:-translate-y-1 hover:shadow-xl">
+            <a href="#meeting" class="bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
                 <i class="fa-solid fa-calendar-week text-2xl accent-coral"></i>
                 <p class="font-medium mt-3 leading-snug">Meeting Load</p>
                 <p class="text-xs text-gray-500 mt-1">by seniority</p>
             </a>
-            <a href="#golf" class="group bg-white rounded-3xl p-6 card-tile transition hover:-translate-y-1 hover:shadow-xl">
+            <a href="#golf" class="bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
                 <i class="fa-solid fa-golf-ball-tee text-2xl accent-coral"></i>
                 <p class="font-medium mt-3 leading-snug">PGA Putting</p>
                 <p class="text-xs text-gray-500 mt-1">drag the distance</p>
             </a>
         </div>
 
-        <!-- 1. Prompt Engineering Playground -->
+        <!-- 1. Forecasts Lead vs Metrics Lag -->
+        <div id="forecast" class="exp reveal mb-16">
+            <div class="bg-white rounded-3xl p-8">
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-3">
+                    <h2 class="text-3xl font-light accent-blue">Forecasts Lead, Metrics Lag</h2>
+                    <label class="text-sm text-gray-600">Metric window:
+                        <input id="lagSlider" type="range" min="2" max="6" value="3" step="1" class="align-middle ml-2 accent-[#e07a5f]">
+                        <span id="lagVal" class="font-medium">3</span> mo
+                    </label>
+                </div>
+                <p class="text-gray-600 mb-6">A signal turns mid-year. Watch a forecast catch the turn early while a trailing metric reacts late — widen the metric window to make the lag worse.</p>
+                <div id="forecastPlot" class="min-h-[420px]"></div>
+                <p id="forecastNote" class="text-sm text-gray-600 mt-4"></p>
+            </div>
+            <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
+                <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> the more you steer by lagging metrics, the later you see the turn. Forecasts buy you decision time.</p>
+                <p class="text-xs text-gray-500 mt-2">Behind the viz: the metric is a trailing moving average of the true signal; the forecast is a leading indicator. Companion to my essay “Metrics Lag, Forecasts Lead.”</p>
+            </div>
+        </div>
+
+        <!-- 2. Cherry-Picking Timeframes -->
+        <div id="cherry" class="exp reveal mb-16">
+            <div class="bg-white rounded-3xl p-8">
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-3">
+                    <h2 class="text-3xl font-light accent-blue">Cherry-Picking Timeframes</h2>
+                    <div class="flex gap-2">
+                        <button id="bullBtn" class="px-4 py-2 rounded-xl border border-gray-300 text-sm hover:border-[#5da7c9]">Make the bull case</button>
+                        <button id="bearBtn" class="px-4 py-2 rounded-xl border border-gray-300 text-sm hover:border-[#5da7c9]">Make the bear case</button>
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-5">The same flat, noisy series — three years of it. Slide a window (or hit a button) and watch the “trend” flip from up to down.</p>
+                <div class="bg-gray-100 rounded-2xl p-5 mb-6 grid sm:grid-cols-2 gap-4 text-sm">
+                    <label>Start month: <input id="startSlider" type="range" min="0" max="30" value="0" step="1" class="w-full accent-[#e07a5f]"></label>
+                    <label>Window length: <input id="winSlider" type="range" min="4" max="36" value="36" step="1" class="w-full accent-[#e07a5f]"></label>
+                </div>
+                <p id="cherryVerdict" class="text-center text-lg font-medium mb-4"></p>
+                <div id="cherryPlot" class="min-h-[420px]"></div>
+            </div>
+            <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
+                <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> the same data can “prove” growth or decline — always ask what window someone chose, and why.</p>
+                <p class="text-xs text-gray-500 mt-2">Behind the viz: a fixed series with no real trend; the line is a least-squares fit over the selected window. Companion to my essay “Tell Me Data Lies.”</p>
+            </div>
+        </div>
+
+        <!-- 3. Prompt Engineering Playground -->
         <div id="prompt" class="exp reveal mb-16">
             <div class="bg-white rounded-3xl p-8">
                 <h2 class="text-3xl font-light accent-blue mb-3">Prompt Engineering Playground</h2>
@@ -90,11 +142,11 @@
             </div>
             <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
                 <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> small wording changes move cost and clarity more than people expect — specificity is cheap leverage.</p>
-                <p class="text-xs text-gray-500 mt-2">Behind the viz: tokens use the ~4-chars-per-token heuristic blended with word count; cost uses published GPT-4o input pricing ($2.50 / 1M tokens); clarity is a transparent rubric rewarding specifics and penalizing vague filler.</p>
+                <p class="text-xs text-gray-500 mt-2">Behind the viz: tokens use the ~4-chars-per-token heuristic blended with word count; cost uses published GPT-4o input pricing ($2.50 / 1M tokens); clarity is a transparent rubric.</p>
             </div>
         </div>
 
-        <!-- 2. Daylight vs Mood -->
+        <!-- 4. Daylight vs Mood -->
         <div id="daylight" class="exp reveal mb-16">
             <div class="bg-white rounded-3xl p-8">
                 <div class="flex flex-wrap items-center justify-between gap-4 mb-3">
@@ -117,7 +169,7 @@
             </div>
         </div>
 
-        <!-- 3. Meeting Load -->
+        <!-- 5. Meeting Load -->
         <div id="meeting" class="exp reveal mb-16">
             <div class="bg-white rounded-3xl p-8">
                 <div class="flex flex-wrap items-center justify-between gap-4 mb-3">
@@ -137,7 +189,7 @@
             </div>
         </div>
 
-        <!-- 4. PGA Tour Performance -->
+        <!-- 6. PGA Tour Performance -->
         <div id="golf" class="exp reveal">
             <div class="bg-white rounded-3xl p-8">
                 <h2 class="text-3xl font-light accent-blue mb-3">PGA Tour Putting: Make % by Distance</h2>
@@ -157,9 +209,7 @@
     </div>
 
     <footer class="bg-white border-t border-[#5da7c9]/10 py-12 mt-8">
-        <div class="max-w-6xl mx-auto px-6 text-center text-sm text-gray-500">
-            © James Svolos
-        </div>
+        <div class="max-w-6xl mx-auto px-6 text-center text-sm text-gray-500">© James Svolos</div>
     </footer>
 
     <script>
@@ -168,79 +218,154 @@
         var hasPlotly = typeof Plotly !== 'undefined';
         var baseLayout = {
             font: { family: 'Inter, system-ui, sans-serif', color: '#374151' },
-            paper_bgcolor: 'rgba(0,0,0,0)',
-            plot_bgcolor: 'rgba(0,0,0,0)',
+            paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
             margin: { t: 20, r: 20, b: 50, l: 55 }
         };
         var config = { displayModeBar: false, responsive: true };
 
         (function () {
             var els = document.querySelectorAll('.reveal');
-            if (!('IntersectionObserver' in window)) {
-                els.forEach(function (e) { e.classList.add('reveal-in'); });
-                return;
-            }
+            if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('reveal-in'); }); return; }
             var io = new IntersectionObserver(function (entries) {
-                entries.forEach(function (en) {
-                    if (en.isIntersecting) { en.target.classList.add('reveal-in'); io.unobserve(en.target); }
-                });
+                entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('reveal-in'); io.unobserve(en.target); } });
             }, { threshold: 0.12 });
             els.forEach(function (e) { io.observe(e); });
         })();
 
+        // ---- 1. Forecasts Lead vs Metrics Lag ----
+        var FC_MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        var FC_TRUTH = [50, 56, 64, 72, 80, 86, 88, 84, 76, 66, 56, 48];
+        function trailing(arr, w) {
+            return arr.map(function (_, i) {
+                var s = 0, n = 0;
+                for (var k = Math.max(0, i - w + 1); k <= i; k++) { s += arr[k]; n++; }
+                return Math.round(s / n);
+            });
+        }
+        function leading(arr) { return arr.map(function (_, i) { return arr[Math.min(arr.length - 1, i + 1)]; }); }
+        function argmax(arr) { var bi = 0; for (var i = 1; i < arr.length; i++) if (arr[i] > arr[bi]) bi = i; return bi; }
+        function drawForecast(w) {
+            var metric = trailing(FC_TRUTH, w);
+            var forecast = leading(FC_TRUTH);
+            var note = document.getElementById('forecastNote');
+            var fPeak = FC_MONTHS[argmax(forecast)], tPeak = FC_MONTHS[argmax(FC_TRUTH)], mPeak = FC_MONTHS[argmax(metric)];
+            note.innerHTML = 'Peak detected — forecast: <span class="font-medium accent-blue">' + fPeak +
+                '</span> · reality: <span class="font-medium">' + tPeak +
+                '</span> · lagging metric: <span class="font-medium accent-coral">' + mPeak + '</span>.';
+            if (!hasPlotly) return;
+            Plotly.react('forecastPlot', [
+                { x: FC_MONTHS, y: FC_TRUTH, type: 'scatter', mode: 'lines', name: 'Reality', line: { color: '#cbd5e1', width: 3 } },
+                { x: FC_MONTHS, y: forecast, type: 'scatter', mode: 'lines+markers', name: 'Forecast (leads)', line: { color: BLUE, width: 3 }, marker: { color: BLUE, size: 6 } },
+                { x: FC_MONTHS, y: metric, type: 'scatter', mode: 'lines+markers', name: 'Metric (lags)', line: { color: CORAL, width: 3 }, marker: { color: CORAL, size: 6 } }
+            ], Object.assign({}, baseLayout, {
+                legend: { orientation: 'h', y: 1.15, x: 0 },
+                xaxis: { showgrid: false },
+                yaxis: { title: 'Signal', showgrid: true, gridcolor: '#eee' }
+            }), config);
+        }
+        (function () {
+            var s = document.getElementById('lagSlider'), v = document.getElementById('lagVal');
+            s.addEventListener('input', function () { v.textContent = s.value; drawForecast(parseInt(s.value, 10)); });
+            drawForecast(parseInt(s.value, 10));
+        })();
+
+        // ---- 2. Cherry-Picking Timeframes ----
+        var CH = [98,103,96,108,101,94,110,99,92,105,113,97,90,104,112,100,95,108,116,103,96,89,101,110,118,105,97,92,99,107,114,102,95,100,108,99];
+        function linfit(ys) {
+            var n = ys.length, sx = 0, sy = 0, sxx = 0, sxy = 0;
+            for (var i = 0; i < n; i++) { sx += i; sy += ys[i]; sxx += i * i; sxy += i * ys[i]; }
+            var slope = (n * sxy - sx * sy) / (n * sxx - sx * sx || 1);
+            var intercept = (sy - slope * sx) / n;
+            return { slope: slope, intercept: intercept, n: n };
+        }
+        function windowPct(start, len) {
+            var ys = CH.slice(start, start + len);
+            var f = linfit(ys);
+            var first = f.intercept, last = f.intercept + f.slope * (f.n - 1);
+            return (last - first) / Math.abs(first || 1) * 100;
+        }
+        function drawCherry(start, len) {
+            start = Math.max(0, Math.min(start, CH.length - 4));
+            len = Math.max(4, Math.min(len, CH.length - start));
+            var xAll = CH.map(function (_, i) { return i + 1; });
+            var winX = [], winY = [];
+            for (var i = start; i < start + len; i++) { winX.push(i + 1); winY.push(CH[i]); }
+            var f = linfit(CH.slice(start, start + len));
+            var fx = [start + 1, start + len], fy = [f.intercept, f.intercept + f.slope * (len - 1)];
+            var pct = windowPct(start, len);
+            var up = pct >= 0;
+            var verdict = document.getElementById('cherryVerdict');
+            verdict.innerHTML = 'This timeframe shows <span style="color:' + (up ? '#16a34a' : '#dc2626') + '">' +
+                (up ? '▲ +' : '▼ ') + pct.toFixed(1) + '%</span> — ' + (up ? 'growth' : 'decline');
+            if (!hasPlotly) return;
+            Plotly.react('cherryPlot', [
+                { x: xAll, y: CH, type: 'scatter', mode: 'lines', name: 'Full series', line: { color: '#cbd5e1', width: 2 } },
+                { x: winX, y: winY, type: 'scatter', mode: 'lines+markers', name: 'Selected window', line: { color: BLUE, width: 2 }, marker: { color: BLUE, size: 5 } },
+                { x: fx, y: fy, type: 'scatter', mode: 'lines', name: 'Trend', line: { color: up ? '#16a34a' : '#dc2626', width: 3, dash: 'dot' } }
+            ], Object.assign({}, baseLayout, {
+                showlegend: false,
+                xaxis: { title: 'Month', showgrid: false },
+                yaxis: { title: 'Value', showgrid: true, gridcolor: '#eee' },
+                shapes: [{ type: 'rect', x0: start + 0.5, x1: start + len + 0.5, y0: 80, y1: 122, fillcolor: 'rgba(93,167,201,0.08)', line: { width: 0 } }]
+            }), config);
+        }
+        function bestWindow(wantMax) {
+            var best = null;
+            for (var len = 6; len <= CH.length; len++) {
+                for (var st = 0; st + len <= CH.length; st++) {
+                    var pct = windowPct(st, len);
+                    if (!best || (wantMax ? pct > best.pct : pct < best.pct)) best = { st: st, len: len, pct: pct };
+                }
+            }
+            return best;
+        }
+        (function () {
+            var ss = document.getElementById('startSlider'), ws = document.getElementById('winSlider');
+            function sync() { drawCherry(parseInt(ss.value, 10), parseInt(ws.value, 10)); }
+            ss.addEventListener('input', sync);
+            ws.addEventListener('input', sync);
+            document.getElementById('bullBtn').addEventListener('click', function () { var b = bestWindow(true); ss.value = b.st; ws.value = b.len; sync(); });
+            document.getElementById('bearBtn').addEventListener('click', function () { var b = bestWindow(false); ss.value = b.st; ws.value = b.len; sync(); });
+            sync();
+        })();
+
+        // ---- 3. Prompt estimator ----
         function estimateTokens(text) {
-            var chars = text.length;
-            var words = (text.trim().match(/\S+/g) || []).length;
-            var byChars = chars / 4;
-            var byWords = words * 1.33;
-            return Math.max(1, Math.round((byChars + byWords) / 2));
+            var chars = text.length, words = (text.trim().match(/\S+/g) || []).length;
+            return Math.max(1, Math.round((chars / 4 + words * 1.33) / 2));
         }
         function clarityScore(text) {
             var t = text.trim();
             if (!t) return { score: 0, notes: ['Empty prompt.'] };
-            var score = 70; var notes = [];
-            var lower = t.toLowerCase();
-            var words = (t.match(/\S+/g) || []).length;
+            var score = 70, notes = [], lo = t.toLowerCase(), words = (t.match(/\S+/g) || []).length;
             if (/\d/.test(t)) { score += 6; notes.push('+ includes specific numbers'); }
-            if (/(bullet|list|table|json|paragraph|markdown|step|email|summary)/.test(lower)) { score += 8; notes.push('+ specifies an output format'); }
-            if (/(executive|audience|customer|engineer|reader|leader|manager|for a)/.test(lower)) { score += 8; notes.push('+ names an audience or role'); }
+            if (/(bullet|list|table|json|paragraph|markdown|step|email|summary)/.test(lo)) { score += 8; notes.push('+ specifies an output format'); }
+            if (/(executive|audience|customer|engineer|reader|leader|manager|for a)/.test(lo)) { score += 8; notes.push('+ names an audience or role'); }
             if (words >= 8 && words <= 60) { score += 6; notes.push('+ well-scoped length'); }
-            var vague = (lower.match(/\b(thing|things|stuff|some|maybe|nice|good|etc|various|kind of|sort of)\b/g) || []).length;
+            var vague = (lo.match(/\b(thing|things|stuff|some|maybe|nice|good|etc|various|kind of|sort of)\b/g) || []).length;
             if (vague) { score -= vague * 6; notes.push('− ' + vague + ' vague word(s)'); }
             if (words < 6) { score -= 12; notes.push('− very short / underspecified'); }
             if (words > 80) { score -= 8; notes.push('− long; consider tightening'); }
             var sentences = (t.split(/[.!?]+/).filter(function (s) { return s.trim().length; })).length || 1;
             if (words / sentences > 40) { score -= 8; notes.push('− long run-on sentence'); }
-            score = Math.max(0, Math.min(100, Math.round(score)));
-            return { score: score, notes: notes };
+            return { score: Math.max(0, Math.min(100, Math.round(score))), notes: notes };
         }
         function scoreColor(s) { if (s >= 80) return '#16a34a'; if (s >= 60) return CORAL; return '#dc2626'; }
         function runPromptDemo() {
             var input = document.getElementById('promptInput').value || '';
-            var result = document.getElementById('promptResult');
-            var tokens = estimateTokens(input);
-            var cost = (tokens / 1e6) * 2.50;
-            var r = clarityScore(input);
-            var score = r.score, notes = r.notes;
-            result.classList.remove('hidden');
-            result.innerHTML =
+            var tokens = estimateTokens(input), cost = (tokens / 1e6) * 2.50, r = clarityScore(input);
+            var el = document.getElementById('promptResult');
+            el.classList.remove('hidden');
+            el.innerHTML =
                 '<div class="grid sm:grid-cols-3 gap-4 text-center">' +
-                    '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm">' +
-                        '<p class="text-xs uppercase tracking-widest text-gray-400">Est. tokens</p>' +
-                        '<p class="text-3xl font-medium mt-1">' + tokens.toLocaleString() + '</p>' +
-                    '</div>' +
-                    '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm">' +
-                        '<p class="text-xs uppercase tracking-widest text-gray-400">Est. input cost</p>' +
-                        '<p class="text-3xl font-medium mt-1 accent-coral">$' + cost.toFixed(5) + '</p>' +
-                    '</div>' +
-                    '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm">' +
-                        '<p class="text-xs uppercase tracking-widest text-gray-400">Clarity score</p>' +
-                        '<p class="text-3xl font-medium mt-1" style="color:' + scoreColor(score) + '">' + score + '/100</p>' +
-                    '</div>' +
+                    '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-400">Est. tokens</p><p class="text-3xl font-medium mt-1">' + tokens.toLocaleString() + '</p></div>' +
+                    '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-400">Est. input cost</p><p class="text-3xl font-medium mt-1 accent-coral">$' + cost.toFixed(5) + '</p></div>' +
+                    '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-400">Clarity score</p><p class="text-3xl font-medium mt-1" style="color:' + scoreColor(r.score) + '">' + r.score + '/100</p></div>' +
                 '</div>' +
-                (notes.length ? '<ul class="mt-5 text-sm text-gray-500 space-y-1">' + notes.map(function (n) { return '<li>' + n + '</li>'; }).join('') + '</ul>' : '');
+                (r.notes.length ? '<ul class="mt-5 text-sm text-gray-500 space-y-1">' + r.notes.map(function (n) { return '<li>' + n + '</li>'; }).join('') + '</ul>' : '');
         }
 
+        // ---- 4. Daylight vs mood ----
         var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         var CITY_DAYLIGHT = {
             Seattle:   [8.5,10.2,11.9,13.7,15.2,16.0,15.6,14.2,12.4,10.6,9.0,8.3],
@@ -255,12 +380,10 @@
         }
         function drawDaylight(city) {
             if (!hasPlotly) return;
-            var daylight = CITY_DAYLIGHT[city];
-            var mood = buildMood(daylight);
+            var daylight = CITY_DAYLIGHT[city], mood = buildMood(daylight);
             Plotly.react('sadPlot', [
                 { x: MONTHS, y: daylight, type: 'bar', name: 'Daylight (hrs)', marker: { color: BLUE, opacity: 0.55 } },
-                { x: MONTHS, y: mood, type: 'scatter', mode: 'lines+markers', name: 'Mood index', yaxis: 'y2',
-                  line: { color: CORAL, width: 3 }, marker: { color: CORAL, size: 7 } }
+                { x: MONTHS, y: mood, type: 'scatter', mode: 'lines+markers', name: 'Mood index', yaxis: 'y2', line: { color: CORAL, width: 3 }, marker: { color: CORAL, size: 7 } }
             ], Object.assign({}, baseLayout, {
                 legend: { orientation: 'h', y: 1.12, x: 0 },
                 xaxis: { showgrid: false },
@@ -274,6 +397,7 @@
             drawDaylight(sel.value);
         })();
 
+        // ---- 5. Meeting load heatmap ----
         var DAYS = ['Mon','Tue','Wed','Thu','Fri'];
         var HOURS = ['8a','9a','10a','11a','12p','1p','2p','3p','4p','5p'];
         var BASE_Z = [
@@ -307,6 +431,7 @@
             drawMeeting(1);
         })();
 
+        // ---- 6. PGA putting ----
         var DIST = [3, 4, 5, 6, 8, 10, 12, 15, 20, 25, 30];
         var MAKE = [91, 84, 77, 67, 50, 40, 33, 23, 15, 10, 7];
         function pctAt(d) {
@@ -324,12 +449,8 @@
             if (!hasPlotly) return;
             var p = pctAt(d);
             Plotly.react('golfPlot', [
-                { x: DIST, y: MAKE, type: 'scatter', mode: 'lines+markers', name: 'Make %',
-                  line: { color: BLUE, width: 3 }, marker: { color: BLUE, size: 7 },
-                  hovertemplate: '%{x} ft → %{y}% made<extra></extra>' },
-                { x: [d], y: [p], type: 'scatter', mode: 'markers', name: 'Selected',
-                  marker: { color: CORAL, size: 16, line: { color: '#fff', width: 2 } },
-                  hovertemplate: d + ' ft → ' + p + '% made<extra></extra>' }
+                { x: DIST, y: MAKE, type: 'scatter', mode: 'lines+markers', name: 'Make %', line: { color: BLUE, width: 3 }, marker: { color: BLUE, size: 7 }, hovertemplate: '%{x} ft → %{y}% made<extra></extra>' },
+                { x: [d], y: [p], type: 'scatter', mode: 'markers', name: 'Selected', marker: { color: CORAL, size: 16, line: { color: '#fff', width: 2 } }, hovertemplate: d + ' ft → ' + p + '% made<extra></extra>' }
             ], Object.assign({}, baseLayout, {
                 showlegend: false,
                 shapes: [{ type: 'line', x0: 3, x1: 30, y0: 50, y1: 50, line: { color: '#bbb', width: 1, dash: 'dot' } }],
@@ -341,12 +462,7 @@
         (function () {
             var slider = document.getElementById('puttSlider');
             var dEl = document.getElementById('puttDist'), pEl = document.getElementById('puttPct');
-            function update() {
-                var d = parseInt(slider.value, 10);
-                dEl.textContent = d;
-                pEl.textContent = pctAt(d) + '%';
-                drawGolf(d);
-            }
+            function update() { var d = parseInt(slider.value, 10); dEl.textContent = d; pEl.textContent = pctAt(d) + '%'; drawGolf(d); }
             slider.addEventListener('input', update);
             update();
         })();
