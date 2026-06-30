@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body { font-family: 'Inter', system-ui, sans-serif; background-color: #f8f4ed; }
+}
+@layer components {
+  .accent-blue { color: #5da7c9; }
+  .accent-coral { color: #e07a5f; }
+  .hero-bg { background:
+      radial-gradient(900px 480px at 50% -10%, rgba(93,167,201,.18), transparent 70%),
+      radial-gradient(700px 420px at 90% 0%, rgba(224,122,95,.12), transparent 65%), #f8f4ed; }
+  .card-hover { transition: transform .25s ease, box-shadow .25s ease; box-shadow: 0 1px 2px rgba(17,24,39,.04); }
+  .card-hover:hover { transform: translateY(-4px); box-shadow: 0 18px 40px -18px rgba(93,167,201,.35); }
+}
