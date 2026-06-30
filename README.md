@@ -1,49 +1,47 @@
 # jamessvolos.com
 
-Personal site of **James Svolos** — Principal Data Science Manager at Microsoft.
-Writing, an interactive data **Lab**, and ways to connect. Live at
-**[jamessvolos.com](https://jamessvolos.com)**.
-
-## Stack
-- Static HTML hosted on **GitHub Pages** (custom domain via `CNAME`)
-- **Tailwind CSS** (CDN) + a little custom CSS in `assets/css/main.css`
-- **Plotly** for charts; vanilla JS for interactions (no framework)
-- Featured Writing pulls **live from Substack RSS** (via a CORS proxy) with a
-  static fallback so content is never empty
-- `.nojekyll` so files are served as-is
+Personal site for **James Svolos** — Principal Data Science Manager at Microsoft.
+Static HTML served by **GitHub Pages** from the `main` branch root (custom domain
+via `CNAME`, `.nojekyll` disables Jekyll processing).
 
 ## Structure
+
 ```
-index.html          Home — hero, impact band, "You Draw It", featured writing
-about.html          Background + leadership philosophy
-writing.html        Essays (dynamic from Substack, with fallback)
-connect.html        LinkedIn · Substack · email
-lab/index.html      Nine interactive data experiments
-about/ , connect/   Redirects to the .html canonical pages
-assets/css/main.css  Shared styles (hero gradient, card hover)
-robots.txt          Crawl directives (search + AI crawlers) + sitemap ref
-sitemap.xml         Page index for search engines
-llms.txt            Short machine-readable summary (llmstxt.org format)
-llms-full.txt       Full-text content dump for LLMs
-CNAME               Custom domain
+index.html          Home
+about.html          About — bio, timeline, philosophy
+writing.html        Writing ("The Dispatch") — live Substack feed
+lab/index.html      Lab — 12 interactive data experiments
+connect.html        Connect — direct channels
+assets/css/
+  site.css          Compiled, minified Tailwind + components (the only stylesheet)
+  tailwind.input.css  Source for the build (@tailwind layers + custom components)
+favicon.svg         Site icon (SVG; modern browsers)
+og-image.png        1200×630 social share card
+robots.txt · sitemap.xml · llms.txt · llms-full.txt   Discoverability (search + LLMs)
 ```
 
-## The Lab
-Interactive experiments, each with a one-line takeaway and a "behind the viz"
-note: Forecasts-Lead vs. Metrics-Lag, Cherry-Picking Timeframes, a Prompt
-Engineering Playground, Daylight vs. Mood, Meeting Load, PGA Putting, Mark
-Broadie's Strokes Gained suite, and the Decoy Effect.
+## Styling / build
 
-## Develop
-Serve over HTTP (the Substack feed needs `http://`, not `file://`):
+The site uses a **precompiled Tailwind stylesheet** (`assets/css/site.css`) rather
+than the Tailwind Play CDN — smaller payload, no runtime class generation, no FOUC.
+
+When you change markup/classes, regenerate the CSS:
+
+```bash
+npm install        # first time only (installs tailwindcss)
+npm run build:css  # rebuilds assets/css/site.css from the HTML it scans
+# or, while editing:
+npm run watch:css
 ```
-python3 -m http.server 8000   # then open http://localhost:8000
-```
+
+`tailwind.config.js` scans all `*.html` (including class names inside inline
+`<script>` strings), so dynamically-rendered cards keep their styles. Page-specific
+CSS (mastheads, canvases, skeletons) stays in each page's inline `<style>`.
+
+Fonts load via `<link>` (Google Fonts, Inter). Font Awesome is CDN-loaded.
+The Lab loads Plotly at the end of `<body>` so it doesn't block first paint.
 
 ## Deploy
-GitHub Pages serves the `main` branch — pushing to `main` publishes within ~1–2
-minutes. There is no build step on `main`.
 
-> An Eleventy + Tailwind build pipeline (single source of truth for the shared
-> header/footer, compiled production CSS, and a GitHub Actions deploy) is staged
-> on a feature branch; see that branch for activation steps.
+Commit to `main`; GitHub Pages publishes the root automatically. No CI build runs
+on deploy — `site.css` is built locally and committed.
