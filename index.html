@@ -31,10 +31,15 @@
         .accent-coral { color: #e07a5f; }
         .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
         .reveal.reveal-in { opacity: 1; transform: none; }
-        @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
-        .hero-wrap { position: relative; overflow: hidden; }
-        #heroCanvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .5; }
-        .hero-inner { position: relative; z-index: 1; }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+            #mastCanvas { display: none; }
+        }
+        /* editorial masthead */
+        .mast-wrap { position: relative; overflow: hidden; }
+        #mastCanvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .45; pointer-events: none; }
+        .mast-inner { position: relative; z-index: 1; }
+        .rule { height: 1px; background: linear-gradient(90deg, rgba(93,167,201,.5), rgba(224,122,95,.45), transparent); }
     </style>
     <script type="application/ld+json">
     {
@@ -76,22 +81,26 @@
         </div>
     </nav>
 
-    <!-- HERO -->
-    <header class="hero-bg hero-wrap py-28">
-        <canvas id="heroCanvas" aria-hidden="true"></canvas>
-        <div class="hero-inner max-w-4xl mx-auto px-6 text-center">
-            <h1 class="text-6xl md:text-7xl font-light tracking-tighter leading-none mb-6">
-                Hi, I'm James.<br>
-                I work on data problems at Microsoft.
+    <!-- ============ EDITORIAL MASTHEAD (hero) ============ -->
+    <header class="hero-bg mast-wrap border-b border-[#5da7c9]/15">
+        <canvas id="mastCanvas" aria-hidden="true"></canvas>
+        <div class="mast-inner max-w-6xl mx-auto px-6 pt-16 pb-10">
+            <div class="flex items-center gap-3 text-xs font-medium uppercase tracking-[0.2em] text-gray-500 mb-6">
+                <span class="accent-coral">James Svolos</span>
+                <span class="rule flex-1"></span>
+                <span>Data &amp; AI Leadership · Microsoft</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-light tracking-tighter leading-[1.05] mb-6 max-w-4xl">
+                Hi, I'm James — I work on <span class="accent-blue">data problems</span> at Microsoft.
             </h1>
-            <p class="text-2xl text-gray-600 max-w-2xl mx-auto">
-                I build and lead data science teams at Microsoft that turn complexity into the clear decisions leaders act on.
+            <p class="text-2xl text-gray-600 max-w-2xl">
+                I build and lead data science teams that turn complexity into the clear decisions leaders act on.
             </p>
-            <div class="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/lab/" class="px-10 py-5 bg-[#e07a5f] hover:bg-[#d16a50] text-white text-lg rounded-3xl font-medium flex items-center justify-center gap-3 transition">
+            <div class="mt-10 flex flex-col sm:flex-row gap-4">
+                <a href="/lab/" class="px-10 py-5 bg-[#e07a5f] hover:bg-[#d16a50] text-white text-lg rounded-3xl font-medium inline-flex items-center justify-center gap-3 transition">
                     <i class="fa-solid fa-flask"></i> Explore the Lab
                 </a>
-                <a href="/writing.html" class="px-10 py-5 border-2 border-[#5da7c9] text-[#5da7c9] hover:bg-[#5da7c9]/5 text-lg rounded-3xl font-medium transition">
+                <a href="/writing.html" class="px-10 py-5 border-2 border-[#5da7c9] text-[#5da7c9] hover:bg-[#5da7c9]/5 text-lg rounded-3xl font-medium inline-flex items-center justify-center transition">
                     Read my writing →
                 </a>
             </div>
@@ -235,21 +244,24 @@
         els.forEach(function (e) { io.observe(e); });
     })();
 
+    // ---- Editorial masthead waveform ----
     (function () {
-        var c = document.getElementById('heroCanvas');
+        var c = document.getElementById('mastCanvas');
         if (!c || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
         var ctx = c.getContext('2d'), w, h, t = 0;
         function size() { w = c.width = c.offsetWidth; h = c.height = c.offsetHeight; }
         size(); window.addEventListener('resize', size);
-        var lines = [{ color: 'rgba(93,167,201,0.45)', amp: 0.10, freq: 1.4, sp: 0.012, off: 0 },
-                     { color: 'rgba(224,122,95,0.40)', amp: 0.07, freq: 2.1, sp: 0.018, off: 2 }];
+        var lines = [
+            { color: 'rgba(93,167,201,0.40)', amp: 0.09, freq: 1.5, sp: 0.011, off: 0 },
+            { color: 'rgba(224,122,95,0.34)', amp: 0.06, freq: 2.2, sp: 0.016, off: 2 }
+        ];
         function draw() {
             ctx.clearRect(0, 0, w, h);
             lines.forEach(function (L) {
                 ctx.beginPath();
                 for (var x = 0; x <= w; x += 6) {
                     var p = x / w;
-                    var y = h * (0.55 + L.amp * Math.sin(p * Math.PI * L.freq + t * L.sp + L.off) + 0.04 * Math.sin(p * Math.PI * 5 + t * 0.006));
+                    var y = h * (0.6 + L.amp * Math.sin(p * Math.PI * L.freq + t * L.sp + L.off) + 0.035 * Math.sin(p * Math.PI * 5 + t * 0.006));
                     if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
                 }
                 ctx.strokeStyle = L.color; ctx.lineWidth = 2; ctx.stroke();
