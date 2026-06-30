@@ -18,6 +18,7 @@ Published on Substack (https://jsvolos.substack.com):
 - Tell Me Data Lies: Cherry-Picking Timeframes — how the choice of timeframe distorts data stories.
 
 ## Lab experiments
+- Spot the Lie (https://jamessvolos.com/spot-the-lie.html) — an interactive chart-literacy game: tell honest charts from misleading ones (truncated axes, cherry-picked windows, dual scales, inverted axes), with the data redrawn honestly on reveal.
 - GenAI Cost at Scale — what generative AI actually costs per day/month/year by model and workload.
 - Autonomous Agent ROI — labor saved and ROI when an AI agent resolves work autonomously.
 - A/B Test Planner — sample size and runtime to detect a given lift at 95% confidence / 80% power.

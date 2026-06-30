@@ -32,6 +32,9 @@ His background in Information Science and Behavioral Psychology from Penn State 
 11. Autonomous Agent ROI: Set tasks/day, auto-resolution rate, minutes saved per task, loaded labor cost, and agent cost to see hours saved, net dollars saved, and ROI. Lesson: agent ROI is driven by volume × resolution rate — automating a slice of high-frequency work compounds fast.
 12. A/B Test Planner: Enter a baseline conversion rate, the relative lift to detect, and daily traffic to get the per-variant sample size, total sample, and estimated runtime (two-proportion test at 95% confidence, 80% power). Lesson: small lifts on low base rates need a lot of traffic — know your runtime before you start.
 
+## Flagship interactive — Spot the Lie (https://jamessvolos.com/spot-the-lie.html)
+A short, shareable chart-literacy game. Each round shows a chart and a claim; the player calls it honest or misleading, then the same data is redrawn honestly to expose the trick. Covers truncated y-axes, inverted axes, cherry-picked timeframes, dual-axis fake correlation, and honest-but-unflattering charts. Lesson: how a number is drawn can matter as much as the number itself.
+
 ## Contact
 - LinkedIn: https://www.linkedin.com/in/james-svolos-74358559
 - Substack: https://jsvolos.substack.com
