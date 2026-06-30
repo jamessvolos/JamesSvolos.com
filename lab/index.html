@@ -29,8 +29,16 @@
         .exp { scroll-margin-top: 100px; }
         .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
         .reveal.reveal-in { opacity: 1; transform: none; }
-        @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+            #mastCanvas { display: none; }
+        }
         html { scroll-behavior: smooth; }
+        /* editorial masthead */
+        .mast-wrap { position: relative; overflow: hidden; }
+        #mastCanvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .45; pointer-events: none; }
+        .mast-inner { position: relative; z-index: 1; }
+        .rule { height: 1px; background: linear-gradient(90deg, rgba(93,167,201,.5), rgba(224,122,95,.45), transparent); }
         .seg-btn.active { background:#5da7c9; color:#fff; }
         .hcp-btn.active { background:#5da7c9; color:#fff; }
         .labchip.active { background:#5da7c9; color:#fff; border-color:#5da7c9; }
@@ -52,9 +60,27 @@
         </div>
     </nav>
 
+    <!-- ============ EDITORIAL MASTHEAD ============ -->
+    <header class="mast-wrap border-b border-[#5da7c9]/15">
+        <canvas id="mastCanvas" aria-hidden="true"></canvas>
+        <div class="mast-inner max-w-6xl mx-auto px-6 pt-14 pb-10">
+            <div class="flex items-center gap-3 text-xs font-medium uppercase tracking-[0.2em] text-gray-500 mb-6">
+                <span class="accent-coral">The Lab</span>
+                <span class="rule flex-1"></span>
+                <span>Interactive data experiments</span>
+            </div>
+            <h1 class="text-5xl md:text-6xl font-light tracking-tighter leading-[1.05] mb-5 max-w-3xl">
+                Experiments in turning <span class="accent-blue">data into clarity</span>.
+            </h1>
+            <p class="text-xl text-gray-600 max-w-2xl">
+                A dozen interactive pieces on AI economics, forecasting, behavioral economics, and the analytics of golf — each one responds to you. Click in.
+            </p>
+        </div>
+    </header>
+
     <div class="max-w-6xl mx-auto px-6 py-12">
-        <h1 class="text-5xl font-light tracking-tighter mb-2">Lab</h1>
-        <p class="text-xl text-gray-600 mb-10">Interactive experiments in turning data into clarity. Click in — every one responds to you.</p>
+        <!-- BROWSE BY THEME -->
+        <p class="text-xs uppercase tracking-[0.2em] text-gray-500 mb-3">Browse by theme</p>
 
         <!-- TAG FILTER -->
         <div id="labFilter" class="flex flex-wrap gap-2 mb-8">
@@ -464,6 +490,33 @@
                 entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('reveal-in'); io.unobserve(en.target); } });
             }, { threshold: 0.12 });
             els.forEach(function (e) { io.observe(e); });
+        })();
+
+        // ---- Editorial masthead waveform ----
+        (function () {
+            var c = document.getElementById('mastCanvas');
+            if (!c || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            var ctx = c.getContext('2d'), w, h, t = 0;
+            function size() { w = c.width = c.offsetWidth; h = c.height = c.offsetHeight; }
+            size(); window.addEventListener('resize', size);
+            var lines = [
+                { color: 'rgba(93,167,201,0.40)', amp: 0.09, freq: 1.5, sp: 0.011, off: 0 },
+                { color: 'rgba(224,122,95,0.34)', amp: 0.06, freq: 2.2, sp: 0.016, off: 2 }
+            ];
+            function draw() {
+                ctx.clearRect(0, 0, w, h);
+                lines.forEach(function (L) {
+                    ctx.beginPath();
+                    for (var x = 0; x <= w; x += 6) {
+                        var p = x / w;
+                        var y = h * (0.6 + L.amp * Math.sin(p * Math.PI * L.freq + t * L.sp + L.off) + 0.035 * Math.sin(p * Math.PI * 5 + t * 0.006));
+                        if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                    }
+                    ctx.strokeStyle = L.color; ctx.lineWidth = 2; ctx.stroke();
+                });
+                t += 1; requestAnimationFrame(draw);
+            }
+            draw();
         })();
 
         // ---- 1. Forecasts Lead vs Metrics Lag ----
