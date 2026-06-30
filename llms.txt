@@ -18,6 +18,9 @@ Published on Substack (https://jsvolos.substack.com):
 - Tell Me Data Lies: Cherry-Picking Timeframes — how the choice of timeframe distorts data stories.
 
 ## Lab experiments
+- GenAI Cost at Scale — what generative AI actually costs per day/month/year by model and workload.
+- Autonomous Agent ROI — labor saved and ROI when an AI agent resolves work autonomously.
+- A/B Test Planner — sample size and runtime to detect a given lift at 95% confidence / 80% power.
 - Forecasts Lead, Metrics Lag — a leading forecast catches a turn earlier than a trailing metric.
 - Cherry-Picking Timeframes — the same flat, noisy series made to look like growth or decline.
 - Prompt Engineering Playground — token, cost, and clarity estimates for a prompt.

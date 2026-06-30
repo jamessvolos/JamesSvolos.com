@@ -26,7 +26,22 @@
   }
 }
 
+/* ---- Shared site chrome (single source of truth; previously inlined per page) ---- */
+body { font-family: 'Inter', system-ui, sans-serif; background-color: #f8f4ed; }
+
+/* Scroll reveal */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.reveal-in { opacity: 1; transform: none; }
+
+/* Editorial masthead */
+.mast-wrap { position: relative; overflow: hidden; }
+.mast-inner { position: relative; z-index: 1; }
+#mastCanvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .45; pointer-events: none; }
+.rule { height: 1px; background: linear-gradient(90deg, rgba(93,167,201,.5), rgba(224,122,95,.45), transparent); }
+
 @media (prefers-reduced-motion: reduce) {
   .card-hover { transition: none; }
   .card-hover:hover { transform: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  #mastCanvas { display: none; }
 }
