@@ -42,7 +42,15 @@
         .accent-coral { color: #e07a5f; }
         .reveal { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
         .reveal.reveal-in { opacity: 1; transform: none; }
-        @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+            #mastCanvas { display: none; }
+        }
+        /* editorial masthead */
+        .mast-wrap { position: relative; overflow: hidden; }
+        #mastCanvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .45; pointer-events: none; }
+        .mast-inner { position: relative; z-index: 1; }
+        .rule { height: 1px; background: linear-gradient(90deg, rgba(93,167,201,.5), rgba(224,122,95,.45), transparent); }
         /* timeline spine */
         .tl { position: relative; }
         .tl::before { content: ''; position: absolute; left: 15px; top: 6px; bottom: 6px; width: 2px; background: linear-gradient(#5da7c9, rgba(93,167,201,.15)); }
@@ -65,18 +73,34 @@
         </div>
     </nav>
 
-    <!-- INTRO -->
-    <section class="max-w-3xl mx-auto px-6 pt-14 pb-4">
-        <p class="text-sm uppercase tracking-widest accent-coral mb-4">Principal Data Science Manager · Microsoft</p>
-        <h1 class="text-5xl font-light tracking-tighter mb-8 leading-tight">I turn data at massive scale into the decisions leaders act on.</h1>
-        <div class="space-y-5 text-lg text-gray-700 leading-relaxed">
-            <p>I'm a data science leader who helps organizations turn complexity into clear, confident decisions. At Microsoft, I build and lead teams that connect product data to strategy, growth, and risk — and I've done it across <strong>Security and Productivity</strong>, two of the company's largest product areas.</p>
+    <!-- ============ EDITORIAL MASTHEAD ============ -->
+    <header class="mast-wrap border-b border-[#5da7c9]/15">
+        <canvas id="mastCanvas" aria-hidden="true"></canvas>
+        <div class="mast-inner max-w-3xl mx-auto px-6 pt-14 pb-10">
+            <div class="flex items-center gap-3 text-xs font-medium uppercase tracking-[0.2em] text-gray-500 mb-6">
+                <span class="accent-coral">About</span>
+                <span class="rule flex-1"></span>
+                <span>Principal Data Science Manager · Microsoft</span>
+            </div>
+            <h1 class="text-5xl md:text-6xl font-light tracking-tighter leading-[1.05] mb-5">
+                I turn data at massive scale into <span class="accent-blue">the decisions leaders act on</span>.
+            </h1>
+            <p class="text-xl text-gray-600 max-w-2xl">
+                I'm a data science leader who helps organizations turn complexity into clear, confident decisions.
+            </p>
+        </div>
+    </header>
+
+    <!-- LEAD -->
+    <section class="max-w-3xl mx-auto px-6 pt-10">
+        <div class="space-y-5 text-lg text-gray-700 leading-relaxed reveal">
+            <p>At Microsoft, I build and lead teams that connect product data to strategy, growth, and risk — and I've done it across <strong>Security and Productivity</strong>, two of the company's largest product areas.</p>
             <p>My teams have turned <strong>trillions of product signals</strong> into insight that reduces risk, drives revenue, and gives executives the confidence to move. My background in Information Science and Behavioral Psychology from Penn State shaped how I work: the hardest data problems are as much about people and incentives as they are about models.</p>
         </div>
     </section>
 
     <!-- METRICS BAND -->
-    <section class="max-w-5xl mx-auto px-6 pt-10">
+    <section class="max-w-5xl mx-auto px-6 pt-14">
         <div class="grid sm:grid-cols-3 gap-6 text-center">
             <div class="bg-white rounded-3xl p-8 reveal">
                 <p class="text-4xl font-light accent-coral">Trillions</p>
@@ -95,6 +119,7 @@
 
     <!-- TIMELINE -->
     <section class="max-w-3xl mx-auto px-6 pt-20">
+        <p class="text-xs uppercase tracking-[0.2em] text-gray-500 mb-3">Career</p>
         <h2 class="text-3xl font-light accent-blue mb-10">The path here</h2>
         <div class="tl space-y-10 pl-12">
             <div class="relative reveal">
@@ -126,6 +151,7 @@
 
     <!-- HOW I LEAD -->
     <section class="max-w-5xl mx-auto px-6 pt-20">
+        <p class="text-xs uppercase tracking-[0.2em] text-gray-500 mb-3">Leadership</p>
         <h2 class="text-3xl font-light accent-blue mb-8">How I lead</h2>
         <div class="grid sm:grid-cols-2 gap-6">
             <div class="bg-white rounded-3xl p-7 reveal">
@@ -153,6 +179,7 @@
 
     <!-- HOW I THINK -->
     <section class="max-w-3xl mx-auto px-6 pt-20">
+        <p class="text-xs uppercase tracking-[0.2em] text-gray-500 mb-3">Philosophy</p>
         <h2 class="text-3xl font-light accent-blue mb-6">How I think about data</h2>
         <div class="bg-white rounded-3xl p-8 reveal">
             <p class="text-lg text-gray-700 leading-relaxed mb-5">Two ideas shape almost everything I build:</p>
@@ -189,6 +216,7 @@
     </section>
 
     <script>
+    // ---- Scroll reveal ----
     (function () {
         var els = document.querySelectorAll('.reveal');
         if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('reveal-in'); }); return; }
@@ -196,6 +224,33 @@
             en.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('reveal-in'); io.unobserve(e.target); } });
         }, { threshold: 0.1 });
         els.forEach(function (e) { io.observe(e); });
+    })();
+
+    // ---- Editorial masthead waveform ----
+    (function () {
+        var c = document.getElementById('mastCanvas');
+        if (!c || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        var ctx = c.getContext('2d'), w, h, t = 0;
+        function size() { w = c.width = c.offsetWidth; h = c.height = c.offsetHeight; }
+        size(); window.addEventListener('resize', size);
+        var lines = [
+            { color: 'rgba(93,167,201,0.40)', amp: 0.09, freq: 1.5, sp: 0.011, off: 0 },
+            { color: 'rgba(224,122,95,0.34)', amp: 0.06, freq: 2.2, sp: 0.016, off: 2 }
+        ];
+        function draw() {
+            ctx.clearRect(0, 0, w, h);
+            lines.forEach(function (L) {
+                ctx.beginPath();
+                for (var x = 0; x <= w; x += 6) {
+                    var p = x / w;
+                    var y = h * (0.6 + L.amp * Math.sin(p * Math.PI * L.freq + t * L.sp + L.off) + 0.035 * Math.sin(p * Math.PI * 5 + t * 0.006));
+                    if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                }
+                ctx.strokeStyle = L.color; ctx.lineWidth = 2; ctx.stroke();
+            });
+            t += 1; requestAnimationFrame(draw);
+        }
+        draw();
     })();
     </script>
 
