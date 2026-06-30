@@ -1,3 +1,8 @@
 node_modules/
 _site/
-src/*.njk
+# generated page templates (produced by generate.js at build time)
+src/index.njk
+src/about.njk
+src/writing.njk
+src/connect.njk
+src/lab.njk
