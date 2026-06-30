@@ -3,7 +3,7 @@
 > A machine-readable, full-text summary of jamessvolos.com. Principal Data Science Manager at Microsoft; data science leader; writer; builder of interactive data experiments.
 
 ## Who he is
-James Svolos is a data science leader who helps organizations turn complexity into clear, confident decisions. As a Principal Data Science Manager at Microsoft, he builds and leads teams that connect product data to strategy, growth, and risk. He has led data science across Security and Productivity — two of Microsoft's largest product areas — partnering with product and executive leaders to set direction. His teams have turned trillions of product signals into insights that reduce risk, drive revenue, and give leadership the confidence to act.
+James Svolos is a data science leader who helps organizations make clear, confident decisions with data. As a Principal Data Science Manager at Microsoft, he builds and leads teams that connect product data to strategy, growth, and risk. He has led data science across Security and Productivity — two of Microsoft's largest product areas — partnering with product and executive leaders to set direction. His teams have turned trillions of product signals into insights that reduce risk, drive revenue, and give leadership the confidence to act.
 
 His background in Information Science and Behavioral Psychology from Penn State shapes how he works: data problems are as much about people and systems as they are about technology. He is based in the Pacific Northwest (Seattle area) and is open to senior and executive (Director / VP) data science leadership roles.
 
