@@ -6,7 +6,10 @@
     <title>Lab | James Svolos</title>
     <meta name="description" content="The Lab: interactive data experiments by James Svolos — GenAI cost & agent ROI, A/B planning, forecasts vs. lagging metrics, cherry-picked timeframes, a prompt estimator, daylight vs. mood, meeting load, PGA putting, Strokes Gained, and the decoy effect.">
     <link rel="canonical" href="https://jamessvolos.com/lab/">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3">
+    <link rel="icon" type="image/png" sizes="any" href="/favicon.png?v=3">
+    <link rel="apple-touch-icon" href="/favicon.png?v=3">
+    <meta name="theme-color" content="#f8f4ed">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Lab | James Svolos">
     <meta property="og:description" content="Interactive data experiments: GenAI cost, agent ROI, A/B planning, forecasting, cherry-picking, prompt estimator, putting, Strokes Gained, decoy effect.">
@@ -17,28 +20,56 @@
     <meta property="og:image:alt" content="James Svolos — Principal Data Science Manager at Microsoft">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://jamessvolos.com/og-image.png">
+    <meta name="twitter:title" content="Lab | James Svolos">
+    <meta name="twitter:description" content="Interactive data experiments: AI economics, forecasting, behavioral economics, and golf analytics.">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://jamessvolos.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Lab", "item": "https://jamessvolos.com/lab/" }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "The Lab — James Svolos",
+      "url": "https://jamessvolos.com/lab/",
+      "description": "Interactive data experiments on AI economics, forecasting, behavioral economics, and golf analytics.",
+      "author": { "@type": "Person", "name": "James Svolos", "url": "https://jamessvolos.com/" },
+      "mainEntity": {
+        "@type": "ItemList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "GenAI Cost at Scale", "url": "https://jamessvolos.com/lab/#gencost" },
+          { "@type": "ListItem", "position": 2, "name": "Autonomous Agent ROI", "url": "https://jamessvolos.com/lab/#agentroi" },
+          { "@type": "ListItem", "position": 3, "name": "A/B Test Planner", "url": "https://jamessvolos.com/lab/#abtest" },
+          { "@type": "ListItem", "position": 4, "name": "Forecasts Lead, Metrics Lag", "url": "https://jamessvolos.com/lab/#forecast" },
+          { "@type": "ListItem", "position": 5, "name": "Cherry-Picking Timeframes", "url": "https://jamessvolos.com/lab/#cherry" },
+          { "@type": "ListItem", "position": 6, "name": "Prompt Engineering Playground", "url": "https://jamessvolos.com/lab/#prompt" },
+          { "@type": "ListItem", "position": 7, "name": "Daylight vs. Mood", "url": "https://jamessvolos.com/lab/#daylight" },
+          { "@type": "ListItem", "position": 8, "name": "Meeting Load", "url": "https://jamessvolos.com/lab/#meeting" },
+          { "@type": "ListItem", "position": 9, "name": "PGA Putting", "url": "https://jamessvolos.com/lab/#golf" },
+          { "@type": "ListItem", "position": 10, "name": "Strokes Gained", "url": "https://jamessvolos.com/lab/#sg" },
+          { "@type": "ListItem", "position": 11, "name": "Where Strokes Are Won", "url": "https://jamessvolos.com/lab/#sgwon" },
+          { "@type": "ListItem", "position": 12, "name": "The Decoy Effect", "url": "https://jamessvolos.com/lab/#decoy" }
+        ]
+      }
+    }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="/assets/css/site.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
     <style>
-        body { font-family: 'Inter', system-ui, sans-serif; background-color: #f8f4ed; }
-        .accent-blue { color: #5da7c9; }
-        .accent-coral { color: #e07a5f; }
         .exp { scroll-margin-top: 100px; }
-        .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
-        .reveal.reveal-in { opacity: 1; transform: none; }
-        @media (prefers-reduced-motion: reduce) {
-            .reveal { opacity: 1; transform: none; transition: none; }
-            #mastCanvas { display: none; }
-        }
         html { scroll-behavior: smooth; }
-        /* editorial masthead */
-        .mast-wrap { position: relative; overflow: hidden; }
-        #mastCanvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .45; pointer-events: none; }
-        .mast-inner { position: relative; z-index: 1; }
-        .rule { height: 1px; background: linear-gradient(90deg, rgba(93,167,201,.5), rgba(224,122,95,.45), transparent); }
+        @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
         .seg-btn.active { background:#5da7c9; color:#fff; }
         .hcp-btn.active { background:#5da7c9; color:#fff; }
         .labchip.active { background:#5da7c9; color:#fff; border-color:#5da7c9; }

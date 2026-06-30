@@ -6,7 +6,10 @@
     <title>Writing | James Svolos</title>
     <meta name="description" content="Essays by James Svolos on data, leadership, forecasting, and turning complexity into clarity — pulled live from Substack.">
     <link rel="canonical" href="https://jamessvolos.com/writing.html">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3">
+    <link rel="icon" type="image/png" sizes="any" href="/favicon.png?v=3">
+    <link rel="apple-touch-icon" href="/favicon.png?v=3">
+    <meta name="theme-color" content="#f8f4ed">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Writing | James Svolos">
     <meta property="og:description" content="Essays on data, leadership, forecasting, and turning complexity into clarity.">
@@ -17,6 +20,18 @@
     <meta property="og:image:alt" content="James Svolos — Principal Data Science Manager at Microsoft">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://jamessvolos.com/og-image.png">
+    <meta name="twitter:title" content="Writing | James Svolos">
+    <meta name="twitter:description" content="Essays on data, leadership, forecasting, and turning complexity into clarity.">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://jamessvolos.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Writing", "item": "https://jamessvolos.com/writing.html" }
+      ]
+    }
+    </script>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -53,27 +68,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="/assets/css/site.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
     <style>
-        body { font-family: 'Inter', system-ui, sans-serif; background-color: #f8f4ed; }
-        .accent-blue { color: #5da7c9; }
-        .accent-coral { color: #e07a5f; }
-        .reveal { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
-        .reveal.reveal-in { opacity: 1; transform: none; }
-        @media (prefers-reduced-motion: reduce) {
-            .reveal { opacity: 1; transform: none; transition: none; }
-            .skel { animation: none !important; }
-            #mastCanvas { display: none; }
-        }
         .chip.active { background:#5da7c9; color:#fff; border-color:#5da7c9; }
         .cover-fallback { background: linear-gradient(135deg, rgba(93,167,201,.25), rgba(224,122,95,.25)); }
         .field { transition: border-color .2s ease, box-shadow .2s ease; }
         .field:focus { outline: none; border-color: #5da7c9; box-shadow: 0 0 0 3px rgba(93,167,201,.15); }
-        /* editorial masthead */
-        .mast-wrap { position: relative; overflow: hidden; }
-        #mastCanvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .45; pointer-events: none; }
-        .mast-inner { position: relative; z-index: 1; }
-        .rule { height: 1px; background: linear-gradient(90deg, rgba(93,167,201,.5), rgba(224,122,95,.45), transparent); }
+        @media (prefers-reduced-motion: reduce) { .skel, .skel::after { animation: none !important; } }
         /* loading skeleton shimmer */
         .skel { position: relative; overflow: hidden; background: #eee9e0; }
         .skel::after { content:''; position:absolute; inset:0; transform: translateX(-100%);
