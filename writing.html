@@ -59,16 +59,37 @@
         .accent-coral { color: #e07a5f; }
         .reveal { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
         .reveal.reveal-in { opacity: 1; transform: none; }
-        @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+            .skel { animation: none !important; }
+            #mastCanvas { display: none; }
+        }
         .chip.active { background:#5da7c9; color:#fff; border-color:#5da7c9; }
         .cover-fallback { background: linear-gradient(135deg, rgba(93,167,201,.25), rgba(224,122,95,.25)); }
         .field { transition: border-color .2s ease, box-shadow .2s ease; }
         .field:focus { outline: none; border-color: #5da7c9; box-shadow: 0 0 0 3px rgba(93,167,201,.15); }
+        /* editorial masthead */
+        .mast-wrap { position: relative; overflow: hidden; }
+        #mastCanvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .45; pointer-events: none; }
+        .mast-inner { position: relative; z-index: 1; }
+        .rule { height: 1px; background: linear-gradient(90deg, rgba(93,167,201,.5), rgba(224,122,95,.45), transparent); }
+        /* loading skeleton shimmer */
+        .skel { position: relative; overflow: hidden; background: #eee9e0; }
+        .skel::after { content:''; position:absolute; inset:0; transform: translateX(-100%);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.6), transparent);
+            animation: shimmer 1.4s infinite; }
+        @keyframes shimmer { 100% { transform: translateX(100%); } }
+        /* card hover lift */
+        .lift { transition: transform .25s ease, box-shadow .25s ease; }
+        .lift:hover { transform: translateY(-4px); box-shadow: 0 18px 40px -18px rgba(93,167,201,.35); }
+        .read-link { transition: gap .2s ease; }
+        .group:hover .read-arrow { transform: translateX(3px); }
+        .read-arrow { transition: transform .2s ease; }
     </style>
 </head>
 <body class="text-gray-800">
 
-    <!-- NAV (consistent with homepage and lab) -->
+    <!-- NAV (consistent with the rest of the site) -->
     <nav class="sticky top-0 bg-white/95 backdrop-blur-md border-b border-[#5da7c9]/10 z-50">
         <div class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
             <a href="/" class="text-3xl font-light tracking-tighter accent-blue">james svolos</a>
@@ -82,67 +103,157 @@
         </div>
     </nav>
 
-    <div class="max-w-6xl mx-auto px-6 py-12">
-        <h1 class="text-5xl font-light tracking-tighter mb-2">Writing</h1>
-        <p class="text-xl text-gray-600 mb-8 max-w-2xl">How I think about leading with data — strategy, forecasting, behavioral economics, and turning complexity into decisions leaders can act on.</p>
-
-        <!-- Toolbar: search + tag filters (search always available; tags appear once feed loads) -->
-        <div class="mb-8 flex flex-col gap-4">
-            <div class="relative max-w-md">
-                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
-                <input id="writingSearch" type="search" placeholder="Search essays…"
-                       class="field w-full rounded-full border border-gray-200 bg-white pl-11 pr-4 py-3 text-sm">
+    <!-- ============ EDITORIAL MASTHEAD ============ -->
+    <header class="mast-wrap border-b border-[#5da7c9]/15">
+        <canvas id="mastCanvas" aria-hidden="true"></canvas>
+        <div class="mast-inner max-w-6xl mx-auto px-6 pt-14 pb-10">
+            <div class="flex items-center gap-3 text-xs font-medium uppercase tracking-[0.2em] text-gray-500 mb-6">
+                <span class="accent-coral">The Dispatch</span>
+                <span class="rule flex-1"></span>
+                <span id="mastMeta">Essays on data &amp; decisions</span>
             </div>
-            <div id="tagbar" class="flex flex-wrap gap-2 hidden"></div>
+            <h1 class="text-5xl md:text-6xl font-light tracking-tighter leading-[1.05] mb-5 max-w-3xl">
+                Writing on leading <span class="accent-blue">with data</span>.
+            </h1>
+            <p class="text-xl text-gray-600 max-w-2xl">
+                Strategy, forecasting, behavioral economics, and the craft of turning complexity into
+                decisions leaders can act on — published on Substack, gathered here.
+            </p>
         </div>
+    </header>
 
-        <!-- Content: static fallback shown first, replaced by the live feed on success -->
-        <div id="writingContent">
-            <div class="grid md:grid-cols-3 gap-6">
-                <a href="https://jsvolos.substack.com/p/scaling-down-and-executing" target="_blank" rel="noopener" data-search="why great teams shrink the scope to ship reducing scope execute" data-tags="leadership" class="writing-item filter-item block bg-white rounded-3xl p-8 hover:shadow-xl transition">
-                    <p class="text-xs uppercase tracking-widest text-gray-500 mb-3">Substack</p>
-                    <h2 class="text-xl font-medium mb-3 leading-snug">Why great teams shrink the scope to ship</h2>
-                    <p class="text-gray-600 text-sm">How reducing scope helps teams execute faster and deliver better results.</p>
+    <main class="max-w-6xl mx-auto px-6 py-12">
+
+        <!-- ============ TOPIC COLLECTIONS + SEARCH ============ -->
+        <section class="mb-12" aria-label="Browse by topic">
+            <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+                <div class="flex-1">
+                    <p class="text-xs uppercase tracking-[0.2em] text-gray-500 mb-3">Collections</p>
+                    <div id="tagbar" class="flex flex-wrap gap-2" role="group" aria-label="Filter essays by topic">
+                        <!-- seeded with the four core themes; recomputed once the live feed loads -->
+                        <button class="chip active px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:border-[#5da7c9] transition" data-tag="all">All essays</button>
+                        <button class="chip px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:border-[#5da7c9] transition" data-tag="leadership">Leadership</button>
+                        <button class="chip px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:border-[#5da7c9] transition" data-tag="forecasting">Forecasting</button>
+                        <button class="chip px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:border-[#5da7c9] transition" data-tag="data lies">Data Lies</button>
+                        <button class="chip px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:border-[#5da7c9] transition" data-tag="behavioral">Behavioral</button>
+                    </div>
+                </div>
+                <div class="relative w-full lg:max-w-xs">
+                    <label for="writingSearch" class="sr-only">Search essays</label>
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm" aria-hidden="true"></i>
+                    <input id="writingSearch" type="search" placeholder="Search essays…" autocomplete="off"
+                           class="field w-full rounded-full border border-gray-200 bg-white pl-11 pr-4 py-3 text-sm">
+                </div>
+            </div>
+        </section>
+
+        <!-- live-status line (announces feed state for screen readers) -->
+        <p id="feedStatus" class="sr-only" role="status" aria-live="polite">Loading the latest essays…</p>
+
+        <!-- ============ CONTENT (static fallback first, replaced on live success) ============ -->
+        <section id="writingContent" aria-label="Essays">
+            <!-- Featured / lead essay -->
+            <a href="https://jsvolos.substack.com/p/scaling-down-and-executing" target="_blank" rel="noopener"
+               data-search="why great teams shrink the scope to ship reducing scope execute leadership"
+               data-tags="leadership"
+               class="filter-item group block bg-white rounded-3xl overflow-hidden lift md:flex mb-10">
+                <div class="md:w-1/2 h-56 md:h-auto cover-fallback flex items-center justify-center text-[#5da7c9]">
+                    <i class="fa-solid fa-feather-pointed text-4xl" aria-hidden="true"></i>
+                </div>
+                <div class="p-8 md:p-10 md:w-1/2 flex flex-col justify-center">
+                    <p class="text-xs uppercase tracking-[0.2em] accent-coral mb-3">Lead essay · Leadership</p>
+                    <h2 class="text-3xl font-light tracking-tight mb-3 leading-tight">Why great teams shrink the scope to ship</h2>
+                    <p class="text-gray-600 mb-5">How reducing scope helps teams execute faster and deliver better results.</p>
+                    <span class="read-link inline-flex items-center gap-2 text-sm font-medium accent-blue">
+                        Read on Substack <span class="read-arrow" aria-hidden="true">→</span>
+                    </span>
+                </div>
+            </a>
+
+            <!-- Secondary grid -->
+            <div class="grid md:grid-cols-2 gap-6">
+                <a href="https://jsvolos.substack.com/p/metrics-lag-forecasts-lead" target="_blank" rel="noopener"
+                   data-search="metrics lag forecasts lead forecasting early business signals"
+                   data-tags="forecasting"
+                   class="filter-item group block bg-white rounded-3xl p-8 lift">
+                    <p class="text-xs uppercase tracking-[0.18em] text-gray-400 mb-3">Forecasting</p>
+                    <h3 class="text-xl font-medium mb-3 leading-snug">Metrics Lag, Forecasts Lead</h3>
+                    <p class="text-gray-600 text-sm mb-4">Using forecasting for early business signals instead of waiting for lagging metrics.</p>
+                    <span class="read-link inline-flex items-center gap-2 text-sm font-medium accent-blue">
+                        Read on Substack <span class="read-arrow" aria-hidden="true">→</span>
+                    </span>
                 </a>
-                <a href="https://jsvolos.substack.com/p/metrics-lag-forecasts-lead" target="_blank" rel="noopener" data-search="metrics lag forecasts lead forecasting early business signals" data-tags="forecasting" class="writing-item filter-item block bg-white rounded-3xl p-8 hover:shadow-xl transition">
-                    <p class="text-xs uppercase tracking-widest text-gray-500 mb-3">Substack</p>
-                    <h2 class="text-xl font-medium mb-3 leading-snug">Metrics Lag, Forecasts Lead</h2>
-                    <p class="text-gray-600 text-sm">Using forecasting for early business signals instead of waiting for lagging metrics.</p>
-                </a>
-                <a href="https://jsvolos.substack.com/p/tell-me-data-lies-cherry-picking" target="_blank" rel="noopener" data-search="tell me data lies cherry-picking timeframes" data-tags="data lies" class="writing-item filter-item block bg-white rounded-3xl p-8 hover:shadow-xl transition">
-                    <p class="text-xs uppercase tracking-widest text-gray-500 mb-3">Substack</p>
-                    <h2 class="text-xl font-medium mb-3 leading-snug">Tell Me Data Lies: Cherry-Picking Timeframes</h2>
-                    <p class="text-gray-600 text-sm">How timeframes alter data stories — and how to spot (and avoid) this common trap.</p>
+                <a href="https://jsvolos.substack.com/p/tell-me-data-lies-cherry-picking" target="_blank" rel="noopener"
+                   data-search="tell me data lies cherry-picking timeframes"
+                   data-tags="data lies"
+                   class="filter-item group block bg-white rounded-3xl p-8 lift">
+                    <p class="text-xs uppercase tracking-[0.18em] text-gray-400 mb-3">Data Lies</p>
+                    <h3 class="text-xl font-medium mb-3 leading-snug">Tell Me Data Lies: Cherry-Picking Timeframes</h3>
+                    <p class="text-gray-600 text-sm mb-4">How timeframes alter data stories — and how to spot (and avoid) this common trap.</p>
+                    <span class="read-link inline-flex items-center gap-2 text-sm font-medium accent-blue">
+                        Read on Substack <span class="read-arrow" aria-hidden="true">→</span>
+                    </span>
                 </a>
             </div>
-        </div>
+        </section>
 
         <!-- No-results message -->
-        <p id="noResults" class="hidden text-gray-500 py-12 text-center">No essays match that search. <button id="clearSearch" class="accent-coral font-medium hover:underline">Clear</button></p>
+        <p id="noResults" class="hidden text-gray-500 py-16 text-center">
+            No essays match that. <button id="clearSearch" class="accent-coral font-medium hover:underline">Clear filters</button>
+        </p>
 
-        <!-- Subscribe CTA with inline email capture -->
-        <div class="mt-16 bg-white rounded-3xl p-8 md:flex items-center justify-between gap-8">
+        <!-- ============ SUBSCRIBE CTA ============ -->
+        <section class="mt-16 bg-white rounded-3xl p-8 md:p-10 md:flex items-center justify-between gap-10 reveal">
             <div class="mb-6 md:mb-0 md:max-w-sm">
+                <p class="text-xs uppercase tracking-[0.2em] accent-coral mb-2">The Dispatch · Free</p>
                 <h2 class="text-2xl font-medium mb-2">Get new essays in your inbox</h2>
                 <p class="text-gray-600">No spam — just data, leadership, and the occasional golf stat.</p>
             </div>
             <form id="subscribeForm" class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                <label for="subEmail" class="sr-only">Email address</label>
                 <input id="subEmail" type="email" required placeholder="you@email.com"
                        class="field rounded-full border border-gray-200 bg-gray-50 px-5 py-3 text-sm sm:w-64">
                 <button type="submit"
                         class="inline-flex items-center justify-center gap-2 px-7 py-3 bg-[#e07a5f] hover:bg-[#d16a50] text-white rounded-full font-medium transition whitespace-nowrap">
-                    <i class="fa-solid fa-envelope-open-text"></i> Subscribe
+                    <i class="fa-solid fa-envelope-open-text" aria-hidden="true"></i> Subscribe
                 </button>
             </form>
-        </div>
-    </div>
+        </section>
+    </main>
 
     <footer class="bg-white border-t border-[#5da7c9]/10 py-12 mt-8">
         <div class="max-w-6xl mx-auto px-6 text-center text-sm text-gray-500">© James Svolos</div>
     </footer>
 
     <script>
-    // ---- Inline subscribe → Substack (prefilled) ----
+    // ---------- Editorial masthead motion (forecast-style waveform) ----------
+    (function () {
+        var c = document.getElementById('mastCanvas');
+        if (!c || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        var ctx = c.getContext('2d'), w, h, t = 0, raf;
+        function size() { w = c.width = c.offsetWidth; h = c.height = c.offsetHeight; }
+        size(); window.addEventListener('resize', size);
+        var lines = [
+            { color: 'rgba(93,167,201,0.40)', amp: 0.09, freq: 1.5, sp: 0.011, off: 0 },
+            { color: 'rgba(224,122,95,0.34)', amp: 0.06, freq: 2.2, sp: 0.016, off: 2 }
+        ];
+        function draw() {
+            ctx.clearRect(0, 0, w, h);
+            lines.forEach(function (L) {
+                ctx.beginPath();
+                for (var x = 0; x <= w; x += 6) {
+                    var p = x / w;
+                    var y = h * (0.6 + L.amp * Math.sin(p * Math.PI * L.freq + t * L.sp + L.off) + 0.035 * Math.sin(p * Math.PI * 5 + t * 0.006));
+                    if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                }
+                ctx.strokeStyle = L.color; ctx.lineWidth = 2; ctx.stroke();
+            });
+            t += 1; raf = requestAnimationFrame(draw);
+        }
+        draw();
+    })();
+
+    // ---------- Inline subscribe → Substack (prefilled) ----------
     (function () {
         var form = document.getElementById('subscribeForm');
         if (!form) return;
@@ -155,15 +266,30 @@
         });
     })();
 
-    // ---- Live feed + search/tag filtering ----
+    // ---------- Live feed (robust multi-proxy) + search/tag filtering ----------
     (function () {
         var FEED = 'https://jsvolos.substack.com/feed';
-        var PROXY = 'https://api.allorigins.win/raw?url=';
+        // Fallback chain: try each proxy until one returns valid RSS XML.
+        var PROXIES = [
+            function (u) { return 'https://corsproxy.io/?url=' + encodeURIComponent(u); },
+            function (u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); },
+            function (u) { return 'https://thingproxy.freeboard.io/fetch/' + u; }
+        ];
+
         var content = document.getElementById('writingContent');
         var tagbar = document.getElementById('tagbar');
         var searchInput = document.getElementById('writingSearch');
         var noResults = document.getElementById('noResults');
+        var feedStatus = document.getElementById('feedStatus');
         var currentTag = 'all';
+
+        // Theme map: collapse Substack categories into the four core collections.
+        var THEMES = [
+            { key: 'leadership', label: 'Leadership', match: /lead|team|manage|scope|execut|ship|strateg|org/i },
+            { key: 'forecasting', label: 'Forecasting', match: /forecast|predict|metric|signal|trend|model/i },
+            { key: 'data lies', label: 'Data Lies', match: /lie|cherry|mislead|chart|visual|deceiv|timeframe/i },
+            { key: 'behavioral', label: 'Behavioral', match: /behav|psycholog|decoy|incentiv|bias|decision|economic/i }
+        ];
 
         function esc(s) {
             return (s || '').replace(/[&<>"']/g, function (c) {
@@ -196,9 +322,21 @@
             var m = (contentHtml || '').match(/<img[^>]+src=["']([^"']+)["']/i);
             return m ? m[1] : '';
         }
-        function cover(url, cls) {
+        function deriveThemes(post) {
+            var hay = (post.title + ' ' + post.excerpt + ' ' + (post.rawTags || []).join(' '));
+            var found = [];
+            THEMES.forEach(function (th) { if (th.match.test(hay)) found.push(th.key); });
+            // ensure every post lands in at least one collection
+            if (!found.length) found.push('leadership');
+            return found;
+        }
+        function themeLabel(key) {
+            for (var i = 0; i < THEMES.length; i++) if (THEMES[i].key === key) return THEMES[i].label;
+            return key.replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+        }
+        function cover(url, cls, iconSize) {
             if (url) return '<div class="' + cls + ' bg-cover bg-center" style="background-image:url(' + esc(url) + ')"></div>';
-            return '<div class="' + cls + ' cover-fallback flex items-center justify-center text-[#5da7c9]"><i class="fa-solid fa-feather-pointed text-3xl"></i></div>';
+            return '<div class="' + cls + ' cover-fallback flex items-center justify-center text-[#5da7c9]"><i class="fa-solid fa-feather-pointed ' + (iconSize || 'text-3xl') + '" aria-hidden="true"></i></div>';
         }
         function meta(post) {
             var bits = [];
@@ -207,32 +345,56 @@
             return bits.join(' · ');
         }
         function searchData(post) {
-            return (post.title + ' ' + post.excerpt + ' ' + post.tags.join(' ')).toLowerCase();
+            return (post.title + ' ' + post.excerpt + ' ' + post.themes.join(' ')).toLowerCase();
+        }
+        function readMore() {
+            return '<span class="read-link inline-flex items-center gap-2 text-sm font-medium accent-blue">' +
+                   'Read on Substack <span class="read-arrow" aria-hidden="true">→</span></span>';
         }
 
         function heroCard(post) {
-            return '<a href="' + esc(post.link) + '" target="_blank" rel="noopener" data-search="' + esc(searchData(post)) + '" data-tags="' + esc(post.tags.join('|').toLowerCase()) + '" class="filter-item reveal block bg-white rounded-3xl overflow-hidden hover:shadow-xl transition md:flex mb-10">' +
-                cover(post.image, 'md:w-1/2 h-56 md:h-auto') +
-                '<div class="p-8 md:w-1/2 flex flex-col justify-center">' +
-                    '<p class="text-xs uppercase tracking-widest accent-coral mb-2">Latest</p>' +
+            var theme = themeLabel(post.themes[0]);
+            return '<a href="' + esc(post.link) + '" target="_blank" rel="noopener" ' +
+                'data-search="' + esc(searchData(post)) + '" data-tags="' + esc(post.themes.join('|')) + '" ' +
+                'class="filter-item reveal group block bg-white rounded-3xl overflow-hidden lift md:flex mb-10">' +
+                cover(post.image, 'md:w-1/2 h-56 md:h-auto', 'text-4xl') +
+                '<div class="p-8 md:p-10 md:w-1/2 flex flex-col justify-center">' +
+                    '<p class="text-xs uppercase tracking-[0.2em] accent-coral mb-3">Lead essay · ' + esc(theme) + '</p>' +
                     '<h2 class="text-3xl font-light tracking-tight mb-3 leading-tight">' + esc(post.title) + '</h2>' +
                     '<p class="text-gray-600 mb-4">' + esc(post.excerpt) + '</p>' +
-                    '<p class="text-xs text-gray-400">' + meta(post) + '</p>' +
+                    '<p class="text-xs text-gray-400 mb-5">' + meta(post) + '</p>' +
+                    readMore() +
                 '</div>' +
             '</a>';
         }
         function gridCard(post) {
-            return '<a href="' + esc(post.link) + '" target="_blank" rel="noopener" data-search="' + esc(searchData(post)) + '" data-tags="' + esc(post.tags.join('|').toLowerCase()) + '" class="filter-item reveal block bg-white rounded-3xl overflow-hidden hover:shadow-xl transition">' +
-                cover(post.image, 'h-44') +
-                '<div class="p-6">' +
-                    '<p class="text-xs text-gray-400 mb-2">' + meta(post) + '</p>' +
+            return '<a href="' + esc(post.link) + '" target="_blank" rel="noopener" ' +
+                'data-search="' + esc(searchData(post)) + '" data-tags="' + esc(post.themes.join('|')) + '" ' +
+                'class="filter-item reveal group block bg-white rounded-3xl overflow-hidden lift flex flex-col">' +
+                cover(post.image, 'h-40') +
+                '<div class="p-6 flex flex-col flex-1">' +
+                    '<p class="text-xs uppercase tracking-[0.18em] text-gray-400 mb-2">' + esc(themeLabel(post.themes[0])) + '</p>' +
                     '<h3 class="text-lg font-medium mb-2 leading-snug">' + esc(post.title) + '</h3>' +
-                    '<p class="text-gray-600 text-sm">' + esc(post.excerpt) + '</p>' +
-                    (post.tags.length ? '<div class="mt-4 flex flex-wrap gap-2">' + post.tags.slice(0, 3).map(function (t) {
-                        return '<span class="text-xs px-2 py-1 rounded-full bg-[#5da7c9]/10 text-[#5da7c9]">' + esc(t) + '</span>';
-                    }).join('') + '</div>' : '') +
+                    '<p class="text-gray-600 text-sm mb-4 flex-1">' + esc(post.excerpt) + '</p>' +
+                    '<p class="text-xs text-gray-400 mb-3">' + meta(post) + '</p>' +
+                    readMore() +
                 '</div>' +
             '</a>';
+        }
+
+        function skeleton() {
+            var card = '<div class="bg-white rounded-3xl overflow-hidden"><div class="skel h-40"></div>' +
+                '<div class="p-6 space-y-3"><div class="skel h-3 w-20 rounded"></div>' +
+                '<div class="skel h-4 w-3/4 rounded"></div><div class="skel h-3 w-full rounded"></div>' +
+                '<div class="skel h-3 w-2/3 rounded"></div></div></div>';
+            return '<div class="bg-white rounded-3xl overflow-hidden md:flex mb-10">' +
+                    '<div class="skel md:w-1/2 h-56"></div>' +
+                    '<div class="p-8 md:p-10 md:w-1/2 space-y-4">' +
+                        '<div class="skel h-3 w-28 rounded"></div><div class="skel h-7 w-3/4 rounded"></div>' +
+                        '<div class="skel h-4 w-full rounded"></div><div class="skel h-4 w-1/2 rounded"></div>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="grid md:grid-cols-3 gap-6">' + card + card + card + '</div>';
         }
 
         function revealAll() {
@@ -241,7 +403,7 @@
             var io = new IntersectionObserver(function (en) {
                 en.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('reveal-in'); io.unobserve(e.target); } });
             }, { threshold: 0.1 });
-            els.forEach(function (e) { io.observe(e); });
+            els.forEach(function (e) { e.classList.add('reveal'); io.observe(e); });
         }
 
         function applyFilters() {
@@ -261,53 +423,79 @@
         }
 
         function buildTagbar(posts) {
+            // Only show collections that actually have essays; keep the four-theme ordering.
             var counts = {};
-            posts.forEach(function (p) { p.tags.forEach(function (t) { counts[t] = (counts[t] || 0) + 1; }); });
-            var tags = Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a]; }).slice(0, 6);
-            if (!tags.length) return;
-            var html = '<button class="chip active px-4 py-2 rounded-full border border-gray-300 text-sm" data-tag="all">All</button>';
-            html += tags.map(function (t) {
-                return '<button class="chip px-4 py-2 rounded-full border border-gray-300 text-sm" data-tag="' + esc(t.toLowerCase()) + '">' + esc(t) + '</button>';
+            posts.forEach(function (p) { p.themes.forEach(function (t) { counts[t] = (counts[t] || 0) + 1; }); });
+            var present = THEMES.filter(function (th) { return counts[th.key]; });
+            if (!present.length) return;
+            var html = '<button class="chip active px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:border-[#5da7c9] transition" data-tag="all">All essays</button>';
+            html += present.map(function (th) {
+                return '<button class="chip px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:border-[#5da7c9] transition" data-tag="' + esc(th.key) + '">' + esc(th.label) + '</button>';
             }).join('');
             tagbar.innerHTML = html;
-            tagbar.classList.remove('hidden');
-            tagbar.addEventListener('click', function (e) {
-                var btn = e.target.closest('.chip'); if (!btn) return;
-                tagbar.querySelectorAll('.chip').forEach(function (c) { c.classList.remove('active'); });
-                btn.classList.add('active');
-                currentTag = btn.dataset.tag;
-                applyFilters();
-            });
+            currentTag = 'all';
         }
 
-        // wire search (works on the static fallback immediately, and on live content once loaded)
-        searchInput.addEventListener('input', applyFilters);
-        document.getElementById('clearSearch').addEventListener('click', function () {
-            searchInput.value = ''; applyFilters(); searchInput.focus();
+        // chip clicks (delegated; works for both seeded and rebuilt chips)
+        tagbar.addEventListener('click', function (e) {
+            var btn = e.target.closest('.chip'); if (!btn) return;
+            tagbar.querySelectorAll('.chip').forEach(function (c) { c.classList.remove('active'); });
+            btn.classList.add('active');
+            currentTag = btn.dataset.tag;
+            applyFilters();
         });
 
-        fetch(PROXY + encodeURIComponent(FEED))
-            .then(function (r) { if (!r.ok) throw new Error('feed ' + r.status); return r.text(); })
-            .then(function (xml) {
-                var doc = new DOMParser().parseFromString(xml, 'text/xml');
-                if (doc.querySelector('parsererror')) throw new Error('parse error');
-                var items = Array.prototype.slice.call(doc.getElementsByTagName('item')).slice(0, 12);
-                if (!items.length) throw new Error('no items');
+        // search wiring — active immediately on the static fallback
+        searchInput.addEventListener('input', applyFilters);
+        document.getElementById('clearSearch').addEventListener('click', function () {
+            searchInput.value = '';
+            currentTag = 'all';
+            tagbar.querySelectorAll('.chip').forEach(function (c) { c.classList.remove('active'); });
+            var allBtn = tagbar.querySelector('[data-tag="all"]'); if (allBtn) allBtn.classList.add('active');
+            applyFilters(); searchInput.focus();
+        });
+
+        function fetchWithProxies(i) {
+            if (i >= PROXIES.length) return Promise.reject(new Error('all proxies failed'));
+            return fetch(PROXIES[i](FEED))
+                .then(function (r) { if (!r.ok) throw new Error('proxy ' + i + ' → ' + r.status); return r.text(); })
+                .then(function (xml) {
+                    var doc = new DOMParser().parseFromString(xml, 'text/xml');
+                    if (doc.querySelector('parsererror')) throw new Error('proxy ' + i + ' parse error');
+                    if (!doc.getElementsByTagName('item').length) throw new Error('proxy ' + i + ' no items');
+                    return doc;
+                })
+                .catch(function (err) {
+                    if (window.console) console.warn('Writing feed:', err.message + ', trying next proxy…');
+                    return fetchWithProxies(i + 1);
+                });
+        }
+
+        // show loading skeleton (only swaps in if a proxy is mid-flight; fallback stays if instant fail)
+        var loadingTimer = setTimeout(function () { content.innerHTML = skeleton(); }, 150);
+
+        fetchWithProxies(0)
+            .then(function (doc) {
+                var items = Array.prototype.slice.call(doc.getElementsByTagName('item')).slice(0, 13);
                 var get = function (el, tag) { var n = firstTag(el, tag); return n ? n.textContent : ''; };
                 var posts = items.map(function (it) {
                     var body = get(it, 'content:encoded') || get(it, 'description');
-                    var cats = Array.prototype.slice.call(it.getElementsByTagName('category'))
+                    var rawTags = Array.prototype.slice.call(it.getElementsByTagName('category'))
                         .map(function (c) { return (c.textContent || '').trim(); }).filter(Boolean);
-                    return {
+                    var p = {
                         title: get(it, 'title'),
                         link: get(it, 'link'),
                         date: fmtDate(get(it, 'pubDate')),
                         excerpt: excerpt(get(it, 'description') || body, 150),
                         read: readingTime(body),
                         image: imageFrom(it, body),
-                        tags: cats.slice(0, 4)
+                        rawTags: rawTags
                     };
+                    p.themes = deriveThemes(p);
+                    return p;
                 });
+
+                clearTimeout(loadingTimer);
 
                 var hero = posts[0];
                 var rest = posts.slice(1);
@@ -318,11 +506,41 @@
                 content.innerHTML = html;
                 buildTagbar(posts);
                 revealAll();
-                applyFilters(); // respect any search term already typed
+                applyFilters(); // honor any search term / tag already chosen
+                feedStatus.textContent = 'Showing the ' + posts.length + ' latest essays from Substack.';
             })
             .catch(function (e) {
-                if (window.console) console.warn('Writing: live feed unavailable, using fallback.', e);
+                clearTimeout(loadingTimer);
+                // every proxy failed → keep/restore the curated static fallback (never an empty state)
+                if (window.console) console.warn('Writing: all proxies unavailable, using curated fallback.', e);
+                feedStatus.textContent = 'Showing a curated selection of essays.';
+                // if a skeleton was injected, the original markup is gone — but the timer only fires
+                // after 150ms; on instant failure the static cards remain. Guard by re-checking.
+                if (!content.querySelector('.filter-item')) { content.innerHTML = STATIC_FALLBACK; }
+                applyFilters();
             });
+
+        // Curated static fallback (re-injected only if a skeleton replaced the original markup).
+        var STATIC_FALLBACK =
+            '<a href="https://jsvolos.substack.com/p/scaling-down-and-executing" target="_blank" rel="noopener" data-search="why great teams shrink the scope to ship reducing scope execute leadership" data-tags="leadership" class="filter-item group block bg-white rounded-3xl overflow-hidden lift md:flex mb-10">' +
+                '<div class="md:w-1/2 h-56 md:h-auto cover-fallback flex items-center justify-center text-[#5da7c9]"><i class="fa-solid fa-feather-pointed text-4xl" aria-hidden="true"></i></div>' +
+                '<div class="p-8 md:p-10 md:w-1/2 flex flex-col justify-center">' +
+                    '<p class="text-xs uppercase tracking-[0.2em] accent-coral mb-3">Lead essay · Leadership</p>' +
+                    '<h2 class="text-3xl font-light tracking-tight mb-3 leading-tight">Why great teams shrink the scope to ship</h2>' +
+                    '<p class="text-gray-600 mb-5">How reducing scope helps teams execute faster and deliver better results.</p>' + readMore() +
+                '</div></a>' +
+            '<div class="grid md:grid-cols-2 gap-6">' +
+                '<a href="https://jsvolos.substack.com/p/metrics-lag-forecasts-lead" target="_blank" rel="noopener" data-search="metrics lag forecasts lead forecasting early business signals" data-tags="forecasting" class="filter-item group block bg-white rounded-3xl p-8 lift">' +
+                    '<p class="text-xs uppercase tracking-[0.18em] text-gray-400 mb-3">Forecasting</p>' +
+                    '<h3 class="text-xl font-medium mb-3 leading-snug">Metrics Lag, Forecasts Lead</h3>' +
+                    '<p class="text-gray-600 text-sm mb-4">Using forecasting for early business signals instead of waiting for lagging metrics.</p>' + readMore() +
+                '</a>' +
+                '<a href="https://jsvolos.substack.com/p/tell-me-data-lies-cherry-picking" target="_blank" rel="noopener" data-search="tell me data lies cherry-picking timeframes" data-tags="data lies" class="filter-item group block bg-white rounded-3xl p-8 lift">' +
+                    '<p class="text-xs uppercase tracking-[0.18em] text-gray-400 mb-3">Data Lies</p>' +
+                    '<h3 class="text-xl font-medium mb-3 leading-snug">Tell Me Data Lies: Cherry-Picking Timeframes</h3>' +
+                    '<p class="text-gray-600 text-sm mb-4">How timeframes alter data stories — and how to spot (and avoid) this common trap.</p>' + readMore() +
+                '</a>' +
+            '</div>';
     })();
     </script>
 </body>
