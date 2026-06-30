@@ -76,9 +76,9 @@
 
     <!-- NAV (matches homepage) -->
     <nav class="sticky top-0 bg-white/95 backdrop-blur-md border-b border-[#5da7c9]/10 z-50">
-        <div class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-center sm:justify-between gap-3">
             <a href="/" class="text-3xl font-light tracking-tighter accent-blue">james svolos</a>
-            <div class="flex gap-8 text-sm font-medium">
+            <div class="flex gap-5 sm:gap-8 text-sm font-medium">
                 <a href="/" class="hover:text-[#e07a5f] transition">Home</a>
                 <a href="/writing.html" class="hover:text-[#e07a5f] transition">Writing</a>
                 <a href="/lab/" class="text-[#e07a5f] transition">Lab</a>
@@ -308,9 +308,9 @@
             <div class="bg-white rounded-3xl p-8">
                 <h2 class="text-3xl font-light accent-blue mb-3">PGA Tour Putting: Make % by Distance</h2>
                 <p class="text-gray-600 mb-6">How quickly a made putt becomes a coin flip as distance grows.</p>
-                <div class="bg-gray-100 rounded-2xl p-5 mb-6 flex items-center gap-4">
+                <div class="bg-gray-100 rounded-2xl p-5 mb-6 flex flex-wrap items-center gap-4">
                     <span class="text-sm text-gray-600 whitespace-nowrap">Distance:</span>
-                    <input id="puttSlider" type="range" min="3" max="30" value="8" step="1" class="flex-1 accent-[#e07a5f]">
+                    <input id="puttSlider" type="range" min="3" max="30" value="8" step="1" class="flex-1 min-w-0 accent-[#e07a5f]">
                     <span class="text-sm font-medium whitespace-nowrap"><span id="puttDist">8</span> ft → <span id="puttPct" class="accent-coral">50%</span> made</span>
                 </div>
                 <div id="golfPlot" class="min-h-[420px]"></div>
@@ -685,9 +685,9 @@
             el.classList.remove('hidden');
             el.innerHTML =
                 '<div class="grid sm:grid-cols-3 gap-4 text-center">' +
-                    '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-400">Est. tokens</p><p class="text-3xl font-medium mt-1">' + tokens.toLocaleString() + '</p></div>' +
-                    '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-400">Est. input cost</p><p class="text-3xl font-medium mt-1 accent-coral">$' + cost.toFixed(5) + '</p></div>' +
-                    '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-400">Clarity score</p><p class="text-3xl font-medium mt-1" style="color:' + scoreColor(r.score) + '">' + r.score + '/100</p></div>' +
+                    '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-500">Est. tokens</p><p class="text-3xl font-medium mt-1">' + tokens.toLocaleString() + '</p></div>' +
+                    '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-500">Est. input cost</p><p class="text-3xl font-medium mt-1 accent-coral">$' + cost.toFixed(5) + '</p></div>' +
+                    '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-500">Clarity score</p><p class="text-3xl font-medium mt-1" style="color:' + scoreColor(r.score) + '">' + r.score + '/100</p></div>' +
                 '</div>' +
                 (r.notes.length ? '<ul class="mt-5 text-sm text-gray-500 space-y-1">' + r.notes.map(function (n) { return '<li>' + n + '</li>'; }).join('') + '</ul>' : '');
         }
@@ -821,9 +821,9 @@
             var el = document.getElementById('sgResult');
             el.classList.remove('hidden');
             el.innerHTML =
-                '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-400">Expected before</p><p class="text-3xl font-medium mt-1">' + bBefore.toFixed(2) + '</p></div>' +
-                '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-400">Expected after</p><p class="text-3xl font-medium mt-1">' + bAfter.toFixed(2) + '</p></div>' +
-                '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-400">Strokes gained</p><p class="text-3xl font-medium mt-1" style="color:' + color + '">' + (sg >= 0 ? '+' : '') + sg.toFixed(2) + '</p></div>';
+                '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-500">Expected before</p><p class="text-3xl font-medium mt-1">' + bBefore.toFixed(2) + '</p></div>' +
+                '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-500">Expected after</p><p class="text-3xl font-medium mt-1">' + bAfter.toFixed(2) + '</p></div>' +
+                '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-500">Strokes gained</p><p class="text-3xl font-medium mt-1" style="color:' + color + '">' + (sg >= 0 ? '+' : '') + sg.toFixed(2) + '</p></div>';
         }
         (function () {
             var fl = document.getElementById('sgFromLie'), tl = document.getElementById('sgToLie');
@@ -884,8 +884,8 @@
                             ? '<p class="text-gray-700">That’s exactly the decoy at work: alone, most people take the cheap digital option. Add a print-only option priced the <em>same</em> as the bundle, and the bundle suddenly looks like a steal — even though nobody wants print-only.</p>'
                             : '<p class="text-gray-700">Interesting — you resisted the nudge. The print-only “decoy” is designed to make the bundle look like obvious value; most people switch to it.</p>') +
                         '<div class="grid sm:grid-cols-2 gap-4 mt-5 text-sm">' +
-                            '<div class="bg-white rounded-xl p-4"><p class="text-xs uppercase tracking-widest text-gray-400 mb-1">Without the decoy</p><p>Digital 68% · Bundle <span class="font-medium">32%</span></p></div>' +
-                            '<div class="bg-white rounded-xl p-4"><p class="text-xs uppercase tracking-widest text-gray-400 mb-1">With the decoy</p><p>Digital 16% · Print 0% · Bundle <span class="font-medium accent-coral">84%</span></p></div>' +
+                            '<div class="bg-white rounded-xl p-4"><p class="text-xs uppercase tracking-widest text-gray-500 mb-1">Without the decoy</p><p>Digital 68% · Bundle <span class="font-medium">32%</span></p></div>' +
+                            '<div class="bg-white rounded-xl p-4"><p class="text-xs uppercase tracking-widest text-gray-500 mb-1">With the decoy</p><p>Digital 16% · Print 0% · Bundle <span class="font-medium accent-coral">84%</span></p></div>' +
                         '</div>' +
                         '<p class="text-xs text-gray-500 mt-3">Source: Dan Ariely, “Predictably Irrational.”</p>' +
                     '</div>';
@@ -930,7 +930,7 @@
             ];
             MODELS.forEach(function (m, idx) { var o = document.createElement('option'); o.value = idx; o.textContent = m.n; sel.appendChild(o); });
             function money(x) { return x >= 1 ? '$' + Math.round(x).toLocaleString() : '$' + x.toFixed(2); }
-            function card(l, v) { return '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-400">' + l + '</p><p class="text-3xl font-medium mt-1 accent-coral">' + v + '</p></div>'; }
+            function card(l, v) { return '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-500">' + l + '</p><p class="text-3xl font-medium mt-1 accent-coral">' + v + '</p></div>'; }
             function calc() {
                 var m = MODELS[+sel.value];
                 var req = +document.getElementById('gcReq').value || 0;
@@ -948,7 +948,7 @@
         (function () {
             var ids = ['arTasks', 'arPct', 'arMin', 'arRate', 'arCost'];
             if (!document.getElementById('arTasks')) return;
-            function card(l, v, color) { return '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-400">' + l + '</p><p class="text-3xl font-medium mt-1" style="color:' + (color || '#374151') + '">' + v + '</p></div>'; }
+            function card(l, v, color) { return '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-500">' + l + '</p><p class="text-3xl font-medium mt-1" style="color:' + (color || '#374151') + '">' + v + '</p></div>'; }
             function calc() {
                 var tasks = +document.getElementById('arTasks').value || 0;
                 var pct = +document.getElementById('arPct').value || 0;
@@ -974,7 +974,7 @@
         (function () {
             var b = document.getElementById('abBase'), l = document.getElementById('abLift'), v = document.getElementById('abVis');
             if (!b) return;
-            function card(t, val) { return '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-400">' + t + '</p><p class="text-3xl font-medium mt-1">' + val + '</p></div>'; }
+            function card(t, val) { return '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-500">' + t + '</p><p class="text-3xl font-medium mt-1">' + val + '</p></div>'; }
             function calc() {
                 var p1 = (+b.value || 0) / 100, lift = (+l.value || 0) / 100, vis = +v.value || 0;
                 var res = document.getElementById('abResult');
