@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lab | James Svolos</title>
-    <meta name="description" content="The Lab: interactive data experiments by James Svolos — forecasts vs. lagging metrics, cherry-picked timeframes, a prompt estimator, daylight vs. mood, meeting load, PGA putting, Strokes Gained, and the decoy effect.">
+    <meta name="description" content="The Lab: interactive data experiments by James Svolos — GenAI cost & agent ROI, A/B planning, forecasts vs. lagging metrics, cherry-picked timeframes, a prompt estimator, daylight vs. mood, meeting load, PGA putting, Strokes Gained, and the decoy effect.">
     <link rel="canonical" href="https://jamessvolos.com/lab/">
     <link rel="icon" type="image/png" href="/favicon.png">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Lab | James Svolos">
-    <meta property="og:description" content="Interactive data experiments: forecasts, cherry-picking, prompt estimator, daylight, meeting load, putting, Strokes Gained, decoy effect.">
+    <meta property="og:description" content="Interactive data experiments: GenAI cost, agent ROI, A/B planning, forecasting, cherry-picking, prompt estimator, putting, Strokes Gained, decoy effect.">
     <meta property="og:url" content="https://jamessvolos.com/lab/">
     <meta property="og:image" content="https://jamessvolos.com/favicon.png">
     <meta name="twitter:card" content="summary">
@@ -28,6 +28,7 @@
         html { scroll-behavior: smooth; }
         .seg-btn.active { background:#5da7c9; color:#fff; }
         .hcp-btn.active { background:#5da7c9; color:#fff; }
+        .labchip.active { background:#5da7c9; color:#fff; border-color:#5da7c9; }
     </style>
 </head>
 <body class="text-gray-800">
@@ -50,49 +51,75 @@
         <h1 class="text-5xl font-light tracking-tighter mb-2">Lab</h1>
         <p class="text-xl text-gray-600 mb-10">Interactive experiments in turning data into clarity. Click in — every one responds to you.</p>
 
+        <!-- TAG FILTER -->
+        <div id="labFilter" class="flex flex-wrap gap-2 mb-8">
+            <button class="labchip active px-4 py-2 rounded-full border border-gray-300 text-sm" data-tag="all">All</button>
+            <button class="labchip px-4 py-2 rounded-full border border-gray-300 text-sm" data-tag="ai">AI</button>
+            <button class="labchip px-4 py-2 rounded-full border border-gray-300 text-sm" data-tag="growth">Growth</button>
+            <button class="labchip px-4 py-2 rounded-full border border-gray-300 text-sm" data-tag="forecasting">Forecasting</button>
+            <button class="labchip px-4 py-2 rounded-full border border-gray-300 text-sm" data-tag="behavioral">Behavioral</button>
+            <button class="labchip px-4 py-2 rounded-full border border-gray-300 text-sm" data-tag="sports">Sports</button>
+            <button class="labchip px-4 py-2 rounded-full border border-gray-300 text-sm" data-tag="life">Life</button>
+        </div>
+
         <!-- GALLERY NAV -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
-            <a href="#forecast" class="bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
+            <a href="#gencost" data-tags="ai" class="labtile bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
+                <i class="fa-solid fa-coins text-2xl accent-coral"></i>
+                <p class="font-medium mt-3 leading-snug">GenAI Cost at Scale</p>
+                <p class="text-xs text-gray-500 mt-1">what does it cost?</p>
+            </a>
+            <a href="#agentroi" data-tags="ai" class="labtile bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
+                <i class="fa-solid fa-robot text-2xl accent-coral"></i>
+                <p class="font-medium mt-3 leading-snug">Agent ROI</p>
+                <p class="text-xs text-gray-500 mt-1">automate the work</p>
+            </a>
+            <a href="#abtest" data-tags="growth" class="labtile bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
+                <i class="fa-solid fa-flask-vial text-2xl accent-coral"></i>
+                <p class="font-medium mt-3 leading-snug">A/B Test Planner</p>
+                <p class="text-xs text-gray-500 mt-1">sample &amp; duration</p>
+            </a>
+            <a href="#forecast" data-tags="forecasting" class="labtile bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
                 <i class="fa-solid fa-chart-line text-2xl accent-coral"></i>
                 <p class="font-medium mt-3 leading-snug">Forecasts Lead</p>
                 <p class="text-xs text-gray-500 mt-1">vs. lagging metrics</p>
             </a>
-            <a href="#cherry" class="bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
+            <a href="#cherry" data-tags="forecasting" class="labtile bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
                 <i class="fa-solid fa-crop-simple text-2xl accent-coral"></i>
                 <p class="font-medium mt-3 leading-snug">Cherry-Picking</p>
                 <p class="text-xs text-gray-500 mt-1">timeframes lie</p>
             </a>
-            <a href="#prompt" class="bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
+            <a href="#prompt" data-tags="ai" class="labtile bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
                 <i class="fa-solid fa-wand-magic-sparkles text-2xl accent-coral"></i>
                 <p class="font-medium mt-3 leading-snug">Prompt Playground</p>
                 <p class="text-xs text-gray-500 mt-1">tokens · cost · clarity</p>
             </a>
-            <a href="#daylight" class="bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
+            <a href="#daylight" data-tags="life" class="labtile bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
                 <i class="fa-solid fa-sun text-2xl accent-coral"></i>
                 <p class="font-medium mt-3 leading-snug">Daylight vs. Mood</p>
                 <p class="text-xs text-gray-500 mt-1">pick a city</p>
             </a>
-            <a href="#meeting" class="bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
+            <a href="#meeting" data-tags="life" class="labtile bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
                 <i class="fa-solid fa-calendar-week text-2xl accent-coral"></i>
                 <p class="font-medium mt-3 leading-snug">Meeting Load</p>
                 <p class="text-xs text-gray-500 mt-1">by seniority</p>
             </a>
-            <a href="#golf" class="bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
+            <a href="#golf" data-tags="sports" class="labtile bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
                 <i class="fa-solid fa-golf-ball-tee text-2xl accent-coral"></i>
                 <p class="font-medium mt-3 leading-snug">PGA Putting</p>
                 <p class="text-xs text-gray-500 mt-1">drag the distance</p>
             </a>
-            <a href="#sg" class="bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
+            <a href="#sg" data-tags="sports" class="labtile bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
                 <i class="fa-solid fa-flag text-2xl accent-coral"></i>
                 <p class="font-medium mt-3 leading-snug">Strokes Gained</p>
                 <p class="text-xs text-gray-500 mt-1">build a shot</p>
             </a>
-            <a href="#sgwon" class="bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
+            <a href="#sgwon" data-tags="sports" class="labtile bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
                 <i class="fa-solid fa-ranking-star text-2xl accent-coral"></i>
                 <p class="font-medium mt-3 leading-snug">Where Strokes Are Won</p>
                 <p class="text-xs text-gray-500 mt-1">drive for show?</p>
             </a>
-            <a href="#decoy" class="bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
+            <a href="#decoy" data-tags="behavioral" class="labtile bg-white rounded-3xl p-6 transition hover:-translate-y-1 hover:shadow-xl">
                 <i class="fa-solid fa-scale-unbalanced text-2xl accent-coral"></i>
                 <p class="font-medium mt-3 leading-snug">The Decoy Effect</p>
                 <p class="text-xs text-gray-500 mt-1">irrational by design</p>
@@ -325,6 +352,87 @@
             <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
                 <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> a “useless” option you'd never choose can still reshape the choice you do make. Context creates value — design the menu, not just the products.</p>
                 <p class="text-xs text-gray-500 mt-2">Behind the viz: based on Dan Ariely's Economist-subscription experiment (“Predictably Irrational”). Adding the print-only decoy pushed combo sign-ups from 32% to 84%.</p>
+            </div>
+        </div>
+
+        <!-- 10. GenAI Cost at Scale -->
+        <div id="gencost" class="exp reveal mb-16 mt-16">
+            <div class="bg-white rounded-3xl p-8">
+                <h2 class="text-3xl font-light accent-blue mb-3">GenAI Cost at Scale</h2>
+                <p class="text-gray-600 mb-6">Pick a model and a workload, and see what generative AI actually costs per day, month, and year.</p>
+                <div class="bg-gray-100 rounded-2xl p-6 grid md:grid-cols-2 gap-5">
+                    <label class="text-sm text-gray-600">Model
+                        <select id="gcModel" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#5da7c9]"></select>
+                    </label>
+                    <label class="text-sm text-gray-600">Requests per day
+                        <input id="gcReq" type="number" value="10000" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#5da7c9]">
+                    </label>
+                    <label class="text-sm text-gray-600">Input tokens / request
+                        <input id="gcIn" type="number" value="1000" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#5da7c9]">
+                    </label>
+                    <label class="text-sm text-gray-600">Output tokens / request
+                        <input id="gcOut" type="number" value="300" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#5da7c9]">
+                    </label>
+                </div>
+                <div id="gcResult" class="mt-8 grid sm:grid-cols-3 gap-4 text-center"></div>
+            </div>
+            <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
+                <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> at scale, model choice and output length dominate the bill — a cheaper model or tighter outputs can cut cost by an order of magnitude.</p>
+                <p class="text-xs text-gray-500 mt-2">Behind the viz: cost = requests × (input_tokens × input_price + output_tokens × output_price), using published per-million-token list prices (approximate, mid-2025).</p>
+            </div>
+        </div>
+
+        <!-- 11. Autonomous Agent ROI -->
+        <div id="agentroi" class="exp reveal mb-16">
+            <div class="bg-white rounded-3xl p-8">
+                <h2 class="text-3xl font-light accent-blue mb-3">Autonomous Agent ROI</h2>
+                <p class="text-gray-600 mb-6">How much does an AI agent return when it resolves work autonomously? Set the workload and see.</p>
+                <div class="bg-gray-100 rounded-2xl p-6 grid md:grid-cols-2 gap-5">
+                    <label class="text-sm text-gray-600">Tasks per day
+                        <input id="arTasks" type="number" value="500" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#5da7c9]">
+                    </label>
+                    <label class="text-sm text-gray-600">Auto-resolved: <span id="arPctVal" class="font-medium">60%</span>
+                        <input id="arPct" type="range" min="0" max="100" value="60" step="5" class="w-full mt-2 accent-[#e07a5f]">
+                    </label>
+                    <label class="text-sm text-gray-600">Minutes saved / task
+                        <input id="arMin" type="number" value="12" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#5da7c9]">
+                    </label>
+                    <label class="text-sm text-gray-600">Loaded cost ($/hr)
+                        <input id="arRate" type="number" value="60" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#5da7c9]">
+                    </label>
+                    <label class="text-sm text-gray-600">Agent cost ($/mo)
+                        <input id="arCost" type="number" value="2000" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#5da7c9]">
+                    </label>
+                </div>
+                <div id="arResult" class="mt-8 grid sm:grid-cols-3 gap-4 text-center"></div>
+            </div>
+            <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
+                <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> agent ROI is driven by volume × resolution rate — automating even a slice of high-frequency work compounds fast.</p>
+                <p class="text-xs text-gray-500 mt-2">Behind the viz: hours saved = tasks × auto-rate × minutes ÷ 60 × 30.4; net = labor saved − agent cost; ROI = net ÷ agent cost.</p>
+            </div>
+        </div>
+
+        <!-- 12. A/B Test Planner -->
+        <div id="abtest" class="exp reveal">
+            <div class="bg-white rounded-3xl p-8">
+                <h2 class="text-3xl font-light accent-blue mb-3">A/B Test Planner</h2>
+                <p class="text-gray-600 mb-6">Enter a baseline conversion rate, the lift you want to detect, and your traffic — get the sample size and how long the test must run.</p>
+                <div class="bg-gray-100 rounded-2xl p-6 grid md:grid-cols-3 gap-5">
+                    <label class="text-sm text-gray-600">Baseline conversion (%)
+                        <input id="abBase" type="number" value="5" step="0.1" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#5da7c9]">
+                    </label>
+                    <label class="text-sm text-gray-600">Relative lift to detect (%)
+                        <input id="abLift" type="number" value="10" step="1" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#5da7c9]">
+                    </label>
+                    <label class="text-sm text-gray-600">Visitors per day (total)
+                        <input id="abVis" type="number" value="4000" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#5da7c9]">
+                    </label>
+                </div>
+                <div id="abResult" class="mt-8 grid sm:grid-cols-3 gap-4 text-center"></div>
+            </div>
+            <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
+                <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> small lifts on low base rates need a lot of traffic — know your runtime before you start, not after.</p>
+                <p class="text-xs text-gray-500 mt-2">Behind the viz: two-proportion sample size at 95% confidence and 80% power, split evenly across two arms.</p>
             </div>
         </div>
     </div>
@@ -571,7 +679,7 @@
             var p = pctAt(d);
             Plotly.react('golfPlot', [
                 { x: DIST, y: MAKE, type: 'scatter', mode: 'lines+markers', name: 'Make %', line: { color: BLUE, width: 3 }, marker: { color: BLUE, size: 7 }, hovertemplate: '%{x} ft → %{y}% made<extra></extra>' },
-                { x: [d], y: [p], type: 'scatter', mode: 'markers', name: 'Selected', marker: { color: CORAL, size: 16, line: { color: '#fff', width: 2 } }, hovertemplate: d + ' ft → ' + p + '% made<extra></extra>' }
+                { x: [d], y: [pctAt(d)], type: 'scatter', mode: 'markers', name: 'Selected', marker: { color: CORAL, size: 16, line: { color: '#fff', width: 2 } }, hovertemplate: d + ' ft → ' + p + '% made<extra></extra>' }
             ], Object.assign({}, baseLayout, {
                 showlegend: false,
                 shapes: [{ type: 'line', x0: 3, x1: 30, y0: 50, y1: 50, line: { color: '#bbb', width: 1, dash: 'dot' } }],
@@ -690,6 +798,97 @@
             document.querySelectorAll('.decoy-opt2').forEach(function (b) {
                 b.addEventListener('click', function () { choice2 = b.dataset.k; mark(b, '.decoy-opt2'); maybeResult(); });
             });
+        })();
+
+        // ---- Gallery tag filter ----
+        (function () {
+            var filter = document.getElementById('labFilter');
+            if (!filter) return;
+            var chips = filter.querySelectorAll('.labchip');
+            var tiles = document.querySelectorAll('.labtile');
+            filter.addEventListener('click', function (e) {
+                var c = e.target.closest('.labchip'); if (!c) return;
+                chips.forEach(function (x) { x.classList.remove('active'); });
+                c.classList.add('active');
+                var tag = c.dataset.tag;
+                tiles.forEach(function (t) {
+                    var tags = (t.dataset.tags || '').split(' ');
+                    t.style.display = (tag === 'all' || tags.indexOf(tag) !== -1) ? '' : 'none';
+                });
+            });
+        })();
+
+        // ---- 10. GenAI Cost at Scale ----
+        (function () {
+            var sel = document.getElementById('gcModel');
+            if (!sel) return;
+            var MODELS = [
+                { n: 'GPT-4o', i: 2.50, o: 10.00 },
+                { n: 'GPT-4o mini', i: 0.15, o: 0.60 },
+                { n: 'Claude Opus 4', i: 15.00, o: 75.00 },
+                { n: 'Claude Sonnet 4', i: 3.00, o: 15.00 },
+                { n: 'Claude Haiku', i: 0.80, o: 4.00 },
+                { n: 'Gemini 1.5 Pro', i: 1.25, o: 5.00 }
+            ];
+            MODELS.forEach(function (m, idx) { var o = document.createElement('option'); o.value = idx; o.textContent = m.n; sel.appendChild(o); });
+            function money(x) { return x >= 1 ? '$' + Math.round(x).toLocaleString() : '$' + x.toFixed(2); }
+            function card(l, v) { return '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-400">' + l + '</p><p class="text-3xl font-medium mt-1 accent-coral">' + v + '</p></div>'; }
+            function calc() {
+                var m = MODELS[+sel.value];
+                var req = +document.getElementById('gcReq').value || 0;
+                var inT = +document.getElementById('gcIn').value || 0;
+                var outT = +document.getElementById('gcOut').value || 0;
+                var perReq = (inT / 1e6 * m.i) + (outT / 1e6 * m.o);
+                var day = perReq * req;
+                document.getElementById('gcResult').innerHTML = card('Per day', money(day)) + card('Per month', money(day * 30.4)) + card('Per year', money(day * 365));
+            }
+            ['gcModel', 'gcReq', 'gcIn', 'gcOut'].forEach(function (id) { document.getElementById(id).addEventListener('input', calc); });
+            calc();
+        })();
+
+        // ---- 11. Autonomous Agent ROI ----
+        (function () {
+            var ids = ['arTasks', 'arPct', 'arMin', 'arRate', 'arCost'];
+            if (!document.getElementById('arTasks')) return;
+            function card(l, v, color) { return '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-400">' + l + '</p><p class="text-3xl font-medium mt-1" style="color:' + (color || '#374151') + '">' + v + '</p></div>'; }
+            function calc() {
+                var tasks = +document.getElementById('arTasks').value || 0;
+                var pct = +document.getElementById('arPct').value || 0;
+                var min = +document.getElementById('arMin').value || 0;
+                var rate = +document.getElementById('arRate').value || 0;
+                var cost = +document.getElementById('arCost').value || 0;
+                document.getElementById('arPctVal').textContent = pct + '%';
+                var hrsMo = (tasks * pct / 100) * min / 60 * 30.4;
+                var saved = hrsMo * rate;
+                var net = saved - cost;
+                var roi = cost > 0 ? net / cost * 100 : 0;
+                var col = net >= 0 ? '#16a34a' : '#dc2626';
+                document.getElementById('arResult').innerHTML =
+                    card('Hours saved / mo', Math.round(hrsMo).toLocaleString()) +
+                    card('Net $ saved / mo', '$' + Math.round(net).toLocaleString(), col) +
+                    card('ROI', Math.round(roi) + '%', col);
+            }
+            ids.forEach(function (id) { document.getElementById(id).addEventListener('input', calc); });
+            calc();
+        })();
+
+        // ---- 12. A/B Test Planner ----
+        (function () {
+            var b = document.getElementById('abBase'), l = document.getElementById('abLift'), v = document.getElementById('abVis');
+            if (!b) return;
+            function card(t, val) { return '<div class="bg-white rounded-2xl px-6 py-5 shadow-sm"><p class="text-xs uppercase tracking-widest text-gray-400">' + t + '</p><p class="text-3xl font-medium mt-1">' + val + '</p></div>'; }
+            function calc() {
+                var p1 = (+b.value || 0) / 100, lift = (+l.value || 0) / 100, vis = +v.value || 0;
+                var res = document.getElementById('abResult');
+                var p2 = p1 * (1 + lift), delta = p2 - p1;
+                if (p1 <= 0 || p1 >= 1 || delta <= 0) { res.innerHTML = '<p class="sm:col-span-3 text-gray-500 text-sm">Enter a baseline between 0 and 100% and a positive lift.</p>'; return; }
+                var n = Math.ceil(7.849 * (p1 * (1 - p1) + p2 * (1 - p2)) / (delta * delta));
+                var total = n * 2;
+                var days = vis > 0 ? Math.ceil(total / vis) : 0;
+                res.innerHTML = card('Per variant', n.toLocaleString()) + card('Total sample', total.toLocaleString()) + card('Est. days', days ? days.toLocaleString() : '—');
+            }
+            [b, l, v].forEach(function (e) { e.addEventListener('input', calc); });
+            calc();
         })();
     </script>
 </body>
