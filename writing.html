@@ -6,8 +6,8 @@
     <title>Writing | James Svolos</title>
     <meta name="description" content="Essays by James Svolos on data, leadership, forecasting, and turning complexity into clarity — pulled live from Substack.">
     <link rel="canonical" href="https://jamessvolos.com/writing.html">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
+    <link rel="icon" type="image/png" href="/favicon.png?v=2">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Writing | James Svolos">
     <meta property="og:description" content="Essays on data, leadership, forecasting, and turning complexity into clarity.">
@@ -58,6 +58,8 @@
         @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
         .chip.active { background:#5da7c9; color:#fff; border-color:#5da7c9; }
         .cover-fallback { background: linear-gradient(135deg, rgba(93,167,201,.25), rgba(224,122,95,.25)); }
+        .field { transition: border-color .2s ease, box-shadow .2s ease; }
+        .field:focus { outline: none; border-color: #5da7c9; box-shadow: 0 0 0 3px rgba(93,167,201,.15); }
     </style>
 </head>
 <body class="text-gray-800">
@@ -78,25 +80,32 @@
 
     <div class="max-w-6xl mx-auto px-6 py-12">
         <h1 class="text-5xl font-light tracking-tighter mb-2">Writing</h1>
-        <p class="text-xl text-gray-600 mb-8">How I think about leading with data — strategy, forecasting, and turning complexity into decisions leaders can act on.</p>
+        <p class="text-xl text-gray-600 mb-8 max-w-2xl">How I think about leading with data — strategy, forecasting, behavioral economics, and turning complexity into decisions leaders can act on.</p>
 
-        <!-- Tag filter bar (populated dynamically; hidden until then) -->
-        <div id="tagbar" class="flex flex-wrap gap-2 mb-10 hidden"></div>
+        <!-- Toolbar: search + tag filters (search always available; tags appear once feed loads) -->
+        <div class="mb-8 flex flex-col gap-4">
+            <div class="relative max-w-md">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                <input id="writingSearch" type="search" placeholder="Search essays…"
+                       class="field w-full rounded-full border border-gray-200 bg-white pl-11 pr-4 py-3 text-sm">
+            </div>
+            <div id="tagbar" class="flex flex-wrap gap-2 hidden"></div>
+        </div>
 
         <!-- Content: static fallback shown first, replaced by the live feed on success -->
         <div id="writingContent">
             <div class="grid md:grid-cols-3 gap-6">
-                <a href="https://jsvolos.substack.com/p/scaling-down-and-executing" target="_blank" rel="noopener" class="block bg-white rounded-3xl p-8 hover:shadow-xl transition">
+                <a href="https://jsvolos.substack.com/p/scaling-down-and-executing" target="_blank" rel="noopener" data-search="why great teams shrink the scope to ship reducing scope execute" data-tags="leadership" class="writing-item filter-item block bg-white rounded-3xl p-8 hover:shadow-xl transition">
                     <p class="text-xs uppercase tracking-widest text-gray-500 mb-3">Substack</p>
                     <h2 class="text-xl font-medium mb-3 leading-snug">Why great teams shrink the scope to ship</h2>
                     <p class="text-gray-600 text-sm">How reducing scope helps teams execute faster and deliver better results.</p>
                 </a>
-                <a href="https://jsvolos.substack.com/p/metrics-lag-forecasts-lead" target="_blank" rel="noopener" class="block bg-white rounded-3xl p-8 hover:shadow-xl transition">
+                <a href="https://jsvolos.substack.com/p/metrics-lag-forecasts-lead" target="_blank" rel="noopener" data-search="metrics lag forecasts lead forecasting early business signals" data-tags="forecasting" class="writing-item filter-item block bg-white rounded-3xl p-8 hover:shadow-xl transition">
                     <p class="text-xs uppercase tracking-widest text-gray-500 mb-3">Substack</p>
                     <h2 class="text-xl font-medium mb-3 leading-snug">Metrics Lag, Forecasts Lead</h2>
                     <p class="text-gray-600 text-sm">Using forecasting for early business signals instead of waiting for lagging metrics.</p>
                 </a>
-                <a href="https://jsvolos.substack.com/p/tell-me-data-lies-cherry-picking" target="_blank" rel="noopener" class="block bg-white rounded-3xl p-8 hover:shadow-xl transition">
+                <a href="https://jsvolos.substack.com/p/tell-me-data-lies-cherry-picking" target="_blank" rel="noopener" data-search="tell me data lies cherry-picking timeframes" data-tags="data lies" class="writing-item filter-item block bg-white rounded-3xl p-8 hover:shadow-xl transition">
                     <p class="text-xs uppercase tracking-widest text-gray-500 mb-3">Substack</p>
                     <h2 class="text-xl font-medium mb-3 leading-snug">Tell Me Data Lies: Cherry-Picking Timeframes</h2>
                     <p class="text-gray-600 text-sm">How timeframes alter data stories — and how to spot (and avoid) this common trap.</p>
@@ -104,16 +113,23 @@
             </div>
         </div>
 
-        <!-- Subscribe CTA -->
+        <!-- No-results message -->
+        <p id="noResults" class="hidden text-gray-500 py-12 text-center">No essays match that search. <button id="clearSearch" class="accent-coral font-medium hover:underline">Clear</button></p>
+
+        <!-- Subscribe CTA with inline email capture -->
         <div class="mt-16 bg-white rounded-3xl p-8 md:flex items-center justify-between gap-8">
-            <div class="mb-6 md:mb-0">
+            <div class="mb-6 md:mb-0 md:max-w-sm">
                 <h2 class="text-2xl font-medium mb-2">Get new essays in your inbox</h2>
                 <p class="text-gray-600">No spam — just data, leadership, and the occasional golf stat.</p>
             </div>
-            <a href="https://jsvolos.substack.com/subscribe" target="_blank" rel="noopener"
-               class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#e07a5f] hover:bg-[#d16a50] text-white rounded-3xl font-medium transition whitespace-nowrap">
-                <i class="fa-solid fa-envelope-open-text"></i> Subscribe on Substack
-            </a>
+            <form id="subscribeForm" class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                <input id="subEmail" type="email" required placeholder="you@email.com"
+                       class="field rounded-full border border-gray-200 bg-gray-50 px-5 py-3 text-sm sm:w-64">
+                <button type="submit"
+                        class="inline-flex items-center justify-center gap-2 px-7 py-3 bg-[#e07a5f] hover:bg-[#d16a50] text-white rounded-full font-medium transition whitespace-nowrap">
+                    <i class="fa-solid fa-envelope-open-text"></i> Subscribe
+                </button>
+            </form>
         </div>
     </div>
 
@@ -122,11 +138,28 @@
     </footer>
 
     <script>
+    // ---- Inline subscribe → Substack (prefilled) ----
+    (function () {
+        var form = document.getElementById('subscribeForm');
+        if (!form) return;
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var email = (document.getElementById('subEmail').value || '').trim();
+            var url = 'https://jsvolos.substack.com/subscribe';
+            if (email) url += '?email=' + encodeURIComponent(email);
+            window.open(url, '_blank', 'noopener');
+        });
+    })();
+
+    // ---- Live feed + search/tag filtering ----
     (function () {
         var FEED = 'https://jsvolos.substack.com/feed';
         var PROXY = 'https://api.allorigins.win/raw?url=';
         var content = document.getElementById('writingContent');
         var tagbar = document.getElementById('tagbar');
+        var searchInput = document.getElementById('writingSearch');
+        var noResults = document.getElementById('noResults');
+        var currentTag = 'all';
 
         function esc(s) {
             return (s || '').replace(/[&<>"']/g, function (c) {
@@ -169,9 +202,12 @@
             bits.push(post.read + ' min read');
             return bits.join(' · ');
         }
+        function searchData(post) {
+            return (post.title + ' ' + post.excerpt + ' ' + post.tags.join(' ')).toLowerCase();
+        }
 
         function heroCard(post) {
-            return '<a href="' + esc(post.link) + '" target="_blank" rel="noopener" class="reveal block bg-white rounded-3xl overflow-hidden hover:shadow-xl transition md:flex mb-10">' +
+            return '<a href="' + esc(post.link) + '" target="_blank" rel="noopener" data-search="' + esc(searchData(post)) + '" data-tags="' + esc(post.tags.join('|').toLowerCase()) + '" class="filter-item reveal block bg-white rounded-3xl overflow-hidden hover:shadow-xl transition md:flex mb-10">' +
                 cover(post.image, 'md:w-1/2 h-56 md:h-auto') +
                 '<div class="p-8 md:w-1/2 flex flex-col justify-center">' +
                     '<p class="text-xs uppercase tracking-widest accent-coral mb-2">Latest</p>' +
@@ -182,7 +218,7 @@
             '</a>';
         }
         function gridCard(post) {
-            return '<a href="' + esc(post.link) + '" target="_blank" rel="noopener" data-tags="' + esc(post.tags.join('|').toLowerCase()) + '" class="writing-item reveal block bg-white rounded-3xl overflow-hidden hover:shadow-xl transition">' +
+            return '<a href="' + esc(post.link) + '" target="_blank" rel="noopener" data-search="' + esc(searchData(post)) + '" data-tags="' + esc(post.tags.join('|').toLowerCase()) + '" class="filter-item reveal block bg-white rounded-3xl overflow-hidden hover:shadow-xl transition">' +
                 cover(post.image, 'h-44') +
                 '<div class="p-6">' +
                     '<p class="text-xs text-gray-400 mb-2">' + meta(post) + '</p>' +
@@ -204,6 +240,22 @@
             els.forEach(function (e) { io.observe(e); });
         }
 
+        function applyFilters() {
+            var q = (searchInput.value || '').trim().toLowerCase();
+            var items = content.querySelectorAll('.filter-item');
+            var shown = 0;
+            items.forEach(function (item) {
+                var tags = '|' + (item.dataset.tags || '') + '|';
+                var hay = item.dataset.search || '';
+                var tagOk = currentTag === 'all' || tags.indexOf('|' + currentTag + '|') !== -1;
+                var searchOk = !q || hay.indexOf(q) !== -1;
+                var show = tagOk && searchOk;
+                item.style.display = show ? '' : 'none';
+                if (show) shown++;
+            });
+            noResults.classList.toggle('hidden', shown !== 0);
+        }
+
         function buildTagbar(posts) {
             var counts = {};
             posts.forEach(function (p) { p.tags.forEach(function (t) { counts[t] = (counts[t] || 0) + 1; }); });
@@ -219,20 +271,23 @@
                 var btn = e.target.closest('.chip'); if (!btn) return;
                 tagbar.querySelectorAll('.chip').forEach(function (c) { c.classList.remove('active'); });
                 btn.classList.add('active');
-                var tag = btn.dataset.tag;
-                content.querySelectorAll('.writing-item').forEach(function (item) {
-                    var show = tag === 'all' || ('|' + item.dataset.tags + '|').indexOf('|' + tag + '|') !== -1;
-                    item.style.display = show ? '' : 'none';
-                });
+                currentTag = btn.dataset.tag;
+                applyFilters();
             });
         }
+
+        // wire search (works on the static fallback immediately, and on live content once loaded)
+        searchInput.addEventListener('input', applyFilters);
+        document.getElementById('clearSearch').addEventListener('click', function () {
+            searchInput.value = ''; applyFilters(); searchInput.focus();
+        });
 
         fetch(PROXY + encodeURIComponent(FEED))
             .then(function (r) { if (!r.ok) throw new Error('feed ' + r.status); return r.text(); })
             .then(function (xml) {
                 var doc = new DOMParser().parseFromString(xml, 'text/xml');
                 if (doc.querySelector('parsererror')) throw new Error('parse error');
-                var items = Array.prototype.slice.call(doc.getElementsByTagName('item')).slice(0, 10);
+                var items = Array.prototype.slice.call(doc.getElementsByTagName('item')).slice(0, 12);
                 if (!items.length) throw new Error('no items');
                 var get = function (el, tag) { var n = firstTag(el, tag); return n ? n.textContent : ''; };
                 var posts = items.map(function (it) {
@@ -257,8 +312,9 @@
                     html += '<div class="grid md:grid-cols-3 gap-6">' + rest.map(gridCard).join('') + '</div>';
                 }
                 content.innerHTML = html;
-                buildTagbar(rest);
+                buildTagbar(posts);
                 revealAll();
+                applyFilters(); // respect any search term already typed
             })
             .catch(function (e) {
                 if (window.console) console.warn('Writing: live feed unavailable, using fallback.', e);

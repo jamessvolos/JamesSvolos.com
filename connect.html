@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connect | James Svolos</title>
-    <meta name="description" content="Get in touch with James Svolos — LinkedIn, Substack, and email. Happy to chat about data, leadership, visualizations, or golf analytics.">
+    <meta name="description" content="Get in touch with James Svolos — data & AI leadership roles, advising, speaking, or golf analytics. Send a message, or reach out on LinkedIn, Substack, or email.">
     <link rel="canonical" href="https://jamessvolos.com/connect.html">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
+    <link rel="icon" type="image/png" href="/favicon.png?v=2">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Connect | James Svolos">
-    <meta property="og:description" content="LinkedIn, Substack, and email. Happy to chat about data and leadership.">
+    <meta property="og:description" content="Data & AI leadership, advising, speaking, or golf analytics. Send a message or find me on LinkedIn and Substack.">
     <meta property="og:url" content="https://jamessvolos.com/connect.html">
     <meta property="og:image" content="https://jamessvolos.com/favicon.png">
     <meta name="twitter:card" content="summary">
@@ -21,6 +21,11 @@
         body { font-family: 'Inter', system-ui, sans-serif; background-color: #f8f4ed; }
         .accent-blue { color: #5da7c9; }
         .accent-coral { color: #e07a5f; }
+        .reveal { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
+        .reveal.reveal-in { opacity: 1; transform: none; }
+        @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+        .field { transition: border-color .2s ease, box-shadow .2s ease; }
+        .field:focus { outline: none; border-color: #5da7c9; box-shadow: 0 0 0 3px rgba(93,167,201,.15); }
     </style>
 </head>
 <body class="text-gray-800">
@@ -40,38 +45,205 @@
     </nav>
 
     <div class="max-w-6xl mx-auto px-6 py-12">
-        <h1 class="text-5xl font-light tracking-tighter mb-8">Connect</h1>
-        
-        <div class="max-w-md">
-            <p class="text-xl text-gray-600 mb-8">
-                I'm always happy to chat about data, leadership, visualizations, or golf analytics.
-            </p>
+        <h1 class="text-5xl font-light tracking-tighter mb-3">Let's connect</h1>
+        <p class="text-xl text-gray-600 max-w-2xl mb-12">
+            Building a data-driven org, sizing up a leadership hire, or just want to compare notes on forecasting, behavioral economics, or golf analytics? Drop me a line.
+        </p>
 
-            <div class="space-y-6">
-                <a href="https://www.linkedin.com/in/james-svolos-74358559" target="_blank" rel="noopener"
-                   class="flex items-center gap-4 text-lg hover:text-[#e07a5f] transition">
-                    <i class="fa-brands fa-linkedin fa-2x w-8"></i>
-                    LinkedIn
-                </a>
+        <div class="grid lg:grid-cols-5 gap-8">
+            <!-- LEFT: contact form -->
+            <div class="lg:col-span-3 bg-white rounded-3xl p-8 reveal">
+                <h2 class="text-2xl font-medium mb-1">Send a message</h2>
+                <p class="text-gray-500 text-sm mb-6">Goes straight to my inbox. I usually reply within a day or two.</p>
 
-                <a href="https://jsvolos.substack.com" target="_blank" rel="noopener"
-                   class="flex items-center gap-4 text-lg hover:text-[#e07a5f] transition">
-                    <i class="fa-solid fa-newspaper fa-2x w-8"></i>
-                    Substack
-                </a>
+                <form id="contactForm" class="space-y-5">
+                    <!-- Web3Forms: replace the access_key value with your own free key from https://web3forms.com (enter your email, they send the key). Until then, the form gracefully falls back to opening your email client. -->
+                    <input type="hidden" name="access_key" value="REPLACE_WITH_WEB3FORMS_KEY">
+                    <input type="hidden" name="subject" value="New message from jamessvolos.com">
+                    <input type="hidden" name="from_name" value="jamessvolos.com">
+                    <!-- honeypot -->
+                    <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off">
 
-                <a href="mailto:svolos.james@outlook.com"
-                   class="flex items-center gap-4 text-lg hover:text-[#e07a5f] transition">
-                    <i class="fa-solid fa-envelope fa-2x w-8"></i>
-                    Email me
-                </a>
+                    <div class="grid sm:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-medium mb-2" for="cf-name">Name</label>
+                            <input id="cf-name" name="name" type="text" required
+                                   class="field w-full rounded-2xl border border-gray-200 px-4 py-3 bg-gray-50" placeholder="Your name">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2" for="cf-email">Email</label>
+                            <input id="cf-email" name="email" type="email" required
+                                   class="field w-full rounded-2xl border border-gray-200 px-4 py-3 bg-gray-50" placeholder="you@company.com">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-2" for="cf-topic">What's this about?</label>
+                        <select id="cf-topic" name="topic"
+                                class="field w-full rounded-2xl border border-gray-200 px-4 py-3 bg-gray-50">
+                            <option>A leadership role / opportunity</option>
+                            <option>Advising or consulting</option>
+                            <option>Speaking or podcast</option>
+                            <option>Golf / sports analytics</option>
+                            <option>Just saying hi</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-2" for="cf-message">Message</label>
+                        <textarea id="cf-message" name="message" rows="5" required
+                                  class="field w-full rounded-2xl border border-gray-200 px-4 py-3 bg-gray-50" placeholder="A sentence or two on what you have in mind."></textarea>
+                    </div>
+
+                    <button id="cf-submit" type="submit"
+                            class="w-full sm:w-auto px-8 py-4 bg-[#e07a5f] hover:bg-[#d16a50] text-white rounded-3xl font-medium inline-flex items-center justify-center gap-2 transition">
+                        <i class="fa-solid fa-paper-plane"></i> <span>Send message</span>
+                    </button>
+                    <p id="cf-status" class="text-sm mt-1" role="status" aria-live="polite"></p>
+                </form>
+            </div>
+
+            <!-- RIGHT: direct channels + context -->
+            <div class="lg:col-span-2 space-y-6">
+                <div class="bg-white rounded-3xl p-7 reveal">
+                    <h3 class="text-sm uppercase tracking-widest text-gray-500 mb-4">Reach out about</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-sm px-3 py-1.5 rounded-full bg-[#5da7c9]/10 text-[#5da7c9] font-medium">Data &amp; AI leadership</span>
+                        <span class="text-sm px-3 py-1.5 rounded-full bg-[#5da7c9]/10 text-[#5da7c9] font-medium">Advising</span>
+                        <span class="text-sm px-3 py-1.5 rounded-full bg-[#5da7c9]/10 text-[#5da7c9] font-medium">Speaking</span>
+                        <span class="text-sm px-3 py-1.5 rounded-full bg-[#5da7c9]/10 text-[#5da7c9] font-medium">Golf analytics</span>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-3xl p-7 reveal space-y-5">
+                    <a href="https://www.linkedin.com/in/james-svolos-74358559" target="_blank" rel="noopener"
+                       class="group flex items-center gap-4 hover:text-[#e07a5f] transition">
+                        <span class="w-11 h-11 rounded-2xl bg-[#5da7c9]/10 flex items-center justify-center text-[#5da7c9] group-hover:bg-[#e07a5f]/10 group-hover:text-[#e07a5f] transition">
+                            <i class="fa-brands fa-linkedin text-xl"></i>
+                        </span>
+                        <span>
+                            <span class="block font-medium leading-tight">LinkedIn</span>
+                            <span class="block text-sm text-gray-500">Best for roles &amp; intros</span>
+                        </span>
+                    </a>
+                    <a href="https://jsvolos.substack.com" target="_blank" rel="noopener"
+                       class="group flex items-center gap-4 hover:text-[#e07a5f] transition">
+                        <span class="w-11 h-11 rounded-2xl bg-[#5da7c9]/10 flex items-center justify-center text-[#5da7c9] group-hover:bg-[#e07a5f]/10 group-hover:text-[#e07a5f] transition">
+                            <i class="fa-solid fa-newspaper text-xl"></i>
+                        </span>
+                        <span>
+                            <span class="block font-medium leading-tight">Substack</span>
+                            <span class="block text-sm text-gray-500">Read &amp; subscribe to my essays</span>
+                        </span>
+                    </a>
+                    <div class="group flex items-center gap-4">
+                        <span class="w-11 h-11 rounded-2xl bg-[#5da7c9]/10 flex items-center justify-center text-[#5da7c9]">
+                            <i class="fa-solid fa-envelope text-xl"></i>
+                        </span>
+                        <span class="min-w-0">
+                            <span class="block font-medium leading-tight">Email</span>
+                            <button id="copyEmail" type="button" class="text-sm text-gray-500 hover:text-[#e07a5f] transition inline-flex items-center gap-2">
+                                <span id="emailText">svolos.james@outlook.com</span>
+                                <i class="fa-regular fa-copy"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="bg-[#5da7c9]/10 rounded-3xl p-7 reveal">
+                    <p class="text-sm text-gray-600 flex items-center gap-2">
+                        <i class="fa-solid fa-location-dot accent-blue"></i> Based in the Pacific Northwest · Pacific Time
+                    </p>
+                </div>
             </div>
         </div>
 
-        <div class="mt-16 text-sm text-gray-500">
-            © James Svolos
-        </div>
+        <div class="mt-16 text-sm text-gray-500">© James Svolos</div>
     </div>
+
+    <script>
+    // ---- Scroll reveal ----
+    (function () {
+        var els = document.querySelectorAll('.reveal');
+        if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('reveal-in'); }); return; }
+        var io = new IntersectionObserver(function (en) {
+            en.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('reveal-in'); io.unobserve(e.target); } });
+        }, { threshold: 0.1 });
+        els.forEach(function (e) { io.observe(e); });
+    })();
+
+    // ---- Copy email ----
+    (function () {
+        var btn = document.getElementById('copyEmail');
+        if (!btn) return;
+        var email = 'svolos.james@outlook.com';
+        btn.addEventListener('click', function () {
+            var done = function () {
+                var label = document.getElementById('emailText');
+                var prev = label.textContent;
+                label.textContent = 'Copied!';
+                setTimeout(function () { label.textContent = prev; }, 1500);
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(email).then(done).catch(function () { window.location.href = 'mailto:' + email; });
+            } else { window.location.href = 'mailto:' + email; }
+        });
+    })();
+
+    // ---- Contact form (Web3Forms with graceful mailto fallback) ----
+    (function () {
+        var form = document.getElementById('contactForm');
+        if (!form) return;
+        var status = document.getElementById('cf-status');
+        var submit = document.getElementById('cf-submit');
+        var EMAIL = 'svolos.james@outlook.com';
+
+        function mailtoFallback() {
+            var name = (form.name.value || '').trim();
+            var email = (form.email.value || '').trim();
+            var topic = form.topic.value || '';
+            var message = (form.message.value || '').trim();
+            var subject = encodeURIComponent('Website message: ' + topic);
+            var body = encodeURIComponent(message + '\n\n— ' + name + ' (' + email + ')');
+            window.location.href = 'mailto:' + EMAIL + '?subject=' + subject + '&body=' + body;
+        }
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (form.botcheck && form.botcheck.checked) return; // honeypot tripped
+            var key = form.access_key.value;
+            status.textContent = '';
+
+            // No key configured yet → go straight to the user's email client.
+            if (!key || key.indexOf('REPLACE_WITH') === 0) { mailtoFallback(); return; }
+
+            submit.disabled = true;
+            submit.querySelector('span').textContent = 'Sending…';
+
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify(Object.fromEntries(new FormData(form)))
+            })
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+                if (data.success) {
+                    form.reset();
+                    status.className = 'text-sm mt-1 text-green-600';
+                    status.textContent = 'Thanks — your message is on its way. I’ll be in touch soon.';
+                    submit.querySelector('span').textContent = 'Sent';
+                } else { throw new Error(data.message || 'failed'); }
+            })
+            .catch(function () {
+                status.className = 'text-sm mt-1 text-gray-500';
+                status.textContent = 'Opening your email app instead…';
+                mailtoFallback();
+                submit.disabled = false;
+                submit.querySelector('span').textContent = 'Send message';
+            });
+        });
+    })();
+    </script>
 
 </body>
 </html>

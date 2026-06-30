@@ -5,15 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About | James Svolos — Data Science Leader at Microsoft</title>
     <meta name="description" content="James Svolos is a data science leader at Microsoft who builds teams and turns data at massive scale into executive decisions, revenue, and reduced risk. Background in Information Science and Behavioral Psychology (Penn State).">
+    <meta name="keywords" content="data science leader, director of data science, VP analytics, CDAO, Microsoft, forecasting, behavioral economics, James Svolos">
     <link rel="canonical" href="https://jamessvolos.com/about.html">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
+    <link rel="icon" type="image/png" href="/favicon.png?v=2">
     <meta property="og:type" content="profile">
     <meta property="og:title" content="About | James Svolos">
     <meta property="og:description" content="Data science leader at Microsoft, turning complexity into clear decisions.">
     <meta property="og:url" content="https://jamessvolos.com/about.html">
     <meta property="og:image" content="https://jamessvolos.com/favicon.png">
     <meta name="twitter:card" content="summary">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "James Svolos",
+      "url": "https://jamessvolos.com/about.html",
+      "jobTitle": "Principal Data Science Manager",
+      "worksFor": { "@type": "Organization", "name": "Microsoft" },
+      "knowsAbout": ["Data Science Leadership", "Forecasting", "Product Analytics", "Behavioral Economics", "Decision Science", "Team Leadership"],
+      "alumniOf": { "@type": "CollegeOrUniversity", "name": "Pennsylvania State University" },
+      "sameAs": ["https://www.linkedin.com/in/james-svolos-74358559", "https://jsvolos.substack.com"]
+    }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -21,6 +35,13 @@
         body { font-family: 'Inter', system-ui, sans-serif; background-color: #f8f4ed; }
         .accent-blue { color: #5da7c9; }
         .accent-coral { color: #e07a5f; }
+        .reveal { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
+        .reveal.reveal-in { opacity: 1; transform: none; }
+        @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+        /* timeline spine */
+        .tl { position: relative; }
+        .tl::before { content: ''; position: absolute; left: 15px; top: 6px; bottom: 6px; width: 2px; background: linear-gradient(#5da7c9, rgba(93,167,201,.15)); }
+        .tl-dot { position: absolute; left: 7px; top: 4px; width: 18px; height: 18px; border-radius: 999px; background: #fff; border: 3px solid #5da7c9; }
     </style>
 </head>
 <body class="text-gray-800">
@@ -39,50 +60,139 @@
         </div>
     </nav>
 
-    <div class="max-w-3xl mx-auto px-6 py-12">
-        <h1 class="text-5xl font-light tracking-tighter mb-8">About</h1>
-
+    <!-- INTRO -->
+    <section class="max-w-3xl mx-auto px-6 pt-14 pb-4">
+        <p class="text-sm uppercase tracking-widest accent-coral mb-4">Principal Data Science Manager · Microsoft</p>
+        <h1 class="text-5xl font-light tracking-tighter mb-8 leading-tight">I turn data at massive scale into the decisions leaders act on.</h1>
         <div class="space-y-5 text-lg text-gray-700 leading-relaxed">
-            <p>I'm a data science leader who helps organizations turn complexity into clear, confident decisions. As a Principal Data Science Manager at Microsoft, I build and lead teams that connect product data to strategy, growth, and risk.</p>
-            <p>I've led data science across Security and Productivity — two of Microsoft's largest product areas — partnering with product and executive leaders to set direction. My teams have turned <strong>trillions of product signals</strong> into insights that reduce risk, drive revenue, and give leadership the confidence to act.</p>
-            <p>My background in Information Science and Behavioral Psychology from Penn State shaped how I work: data problems are as much about people and systems as they are about technology.</p>
+            <p>I'm a data science leader who helps organizations turn complexity into clear, confident decisions. At Microsoft, I build and lead teams that connect product data to strategy, growth, and risk — and I've done it across <strong>Security and Productivity</strong>, two of the company's largest product areas.</p>
+            <p>My teams have turned <strong>trillions of product signals</strong> into insight that reduces risk, drives revenue, and gives executives the confidence to move. My background in Information Science and Behavioral Psychology from Penn State shaped how I work: the hardest data problems are as much about people and incentives as they are about models.</p>
         </div>
+    </section>
 
-        <h2 class="text-3xl font-light accent-blue mt-16 mb-6">How I lead</h2>
+    <!-- METRICS BAND -->
+    <section class="max-w-5xl mx-auto px-6 pt-10">
+        <div class="grid sm:grid-cols-3 gap-6 text-center">
+            <div class="bg-white rounded-3xl p-8 reveal">
+                <p class="text-4xl font-light accent-coral">Trillions</p>
+                <p class="text-sm text-gray-600 mt-2">of product signals turned into executive-ready insight</p>
+            </div>
+            <div class="bg-white rounded-3xl p-8 reveal">
+                <p class="text-4xl font-light accent-coral">2 areas</p>
+                <p class="text-sm text-gray-600 mt-2">data science led across Security &amp; Productivity</p>
+            </div>
+            <div class="bg-white rounded-3xl p-8 reveal">
+                <p class="text-4xl font-light accent-coral">Revenue &amp; risk</p>
+                <p class="text-sm text-gray-600 mt-2">outcomes that grow the business and protect it</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="max-w-3xl mx-auto px-6 pt-20">
+        <h2 class="text-3xl font-light accent-blue mb-10">The path here</h2>
+        <div class="tl space-y-10 pl-12">
+            <div class="relative reveal">
+                <span class="tl-dot"></span>
+                <p class="text-sm font-medium accent-coral mb-1">Now · Microsoft</p>
+                <h3 class="text-xl font-medium mb-2">Principal Data Science Manager</h3>
+                <p class="text-gray-600">Lead data science teams turning product signals into strategy, forecasts, and risk reduction — partnering directly with product and executive leaders to set direction.</p>
+            </div>
+            <div class="relative reveal">
+                <span class="tl-dot"></span>
+                <p class="text-sm font-medium accent-coral mb-1">Microsoft · Security</p>
+                <h3 class="text-xl font-medium mb-2">Data science across a flagship area</h3>
+                <p class="text-gray-600">Built measurement and forecasting that helped leadership see risk early and act with confidence at the scale of one of Microsoft's largest businesses.</p>
+            </div>
+            <div class="relative reveal">
+                <span class="tl-dot"></span>
+                <p class="text-sm font-medium accent-coral mb-1">Microsoft · Productivity</p>
+                <h3 class="text-xl font-medium mb-2">From signals to growth decisions</h3>
+                <p class="text-gray-600">Translated trillions of product signals into the insight behind growth and engagement decisions — and grew the analysts and leaders who carry that work forward.</p>
+            </div>
+            <div class="relative reveal">
+                <span class="tl-dot"></span>
+                <p class="text-sm font-medium accent-coral mb-1">Penn State</p>
+                <h3 class="text-xl font-medium mb-2">Information Science &amp; Behavioral Psychology</h3>
+                <p class="text-gray-600">The foundation for how I think — data and human behavior, together. It's why I care as much about how a decision gets made as what the number says.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW I LEAD -->
+    <section class="max-w-5xl mx-auto px-6 pt-20">
+        <h2 class="text-3xl font-light accent-blue mb-8">How I lead</h2>
         <div class="grid sm:grid-cols-2 gap-6">
-            <div class="bg-white rounded-3xl p-7">
-                <h3 class="font-medium text-lg mb-2">Build simple, trusted solutions</h3>
+            <div class="bg-white rounded-3xl p-7 reveal">
+                <i class="fa-solid fa-shield-halved text-2xl accent-coral"></i>
+                <h3 class="font-medium text-lg mt-4 mb-2">Build simple, trusted solutions</h3>
                 <p class="text-gray-600">The goal isn't more dashboards — it's earning trust and giving leaders something they can act on with confidence.</p>
             </div>
-            <div class="bg-white rounded-3xl p-7">
-                <h3 class="font-medium text-lg mb-2">Translate data into strategy</h3>
+            <div class="bg-white rounded-3xl p-7 reveal">
+                <i class="fa-solid fa-compass text-2xl accent-coral"></i>
+                <h3 class="font-medium text-lg mt-4 mb-2">Translate data into strategy</h3>
                 <p class="text-gray-600">I sit between the data and the decision, turning analysis into direction for product and executive partners.</p>
             </div>
-            <div class="bg-white rounded-3xl p-7">
-                <h3 class="font-medium text-lg mb-2">Grow people, not just models</h3>
-                <p class="text-gray-600">I lead teams to focus on what matters, develop the next layer of leaders, and ship outcomes that compound.</p>
+            <div class="bg-white rounded-3xl p-7 reveal">
+                <i class="fa-solid fa-seedling text-2xl accent-coral"></i>
+                <h3 class="font-medium text-lg mt-4 mb-2">Grow people, not just models</h3>
+                <p class="text-gray-600">I help teams focus on what matters, develop the next layer of leaders, and ship outcomes that compound.</p>
             </div>
-            <div class="bg-white rounded-3xl p-7">
-                <h3 class="font-medium text-lg mb-2">Apply AI where it pays off</h3>
-                <p class="text-gray-600">I'm not chasing the latest "AI expert" label — I'm focused on applying it where it creates real, measurable value.</p>
+            <div class="bg-white rounded-3xl p-7 reveal">
+                <i class="fa-solid fa-wand-magic-sparkles text-2xl accent-coral"></i>
+                <h3 class="font-medium text-lg mt-4 mb-2">Apply AI where it pays off</h3>
+                <p class="text-gray-600">I'm not chasing the latest "AI expert" label — I focus on applying it where it creates real, measurable value.</p>
             </div>
         </div>
+    </section>
 
-        <div class="mt-12 flex flex-col sm:flex-row gap-4">
-            <a href="/connect.html" class="px-8 py-4 bg-[#e07a5f] hover:bg-[#d16a50] text-white rounded-3xl font-medium inline-flex items-center justify-center gap-2 transition">
-                Let's connect
-            </a>
-            <a href="/writing.html" class="px-8 py-4 border-2 border-[#5da7c9] text-[#5da7c9] hover:bg-[#5da7c9]/5 rounded-3xl font-medium inline-flex items-center justify-center transition">
-                How I think about data →
-            </a>
+    <!-- HOW I THINK -->
+    <section class="max-w-3xl mx-auto px-6 pt-20">
+        <h2 class="text-3xl font-light accent-blue mb-6">How I think about data</h2>
+        <div class="bg-white rounded-3xl p-8 reveal">
+            <p class="text-lg text-gray-700 leading-relaxed mb-5">Two ideas shape almost everything I build:</p>
+            <div class="space-y-6">
+                <div class="flex gap-4">
+                    <i class="fa-solid fa-brain accent-blue text-xl mt-1"></i>
+                    <p class="text-gray-700"><strong>Behavioral economics.</strong> Numbers don't make decisions — people do, and people are predictably irrational. I design analysis and visualizations around how leaders actually perceive risk, framing, and choice, not how a textbook says they should.</p>
+                </div>
+                <div class="flex gap-4">
+                    <i class="fa-solid fa-golf-ball-tee accent-blue text-xl mt-1"></i>
+                    <p class="text-gray-700"><strong>Strokes gained thinking.</strong> Borrowed from golf analytics: don't judge a result, measure each decision against the right benchmark. The same discipline that revolutionized how we evaluate a golf shot is how I think about isolating what's actually driving a business outcome.</p>
+                </div>
+            </div>
+            <p class="text-gray-600 mt-6">You can play with both ideas — and more — over in the <a href="/lab/" class="accent-coral font-medium hover:underline">Lab</a>.</p>
         </div>
+    </section>
 
-        <p class="text-gray-600 mt-12">Outside of work, you'll find me in the Pacific Northwest thinking about weather, golf, and how to make better decisions with data.</p>
-
-        <div class="mt-16 text-sm text-gray-500">
-            © James Svolos
+    <!-- CTA -->
+    <section class="max-w-5xl mx-auto px-6 pt-16 pb-8">
+        <div class="bg-[#5da7c9] rounded-3xl p-10 md:p-12 text-center text-white reveal">
+            <h2 class="text-3xl font-light mb-3">Let's solve a hard data problem together.</h2>
+            <p class="text-white/90 max-w-xl mx-auto mb-8">Whether it's a leadership conversation or comparing notes on forecasting and decision science, I'd love to talk.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/connect.html" class="px-8 py-4 bg-white text-[#5da7c9] hover:bg-gray-100 rounded-3xl font-medium inline-flex items-center justify-center gap-2 transition">
+                    <i class="fa-solid fa-paper-plane"></i> Get in touch
+                </a>
+                <a href="/writing.html" class="px-8 py-4 border-2 border-white/70 text-white hover:bg-white/10 rounded-3xl font-medium inline-flex items-center justify-center transition">
+                    Read my writing →
+                </a>
+            </div>
         </div>
-    </div>
+        <p class="text-gray-600 text-center mt-10">Outside of work, you'll find me in the Pacific Northwest thinking about weather, golf, and how to make better decisions with data.</p>
+        <div class="mt-12 text-sm text-gray-500 text-center">© James Svolos</div>
+    </section>
+
+    <script>
+    (function () {
+        var els = document.querySelectorAll('.reveal');
+        if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('reveal-in'); }); return; }
+        var io = new IntersectionObserver(function (en) {
+            en.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('reveal-in'); io.unobserve(e.target); } });
+        }, { threshold: 0.1 });
+        els.forEach(function (e) { io.observe(e); });
+    })();
+    </script>
 
 </body>
 </html>
