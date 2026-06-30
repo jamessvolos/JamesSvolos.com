@@ -51,10 +51,75 @@
         #mastCanvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .45; pointer-events: none; }
         .mast-inner { position: relative; z-index: 1; }
         .rule { height: 1px; background: linear-gradient(90deg, rgba(93,167,201,.5), rgba(224,122,95,.45), transparent); }
-        /* timeline spine */
-        .tl { position: relative; }
-        .tl::before { content: ''; position: absolute; left: 15px; top: 6px; bottom: 6px; width: 2px; background: linear-gradient(#5da7c9, rgba(93,167,201,.15)); }
-        .tl-dot { position: absolute; left: 7px; top: 4px; width: 18px; height: 18px; border-radius: 999px; background: #fff; border: 3px solid #5da7c9; }
+
+        /* ---- Career trajectory ("the spine") ---- */
+        .cv-trajectory { position: relative; }
+        .cv-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        .cv-fallback-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        .cv-js .cv-fallback-svg { display: none; }
+        .cv-track { position: relative; z-index: 1; display: grid; gap: 1.5rem; }
+        @media (min-width: 768px) { .cv-track { gap: 2.5rem; } }
+        .cv-node { position: relative; }
+        .cv-marker {
+            position: absolute; left: 0; top: 0.35rem; width: 1.5rem; height: 1.5rem;
+            border-radius: 999px; background: #f8f4ed; border: 2px solid #5da7c9;
+            display: flex; align-items: center; justify-content: center; z-index: 2;
+            transition: transform .35s cubic-bezier(.22,1,.36,1), border-color .35s ease, box-shadow .35s ease;
+        }
+        .cv-marker::after {
+            content: ''; width: 0.45rem; height: 0.45rem; border-radius: 999px;
+            background: #5da7c9; transition: background .35s ease, transform .35s ease;
+        }
+        .cv-node--now .cv-marker { border-color: #e07a5f; }
+        .cv-node--now .cv-marker::after { background: #e07a5f; }
+        .cv-node--now .cv-marker::before {
+            content: ''; position: absolute; inset: -4px; border-radius: 999px;
+            border: 1px solid rgba(224,122,95,.5); animation: cv-pulse 2.6s ease-out infinite;
+        }
+        @keyframes cv-pulse {
+            0%   { transform: scale(.8); opacity: .7; }
+            70%  { transform: scale(1.6); opacity: 0; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+        .cv-card {
+            background: #fff; border-radius: 1.5rem; padding: 1.5rem 1.75rem;
+            box-shadow: 0 1px 2px rgba(45,55,72,.04), 0 8px 24px -16px rgba(45,55,72,.18);
+            transition: transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s ease; will-change: transform;
+        }
+        @media (hover: hover) {
+            .cv-node:hover .cv-card, .cv-node:focus-within .cv-card {
+                transform: translateY(-3px);
+                box-shadow: 0 1px 2px rgba(45,55,72,.05), 0 18px 40px -20px rgba(45,55,72,.28);
+            }
+            .cv-node:hover .cv-marker, .cv-node:focus-within .cv-marker {
+                transform: scale(1.18); box-shadow: 0 0 0 5px rgba(93,167,201,.10);
+            }
+            .cv-node--now:hover .cv-marker, .cv-node--now:focus-within .cv-marker {
+                box-shadow: 0 0 0 5px rgba(224,122,95,.12);
+            }
+        }
+        .cv-detail {
+            max-height: 0; opacity: 0; overflow: hidden; margin-top: 0;
+            transition: max-height .45s cubic-bezier(.22,1,.36,1), opacity .35s ease, margin-top .35s ease;
+        }
+        @media (hover: hover) {
+            .cv-node:hover .cv-detail, .cv-node:focus-within .cv-detail {
+                max-height: 6rem; opacity: 1; margin-top: 0.85rem;
+            }
+        }
+        @media (hover: none) { .cv-detail { max-height: none; opacity: 1; margin-top: 0.85rem; } }
+        .cv-reveal {
+            opacity: 0; transform: translateY(22px);
+            transition: opacity .6s ease, transform .6s cubic-bezier(.22,1,.36,1);
+        }
+        .cv-reveal.cv-in { opacity: 1; transform: none; }
+        @media (prefers-reduced-motion: reduce) {
+            .cv-reveal { opacity: 1; transform: none; transition: none; }
+            .cv-card, .cv-marker, .cv-detail { transition: none; }
+            .cv-node--now .cv-marker::before { animation: none; }
+            .cv-canvas { display: none; }
+            .cv-detail { max-height: none; opacity: 1; margin-top: 0.85rem; }
+        }
     </style>
 </head>
 <body class="text-gray-800">
@@ -118,34 +183,68 @@
     </section>
 
     <!-- TIMELINE -->
-    <section class="max-w-3xl mx-auto px-6 pt-20">
-        <p class="text-xs uppercase tracking-[0.2em] text-gray-500 mb-3">Career</p>
-        <h2 class="text-3xl font-light accent-blue mb-10">The path here</h2>
-        <div class="tl space-y-10 pl-12">
-            <div class="relative reveal">
-                <span class="tl-dot"></span>
-                <p class="text-sm font-medium accent-coral mb-1">Now · Microsoft</p>
-                <h3 class="text-xl font-medium mb-2">Principal Data Science Manager</h3>
-                <p class="text-gray-600">Lead data science teams turning product signals into strategy, forecasts, and risk reduction — partnering directly with product and executive leaders to set direction.</p>
-            </div>
-            <div class="relative reveal">
-                <span class="tl-dot"></span>
-                <p class="text-sm font-medium accent-coral mb-1">Microsoft · Security</p>
-                <h3 class="text-xl font-medium mb-2">Data science across a flagship area</h3>
-                <p class="text-gray-600">Built measurement and forecasting that helped leadership see risk early and act with confidence at the scale of one of Microsoft's largest businesses.</p>
-            </div>
-            <div class="relative reveal">
-                <span class="tl-dot"></span>
-                <p class="text-sm font-medium accent-coral mb-1">Microsoft · Productivity</p>
-                <h3 class="text-xl font-medium mb-2">From signals to growth decisions</h3>
-                <p class="text-gray-600">Translated trillions of product signals into the insight behind growth and engagement decisions — and grew the analysts and leaders who carry that work forward.</p>
-            </div>
-            <div class="relative reveal">
-                <span class="tl-dot"></span>
-                <p class="text-sm font-medium accent-coral mb-1">Penn State</p>
-                <h3 class="text-xl font-medium mb-2">Information Science &amp; Behavioral Psychology</h3>
-                <p class="text-gray-600">The foundation for how I think — data and human behavior, together. It's why I care as much about how a decision gets made as what the number says.</p>
-            </div>
+    <section class="max-w-5xl mx-auto px-6 pt-20">
+        <div class="max-w-3xl">
+            <p class="text-xs uppercase tracking-[0.2em] text-gray-500 mb-3">Career</p>
+            <h2 class="text-3xl md:text-4xl font-light tracking-tighter accent-blue mb-2">The trajectory</h2>
+            <p class="text-gray-600 mb-12">A rising line — from how I learned to think, to leading data science at scale.</p>
+        </div>
+
+        <div class="cv-trajectory">
+            <canvas class="cv-canvas" id="cvCanvas" aria-hidden="true"></canvas>
+
+            <svg class="cv-fallback-svg" viewBox="0 0 100 400" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M 5 380 C 25 360, 30 250, 50 200 S 80 60, 95 30"
+                      fill="none" stroke="#5da7c9" stroke-opacity="0.35" stroke-width="0.8"
+                      stroke-linecap="round" />
+            </svg>
+
+            <ol class="cv-track list-none m-0 p-0 pl-10 md:pl-14" aria-label="Career milestones, most recent first">
+
+                <li class="cv-node cv-node--now cv-reveal pl-8">
+                    <span class="cv-marker" aria-hidden="true"></span>
+                    <article class="cv-card" tabindex="0">
+                        <p class="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] accent-coral mb-2">
+                            <span class="inline-block w-1.5 h-1.5 rounded-full bg-[#e07a5f]"></span>
+                            Now · Microsoft
+                        </p>
+                        <h3 class="text-xl font-medium mb-1">Principal Data Science Manager</h3>
+                        <p class="text-gray-600">Lead data science teams turning product signals into strategy, forecasts, and risk reduction.</p>
+                        <p class="cv-detail text-gray-600 border-t border-gray-100 pt-3">Partnering directly with product and executive leaders to set direction — and to decide what's worth building next.</p>
+                    </article>
+                </li>
+
+                <li class="cv-node cv-reveal pl-8">
+                    <span class="cv-marker" aria-hidden="true"></span>
+                    <article class="cv-card" tabindex="0">
+                        <p class="text-xs font-medium uppercase tracking-[0.18em] accent-blue mb-2">Microsoft · Security</p>
+                        <h3 class="text-xl font-medium mb-1">Data science across a flagship area</h3>
+                        <p class="text-gray-600">Built measurement and forecasting that helped leadership see risk early and act with confidence.</p>
+                        <p class="cv-detail text-gray-600 border-t border-gray-100 pt-3">At the scale of one of Microsoft's largest businesses, where a clear read on risk is worth more than another dashboard.</p>
+                    </article>
+                </li>
+
+                <li class="cv-node cv-reveal pl-8">
+                    <span class="cv-marker" aria-hidden="true"></span>
+                    <article class="cv-card" tabindex="0">
+                        <p class="text-xs font-medium uppercase tracking-[0.18em] accent-blue mb-2">Microsoft · Productivity</p>
+                        <h3 class="text-xl font-medium mb-1">From signals to growth decisions</h3>
+                        <p class="text-gray-600">Translated trillions of product signals into the insight behind growth and engagement decisions.</p>
+                        <p class="cv-detail text-gray-600 border-t border-gray-100 pt-3">And grew the analysts and leaders who carry that work forward — the part of the job that compounds.</p>
+                    </article>
+                </li>
+
+                <li class="cv-node cv-reveal pl-8">
+                    <span class="cv-marker" aria-hidden="true"></span>
+                    <article class="cv-card" tabindex="0">
+                        <p class="text-xs font-medium uppercase tracking-[0.18em] accent-blue mb-2">Penn State</p>
+                        <h3 class="text-xl font-medium mb-1">Information Science &amp; Behavioral Psychology</h3>
+                        <p class="text-gray-600">The foundation for how I think — data and human behavior, together.</p>
+                        <p class="cv-detail text-gray-600 border-t border-gray-100 pt-3">It's why I care as much about how a decision gets made as what the number says.</p>
+                    </article>
+                </li>
+
+            </ol>
         </div>
     </section>
 
@@ -251,6 +350,153 @@
             t += 1; requestAnimationFrame(draw);
         }
         draw();
+    })();
+
+    // ---- Career trajectory: staggered reveal + scroll-drawn forecast curve ----
+    (function () {
+        var root = document.querySelector('.cv-trajectory');
+        if (!root) return;
+
+        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var nodes = Array.prototype.slice.call(root.querySelectorAll('.cv-reveal'));
+        var canvas = document.getElementById('cvCanvas');
+
+        if (!reduce && canvas) document.body.classList.add('cv-js');
+
+        if (reduce || !('IntersectionObserver' in window)) {
+            nodes.forEach(function (n) { n.classList.add('cv-in'); });
+        } else {
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    if (!e.isIntersecting) return;
+                    var idx = nodes.indexOf(e.target);
+                    setTimeout(function () { e.target.classList.add('cv-in'); }, Math.max(0, idx) * 110);
+                    io.unobserve(e.target);
+                });
+            }, { threshold: 0.18 });
+            nodes.forEach(function (n) { io.observe(n); });
+        }
+
+        if (reduce || !canvas) return;
+        var ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        var W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var markersY = [];
+
+        function measure() {
+            var r = root.getBoundingClientRect();
+            W = r.width; H = r.height;
+            canvas.width = Math.round(W * dpr);
+            canvas.height = Math.round(H * dpr);
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            markersY = [];
+            var ms = root.querySelectorAll('.cv-marker');
+            for (var i = 0; i < ms.length; i++) {
+                var mr = ms[i].getBoundingClientRect();
+                markersY.push((mr.top + mr.height / 2) - r.top);
+            }
+        }
+
+        function pathPoints() {
+            var n = markersY.length;
+            if (!n) return [];
+            var xLeft = 14;
+            var pts = [];
+            for (var i = n - 1; i >= 0; i--) {
+                var prog = (n - 1 - i) / Math.max(1, n - 1);
+                var x = xLeft + prog * Math.min(46, W * 0.12);
+                pts.push({ x: x, y: markersY[i] });
+            }
+            return pts;
+        }
+
+        function drawCurve(progress) {
+            ctx.clearRect(0, 0, W, H);
+            var pts = pathPoints();
+            if (pts.length < 2) return;
+
+            ctx.beginPath();
+            ctx.moveTo(pts[0].x, pts[0].y);
+            for (var i = 0; i < pts.length - 1; i++) {
+                var p0 = pts[i - 1] || pts[i];
+                var p1 = pts[i];
+                var p2 = pts[i + 1];
+                var p3 = pts[i + 2] || p2;
+                var c1x = p1.x + (p2.x - p0.x) / 6;
+                var c1y = p1.y + (p2.y - p0.y) / 6;
+                var c2x = p2.x - (p3.x - p1.x) / 6;
+                var c2y = p2.y - (p3.y - p1.y) / 6;
+                ctx.bezierCurveTo(c1x, c1y, c2x, c2y, p2.x, p2.y);
+            }
+
+            var grad = ctx.createLinearGradient(0, H, 0, 0);
+            grad.addColorStop(0, 'rgba(93,167,201,0.10)');
+            grad.addColorStop(0.75, 'rgba(93,167,201,0.40)');
+            grad.addColorStop(1, 'rgba(224,122,95,0.55)');
+
+            var approxLen = 0;
+            for (var k = 1; k < pts.length; k++) {
+                approxLen += Math.hypot(pts[k].x - pts[k - 1].x, pts[k].y - pts[k - 1].y);
+            }
+            approxLen *= 1.25;
+            ctx.setLineDash([approxLen, approxLen]);
+            ctx.lineDashOffset = approxLen * (1 - progress);
+
+            ctx.strokeStyle = grad;
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+
+        var drawn = 0;
+        var rendered = -1;
+
+        function targetProgress() {
+            var r = root.getBoundingClientRect();
+            var vh = window.innerHeight || document.documentElement.clientHeight;
+            var start = vh * 0.9;
+            var end = vh * 0.25;
+            var p = (start - r.top) / (start - end + (r.height * 0.4));
+            return Math.max(0, Math.min(1, p));
+        }
+
+        var ticking = false;
+        function onScroll() {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+                drawn = targetProgress();
+                if (Math.abs(drawn - rendered) > 0.004) {
+                    drawCurve(drawn);
+                    rendered = drawn;
+                }
+                ticking = false;
+            });
+        }
+
+        var ro;
+        function init() {
+            measure();
+            drawCurve(targetProgress());
+            rendered = drawn = targetProgress();
+        }
+
+        if (document.readyState === 'complete') {
+            init();
+        } else {
+            window.addEventListener('load', init);
+            init();
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', function () { measure(); drawCurve(drawn); }, { passive: true });
+        if ('ResizeObserver' in window) {
+            ro = new ResizeObserver(function () { measure(); drawCurve(drawn); });
+            ro.observe(root);
+        }
     })();
     </script>
 
