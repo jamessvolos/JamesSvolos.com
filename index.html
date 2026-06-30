@@ -336,9 +336,31 @@
 
     (function () {
         var FEED = 'https://jsvolos.substack.com/feed';
-        var PROXY = 'https://api.allorigins.win/raw?url=';
+        var PROXIES = [
+            function (u) { return 'https://corsproxy.io/?url=' + encodeURIComponent(u); },
+            function (u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); },
+            function (u) { return 'https://thingproxy.freeboard.io/fetch/' + u; }
+        ];
         var container = document.getElementById('featuredWriting');
         if (!container) return;
+        function timedFetch(url, ms) {
+            var ctrl = ('AbortController' in window) ? new AbortController() : null;
+            var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, ms) : null;
+            return fetch(url, ctrl ? { signal: ctrl.signal } : {}).then(function (r) {
+                if (timer) clearTimeout(timer);
+                if (!r.ok) throw new Error('proxy ' + r.status);
+                return r.text();
+            });
+        }
+        function tryProxies(i) {
+            if (i >= PROXIES.length) return Promise.reject(new Error('all proxies failed'));
+            return timedFetch(PROXIES[i](FEED), 6000).then(function (xml) {
+                var doc = new DOMParser().parseFromString(xml, 'text/xml');
+                if (doc.querySelector('parsererror')) throw new Error('parse error');
+                if (!doc.querySelectorAll('item').length) throw new Error('no items');
+                return doc;
+            }).catch(function () { return tryProxies(i + 1); });
+        }
         function esc(s) { return (s || '').replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
         function excerpt(html, max) {
             var tmp = document.createElement('div'); tmp.innerHTML = html || '';
@@ -354,13 +376,9 @@
                 '<h3 class="text-xl font-medium mb-3 leading-snug">' + esc(post.title) + '</h3>' +
                 '<p class="text-gray-600 text-sm">' + esc(post.excerpt) + '</p></a>';
         }
-        fetch(PROXY + encodeURIComponent(FEED))
-            .then(function (r) { if (!r.ok) throw new Error('feed ' + r.status); return r.text(); })
-            .then(function (xml) {
-                var doc = new DOMParser().parseFromString(xml, 'text/xml');
-                if (doc.querySelector('parsererror')) throw new Error('parse error');
+        tryProxies(0)
+            .then(function (doc) {
                 var items = Array.prototype.slice.call(doc.querySelectorAll('item')).slice(0, 3);
-                if (!items.length) throw new Error('no items');
                 var get = function (el, tag) { var n = el.querySelector(tag); return n ? n.textContent : ''; };
                 var posts = items.map(function (it) {
                     return { title: get(it, 'title'), link: get(it, 'link'), date: fmtDate(get(it, 'pubDate')),

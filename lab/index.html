@@ -503,7 +503,6 @@
         <div class="max-w-6xl mx-auto px-6 text-center text-sm text-gray-500">© James Svolos</div>
     </footer>
 
-    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
     <script>
         var BLUE = '#5da7c9';
         var CORAL = '#e07a5f';
@@ -979,6 +978,33 @@
             }
             [b, l, v].forEach(function (e) { e.addEventListener('input', calc); });
             calc();
+        })();
+
+        // ---- Lazy-load Plotly only when an experiment nears the viewport (~3MB off the critical path) ----
+        function renderPlots() {
+            try { drawForecast(parseInt(document.getElementById('lagSlider').value, 10)); } catch (e) {}
+            try { drawCherry(parseInt(document.getElementById('startSlider').value, 10), parseInt(document.getElementById('winSlider').value, 10)); } catch (e) {}
+            try { drawDaylight(document.getElementById('citySelect').value); } catch (e) {}
+            try { var sb = document.querySelector('.seg-btn.active'); drawMeeting(sb ? parseFloat(sb.dataset.role) : 1); } catch (e) {}
+            try { drawGolf(parseInt(document.getElementById('puttSlider').value, 10)); } catch (e) {}
+            try { var hb = document.querySelector('.hcp-btn.active'); drawSgWon(hb ? hb.dataset.hcp : 'Scratch'); } catch (e) {}
+        }
+        (function () {
+            var loaded = false;
+            function loadPlotly() {
+                if (loaded) return; loaded = true;
+                var s = document.createElement('script');
+                s.src = 'https://cdn.plot.ly/plotly-2.35.2.min.js';
+                s.onload = function () { hasPlotly = true; renderPlots(); };
+                document.head.appendChild(s);
+            }
+            if (!('IntersectionObserver' in window)) { loadPlotly(); return; }
+            var io = new IntersectionObserver(function (ents) {
+                for (var k = 0; k < ents.length; k++) {
+                    if (ents[k].isIntersecting) { loadPlotly(); io.disconnect(); break; }
+                }
+            }, { rootMargin: '500px 0px' });
+            document.querySelectorAll('.exp').forEach(function (el) { io.observe(el); });
         })();
     </script>
 </body>

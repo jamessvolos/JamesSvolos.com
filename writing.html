@@ -461,8 +461,10 @@
 
         function fetchWithProxies(i) {
             if (i >= PROXIES.length) return Promise.reject(new Error('all proxies failed'));
-            return fetch(PROXIES[i](FEED))
-                .then(function (r) { if (!r.ok) throw new Error('proxy ' + i + ' → ' + r.status); return r.text(); })
+            var ctrl = ('AbortController' in window) ? new AbortController() : null;
+            var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 6000) : null;
+            return fetch(PROXIES[i](FEED), ctrl ? { signal: ctrl.signal } : {})
+                .then(function (r) { if (timer) clearTimeout(timer); if (!r.ok) throw new Error('proxy ' + i + ' → ' + r.status); return r.text(); })
                 .then(function (xml) {
                     var doc = new DOMParser().parseFromString(xml, 'text/xml');
                     if (doc.querySelector('parsererror')) throw new Error('proxy ' + i + ' parse error');
