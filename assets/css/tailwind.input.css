@@ -26,12 +26,20 @@
   }
 }
 
+/* ---- Self-hosted Inter (latin subset) ---- */
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('/assets/fonts/inter-latin-400.woff2') format('woff2'); }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url('/assets/fonts/inter-latin-500.woff2') format('woff2'); }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url('/assets/fonts/inter-latin-600.woff2') format('woff2'); }
+
 /* ---- Shared site chrome (single source of truth; previously inlined per page) ---- */
 body { font-family: 'Inter', system-ui, sans-serif; background-color: #f8f4ed; }
 
 /* Scroll reveal */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
 .reveal.reveal-in { opacity: 1; transform: none; }
+
+/* Skip rendering of long offscreen sections until near the viewport */
+.cv-auto { content-visibility: auto; contain-intrinsic-size: 0 480px; }
 
 /* Editorial masthead */
 .mast-wrap { position: relative; overflow: hidden; }

@@ -6,9 +6,9 @@
     <title>Lab | James Svolos</title>
     <meta name="description" content="The Lab: interactive data experiments by James Svolos — GenAI cost & agent ROI, A/B planning, forecasts vs. lagging metrics, cherry-picked timeframes, a prompt estimator, daylight vs. mood, meeting load, PGA putting, Strokes Gained, and the decoy effect.">
     <link rel="canonical" href="https://jamessvolos.com/lab/">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3">
-    <link rel="icon" type="image/png" sizes="any" href="/favicon.png?v=3">
-    <link rel="apple-touch-icon" href="/favicon.png?v=3">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=4">
+    <link rel="icon" type="image/png" sizes="any" href="/favicon.png?v=4">
+    <link rel="apple-touch-icon" href="/favicon.png?v=4">
     <meta name="theme-color" content="#f8f4ed">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Lab | James Svolos">
@@ -59,9 +59,8 @@
       }
     }
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+    <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-400.woff2" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-500.woff2" crossorigin>
     <link rel="stylesheet" href="/assets/css/site.css">
     <style>
         .exp { scroll-margin-top: 100px; }
@@ -242,7 +241,7 @@
         </div>
 
         <!-- 3. Prompt Engineering Playground -->
-        <div id="prompt" class="exp reveal mb-16">
+        <div id="prompt" class="exp reveal mb-16 cv-auto">
             <div class="bg-white rounded-3xl p-8">
                 <h2 class="text-3xl font-light accent-blue mb-3">Prompt Engineering Playground</h2>
                 <p class="text-gray-600 mb-6">Type a prompt and see an estimated token count, API cost, and a clarity score computed from the actual text.</p>
@@ -322,7 +321,7 @@
         </div>
 
         <!-- 7. Strokes Gained explainer -->
-        <div id="sg" class="exp reveal mb-16 mt-16">
+        <div id="sg" class="exp reveal mb-16 mt-16 cv-auto">
             <div class="bg-white rounded-3xl p-8">
                 <h2 class="text-3xl font-light accent-blue mb-3">Strokes Gained: build a shot</h2>
                 <p class="text-gray-600 mb-6">Every spot on the course has an expected number of strokes to hole out. Strokes Gained = (expected before) − (expected after) − 1. Build a shot and see what it was worth.</p>
@@ -386,7 +385,7 @@
         </div>
 
         <!-- 9. The Decoy Effect -->
-        <div id="decoy" class="exp reveal mt-16">
+        <div id="decoy" class="exp reveal mt-16 cv-auto">
             <div class="bg-white rounded-3xl p-8">
                 <h2 class="text-3xl font-light accent-blue mb-3">The Decoy Effect</h2>
                 <p class="text-gray-600 mb-6">A famous experiment (Dan Ariely, often retold by Rory Sutherland). Make your choice in each scenario — then see what adding one “useless” option does.</p>
@@ -427,7 +426,7 @@
         </div>
 
         <!-- 10. GenAI Cost at Scale -->
-        <div id="gencost" class="exp reveal mb-16 mt-16">
+        <div id="gencost" class="exp reveal mb-16 mt-16 cv-auto">
             <div class="bg-white rounded-3xl p-8">
                 <h2 class="text-3xl font-light accent-blue mb-3">GenAI Cost at Scale</h2>
                 <p class="text-gray-600 mb-6">Pick a model and a workload, and see what generative AI actually costs per day, month, and year.</p>
@@ -454,7 +453,7 @@
         </div>
 
         <!-- 11. Autonomous Agent ROI -->
-        <div id="agentroi" class="exp reveal mb-16">
+        <div id="agentroi" class="exp reveal mb-16 cv-auto">
             <div class="bg-white rounded-3xl p-8">
                 <h2 class="text-3xl font-light accent-blue mb-3">Autonomous Agent ROI</h2>
                 <p class="text-gray-600 mb-6">How much does an AI agent return when it resolves work autonomously? Set the workload and see.</p>
@@ -484,7 +483,7 @@
         </div>
 
         <!-- 12. A/B Test Planner -->
-        <div id="abtest" class="exp reveal">
+        <div id="abtest" class="exp reveal cv-auto">
             <div class="bg-white rounded-3xl p-8">
                 <h2 class="text-3xl font-light accent-blue mb-3">A/B Test Planner</h2>
                 <p class="text-gray-600 mb-6">Enter a baseline conversion rate, the lift you want to detect, and your traffic — get the sample size and how long the test must run.</p>
