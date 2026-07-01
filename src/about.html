@@ -84,34 +84,63 @@
     </section>
 
     <!-- HOW I THINK -->
-    <section class="max-w-5xl mx-auto px-6 pt-20">
+    <style>
+        .think-viz { display: block; width: 100%; overflow: visible; }
+        /* Strokes gained — bars grow from the benchmark */
+        #think-section.js .sg-bar { transform: scaleY(0); transform-box: fill-box; transform-origin: bottom; }
+        #think-section.js .think-card.think-live .sg-bar { animation: sg-grow .7s cubic-bezier(.34,1.4,.64,1) forwards; }
+        #think-section.js .think-card.think-live .sg-b1 { animation-delay: .04s; }
+        #think-section.js .think-card.think-live .sg-b2 { animation-delay: .12s; }
+        #think-section.js .think-card.think-live .sg-b3 { animation-delay: .20s; }
+        #think-section.js .think-card.think-live .sg-b4 { animation-delay: .28s; }
+        @keyframes sg-grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+        #think-section.js .sg-dot { opacity: 0; }
+        #think-section.js .think-card.think-live .sg-dot { opacity: 1; transition: opacity .35s ease .34s; }
+        /* shared endpoint glow */
+        #think-section.js .be-glow, #think-section.js .sg-glow { opacity: 0; transform-box: fill-box; transform-origin: center; }
+        #think-section.js .think-card.think-live .be-glow { animation: think-glow 2.6s ease-in-out 1.2s infinite; }
+        #think-section.js .think-card.think-live .sg-glow { animation: think-glow 2.6s ease-in-out .6s infinite; }
+        @keyframes think-glow { 0%,100% { opacity: .12; transform: scale(1); } 50% { opacity: .30; transform: scale(1.55); } }
+        /* Behavioral economics — the pen that draws the human curve (positioned in JS) */
+        #think-section.js .be-trav { opacity: 0; }
+        @media (prefers-reduced-motion: reduce) {
+            #think-section.js .sg-bar { transform: none !important; animation: none !important; }
+            #think-section.js .sg-dot { opacity: 1 !important; }
+            #think-section.js .be-trav { opacity: 0 !important; }
+            #think-section.js .be-glow, #think-section.js .sg-glow { animation: none !important; opacity: .18 !important; }
+        }
+    </style>
+    <section id="think-section" class="max-w-5xl mx-auto px-6 pt-20">
         <div class="max-w-3xl">
             <p class="text-xs uppercase tracking-[0.2em] text-gray-500 mb-3">Operating lens</p>
             <h2 class="text-3xl md:text-4xl font-light tracking-tighter accent-blue mb-2">How I think about data</h2>
             <p class="text-gray-600 mb-10">Two ideas sit under almost everything I build.</p>
         </div>
         <div class="grid md:grid-cols-2 gap-6">
-            <div class="bg-white rounded-3xl p-7 reveal">
+            <div class="bg-white rounded-3xl p-7 reveal think-card">
                 <div class="rounded-2xl bg-[#4790b3]/5 px-5 py-5 mb-5">
-                    <svg viewBox="0 0 280 100" class="w-full" aria-hidden="true">
+                    <svg class="think-viz" viewBox="0 0 280 100" aria-hidden="true">
                         <line x1="14" y1="84" x2="266" y2="30" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="4 5"></line>
-                        <path d="M14 86 C 60 24, 104 96, 150 52 S 214 18, 266 42" fill="none" stroke="#cf6146" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                        <circle cx="266" cy="42" r="4" fill="#cf6146"></circle>
+                        <path class="be-path" d="M14 86 C 60 24, 104 96, 150 52 S 214 18, 266 42" fill="none" stroke="#cf6146" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
                         <circle cx="14" cy="84" r="3" fill="#9ca3af"></circle>
+                        <circle class="be-glow" cx="266" cy="42" r="6" fill="#cf6146"></circle>
+                        <circle cx="266" cy="42" r="4" fill="#cf6146"></circle>
+                        <circle class="be-trav" cx="14" cy="86" r="3.5" fill="#cf6146"></circle>
                     </svg>
                 </div>
                 <h3 class="text-lg font-medium mb-2">Behavioral economics</h3>
                 <p class="text-gray-600">Numbers don't make decisions — people do, and people are predictably irrational. I build analysis around how leaders actually weigh risk, framing, and choice, not how a textbook says they should.</p>
             </div>
-            <div class="bg-white rounded-3xl p-7 reveal">
+            <div class="bg-white rounded-3xl p-7 reveal think-card">
                 <div class="rounded-2xl bg-[#4790b3]/5 px-5 py-5 mb-5">
-                    <svg viewBox="0 0 280 100" class="w-full" aria-hidden="true">
+                    <svg class="think-viz" viewBox="0 0 280 100" aria-hidden="true">
                         <line x1="14" y1="64" x2="266" y2="64" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="4 5"></line>
-                        <rect x="40" y="48" width="16" height="16" rx="3" fill="#4790b3" opacity="0.45"></rect>
-                        <rect x="96" y="40" width="16" height="24" rx="3" fill="#4790b3" opacity="0.6"></rect>
-                        <rect x="152" y="30" width="16" height="34" rx="3" fill="#4790b3" opacity="0.78"></rect>
-                        <rect x="208" y="16" width="16" height="48" rx="3" fill="#cf6146"></rect>
-                        <circle cx="216" cy="13" r="4" fill="#cf6146"></circle>
+                        <rect class="sg-bar sg-b1" x="40" y="48" width="16" height="16" rx="3" fill="#4790b3" opacity="0.45"></rect>
+                        <rect class="sg-bar sg-b2" x="96" y="40" width="16" height="24" rx="3" fill="#4790b3" opacity="0.6"></rect>
+                        <rect class="sg-bar sg-b3" x="152" y="30" width="16" height="34" rx="3" fill="#4790b3" opacity="0.78"></rect>
+                        <rect class="sg-bar sg-b4" x="208" y="16" width="16" height="48" rx="3" fill="#cf6146"></rect>
+                        <circle class="sg-glow" cx="216" cy="13" r="6" fill="#cf6146"></circle>
+                        <circle class="sg-dot" cx="216" cy="13" r="4" fill="#cf6146"></circle>
                     </svg>
                 </div>
                 <h3 class="text-lg font-medium mb-2">Strokes gained</h3>
@@ -120,6 +149,66 @@
         </div>
         <p class="text-gray-600 mt-6 max-w-3xl">Both ideas — and a dozen more — are playable over in the <a href="/lab/" class="accent-coral font-medium hover:underline">Lab</a>.</p>
     </section>
+    <script>
+    (function () {
+        "use strict";
+        var section = document.getElementById("think-section");
+        if (!section) return;
+        section.classList.add("js");
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+        var cards = Array.prototype.slice.call(section.querySelectorAll(".think-card"));
+
+        // Behavioral economics: draw the human curve with a travelling "pen"
+        var bePath = section.querySelector(".be-path");
+        var beTrav = section.querySelector(".be-trav");
+        var beLen = bePath ? bePath.getTotalLength() : 0;
+        var beRAF = null;
+        if (bePath) { bePath.style.strokeDasharray = beLen; bePath.style.strokeDashoffset = reduce.matches ? 0 : beLen; }
+
+        function beDraw() {
+            if (!bePath) return;
+            if (reduce.matches) { bePath.style.strokeDashoffset = 0; if (beTrav) beTrav.style.opacity = 0; return; }
+            if (beRAF) cancelAnimationFrame(beRAF);
+            var start = null, dur = 1300;
+            if (beTrav) beTrav.style.opacity = 1;
+            function step(ts) {
+                if (start === null) start = ts;
+                var t = Math.min(1, (ts - start) / dur), e = 1 - Math.pow(1 - t, 3);
+                bePath.style.strokeDashoffset = beLen * (1 - e);
+                if (beTrav) { var pt = bePath.getPointAtLength(beLen * e); beTrav.setAttribute("cx", pt.x); beTrav.setAttribute("cy", pt.y); }
+                if (t < 1) { beRAF = requestAnimationFrame(step); }
+                else if (beTrav) { beTrav.style.opacity = 0; }
+            }
+            beRAF = requestAnimationFrame(step);
+        }
+
+        function play(card) {
+            card.classList.add("think-live");
+            if (card.querySelector(".be-path")) beDraw();
+        }
+        function replay(card) {
+            if (reduce.matches) return;
+            card.classList.remove("think-live");
+            void card.offsetWidth;           // restart CSS animations
+            play(card);
+        }
+
+        if (reduce.matches) { cards.forEach(function (c) { c.classList.add("think-live"); }); return; }
+
+        if ("IntersectionObserver" in window) {
+            var io = new IntersectionObserver(function (ents) {
+                ents.forEach(function (en) {
+                    if (en.isIntersecting) { play(en.target); io.unobserve(en.target); }
+                });
+            }, { threshold: 0.4 });
+            cards.forEach(function (c) { io.observe(c); });
+        } else {
+            cards.forEach(play);
+        }
+
+        cards.forEach(function (c) { c.addEventListener("mouseenter", function () { replay(c); }); });
+    })();
+    </script>
 
     <!-- HOW I LEAD -->
     <style>
