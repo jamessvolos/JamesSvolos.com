@@ -67,29 +67,29 @@
         .exp { scroll-margin-top: 100px; }
         html { scroll-behavior: smooth; }
         @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-        .seg-btn.active { background:#5da7c9; color:#fff; }
-        .hcp-btn.active { background:#5da7c9; color:#fff; }
-        .labchip.active { background:#5da7c9; color:#fff; border-color:#5da7c9; }
+        .seg-btn.active { background:#4790b3; color:#fff; }
+        .hcp-btn.active { background:#4790b3; color:#fff; }
+        .labchip.active { background:#4790b3; color:#fff; border-color:#4790b3; }
     </style>
 </head>
 <body class="text-gray-800">
 
     <!-- NAV (matches homepage) -->
-    <nav class="sticky top-0 bg-white/95 backdrop-blur-md border-b border-[#5da7c9]/10 z-50">
+    <nav class="sticky top-0 bg-white/95 backdrop-blur-md border-b border-[#4790b3]/10 z-50">
         <div class="max-w-6xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-center sm:justify-between gap-3">
             <a href="/" class="text-3xl font-light tracking-tighter accent-blue">james svolos</a>
             <div class="flex gap-5 sm:gap-8 text-sm font-medium">
-                <a href="/" class="hover:text-[#e07a5f] transition">Home</a>
-                <a href="/writing.html" class="hover:text-[#e07a5f] transition">Writing</a>
-                <a href="/lab/" class="text-[#e07a5f] transition">Lab</a>
-                <a href="/about.html" class="hover:text-[#e07a5f] transition">About</a>
-                <a href="/connect.html" class="hover:text-[#e07a5f] transition">Connect</a>
+                <a href="/" class="hover:text-[#cf6146] transition">Home</a>
+                <a href="/writing.html" class="hover:text-[#cf6146] transition">Writing</a>
+                <a href="/lab/" class="text-[#cf6146] transition">Lab</a>
+                <a href="/about.html" class="hover:text-[#cf6146] transition">About</a>
+                <a href="/connect.html" class="hover:text-[#cf6146] transition">Connect</a>
             </div>
         </div>
     </nav>
 
     <!-- ============ EDITORIAL MASTHEAD ============ -->
-    <header class="mast-wrap border-b border-[#5da7c9]/15">
+    <header class="mast-wrap border-b border-[#4790b3]/15">
         <canvas id="mastCanvas" aria-hidden="true"></canvas>
         <div class="mast-inner max-w-6xl mx-auto px-6 pt-14 pb-10">
             <div class="flex items-center gap-3 text-xs font-medium uppercase tracking-[0.2em] text-gray-500 mb-6">
@@ -115,7 +115,7 @@
                     <h2 class="text-2xl md:text-3xl font-light tracking-tight mb-2">Spot the Lie</h2>
                     <p class="text-gray-600">Honest chart or misleading? Judge each one, then watch the data get redrawn straight. How many tricks can you catch?</p>
                 </div>
-                <span class="mt-5 md:mt-0 inline-flex flex-none items-center justify-center gap-2 px-8 py-4 bg-[#e07a5f] hover:bg-[#d16a50] text-white rounded-3xl font-medium transition">Play the game →</span>
+                <span class="mt-5 md:mt-0 inline-flex flex-none items-center justify-center gap-2 px-8 py-4 bg-[#cf6146] hover:bg-[#c2543a] text-white rounded-3xl font-medium transition">Play the game →</span>
             </div>
         </a>
 
@@ -203,7 +203,7 @@
                 <div class="flex flex-wrap items-center justify-between gap-4 mb-3">
                     <h2 class="text-3xl font-light accent-blue">Forecasts Lead, Metrics Lag</h2>
                     <label class="text-sm text-gray-600">Metric window:
-                        <input id="lagSlider" type="range" min="2" max="6" value="3" step="1" class="align-middle ml-2 accent-[#e07a5f]">
+                        <input id="lagSlider" type="range" min="2" max="6" value="3" step="1" class="align-middle ml-2 accent-[#cf6146]">
                         <span id="lagVal" class="font-medium">3</span> mo
                     </label>
                 </div>
@@ -211,7 +211,7 @@
                 <div id="forecastPlot" class="min-h-[420px]"></div>
                 <p id="forecastNote" class="text-sm text-gray-600 mt-4"></p>
             </div>
-            <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
+            <div class="bg-[#4790b3]/5 rounded-2xl px-6 py-4 mt-6">
                 <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> the more you steer by lagging metrics, the later you see the turn. Forecasts buy you decision time.</p>
                 <p class="text-xs text-gray-500 mt-2">Behind the viz: the metric is a trailing moving average of the true signal; the forecast is a leading indicator. Companion to my essay “Metrics Lag, Forecasts Lead.”</p>
             </div>
@@ -223,19 +223,19 @@
                 <div class="flex flex-wrap items-center justify-between gap-4 mb-3">
                     <h2 class="text-3xl font-light accent-blue">Cherry-Picking Timeframes</h2>
                     <div class="flex gap-2">
-                        <button id="bullBtn" class="px-4 py-2 rounded-xl border border-gray-300 text-sm hover:border-[#5da7c9]">Make the bull case</button>
-                        <button id="bearBtn" class="px-4 py-2 rounded-xl border border-gray-300 text-sm hover:border-[#5da7c9]">Make the bear case</button>
+                        <button id="bullBtn" class="px-4 py-2 rounded-xl border border-gray-300 text-sm hover:border-[#4790b3]">Make the bull case</button>
+                        <button id="bearBtn" class="px-4 py-2 rounded-xl border border-gray-300 text-sm hover:border-[#4790b3]">Make the bear case</button>
                     </div>
                 </div>
                 <p class="text-gray-600 mb-5">The same flat, noisy series — three years of it. Slide a window (or hit a button) and watch the “trend” flip from up to down.</p>
                 <div class="bg-gray-100 rounded-2xl p-5 mb-6 grid sm:grid-cols-2 gap-4 text-sm">
-                    <label>Start month: <input id="startSlider" type="range" min="0" max="30" value="0" step="1" class="w-full accent-[#e07a5f]"></label>
-                    <label>Window length: <input id="winSlider" type="range" min="4" max="36" value="36" step="1" class="w-full accent-[#e07a5f]"></label>
+                    <label>Start month: <input id="startSlider" type="range" min="0" max="30" value="0" step="1" class="w-full accent-[#cf6146]"></label>
+                    <label>Window length: <input id="winSlider" type="range" min="4" max="36" value="36" step="1" class="w-full accent-[#cf6146]"></label>
                 </div>
                 <p id="cherryVerdict" class="text-center text-lg font-medium mb-4"></p>
                 <div id="cherryPlot" class="min-h-[420px]"></div>
             </div>
-            <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
+            <div class="bg-[#4790b3]/5 rounded-2xl px-6 py-4 mt-6">
                 <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> the same data can “prove” growth or decline — always ask what window someone chose, and why.</p>
                 <p class="text-xs text-gray-500 mt-2">Behind the viz: a fixed series with no real trend; the line is a least-squares fit over the selected window. Companion to my essay “Tell Me Data Lies.”</p>
             </div>
@@ -247,14 +247,14 @@
                 <h2 class="text-3xl font-light accent-blue mb-3">Prompt Engineering Playground</h2>
                 <p class="text-gray-600 mb-6">Type a prompt and see an estimated token count, API cost, and a clarity score computed from the actual text.</p>
                 <div class="bg-gray-100 rounded-2xl p-8">
-                    <textarea id="promptInput" rows="3" placeholder="e.g. Summarize this quarterly report in 5 bullet points for an executive audience, focusing on revenue drivers." class="w-full px-6 py-4 rounded-2xl border border-gray-300 focus:outline-none focus:border-[#5da7c9] text-lg resize-y"></textarea>
-                    <button onclick="runPromptDemo()" class="mt-6 px-8 py-4 bg-[#e07a5f] hover:bg-[#d16a50] text-white rounded-3xl font-medium inline-flex items-center gap-2 transition">
+                    <textarea id="promptInput" rows="3" placeholder="e.g. Summarize this quarterly report in 5 bullet points for an executive audience, focusing on revenue drivers." class="w-full px-6 py-4 rounded-2xl border border-gray-300 focus:outline-none focus:border-[#4790b3] text-lg resize-y"></textarea>
+                    <button onclick="runPromptDemo()" class="mt-6 px-8 py-4 bg-[#cf6146] hover:bg-[#c2543a] text-white rounded-3xl font-medium inline-flex items-center gap-2 transition">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg> Analyze Prompt
                     </button>
                     <div id="promptResult" class="mt-8 hidden"></div>
                 </div>
             </div>
-            <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
+            <div class="bg-[#4790b3]/5 rounded-2xl px-6 py-4 mt-6">
                 <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> small wording changes move cost and clarity more than people expect — specificity is cheap leverage.</p>
                 <p class="text-xs text-gray-500 mt-2">Behind the viz: tokens use the ~4-chars-per-token heuristic blended with word count; cost uses published GPT-4o input pricing ($2.50 / 1M tokens); clarity is a transparent rubric.</p>
             </div>
@@ -266,7 +266,7 @@
                 <div class="flex flex-wrap items-center justify-between gap-4 mb-3">
                     <h2 class="text-3xl font-light accent-blue">Daylight vs. Mood</h2>
                     <label class="text-sm text-gray-600">City:
-                        <select id="citySelect" class="ml-2 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#5da7c9]">
+                        <select id="citySelect" class="ml-2 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#4790b3]">
                             <option value="Seattle">Seattle</option>
                             <option value="London">London</option>
                             <option value="Phoenix">Phoenix</option>
@@ -277,7 +277,7 @@
                 <p class="text-gray-600 mb-6">How daylight hours track with a seasonal mood index across the year.</p>
                 <div id="sadPlot" class="min-h-[420px]"></div>
             </div>
-            <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
+            <div class="bg-[#4790b3]/5 rounded-2xl px-6 py-4 mt-6">
                 <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> the higher the latitude, the wilder the swing — daylight, not rainfall, is the stronger signal for seasonal mood.</p>
                 <p class="text-xs text-gray-500 mt-2">Behind the viz: monthly daylight hours by latitude; the mood index is a modeled value that tracks trailing daylight (normalized 0–100).</p>
             </div>
@@ -297,7 +297,7 @@
                 <p class="text-gray-600 mb-6">Meeting density by day and hour — toggle the seniority level.</p>
                 <div id="meetingPlot" class="min-h-[420px]"></div>
             </div>
-            <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
+            <div class="bg-[#4790b3]/5 rounded-2xl px-6 py-4 mt-6">
                 <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> the calendar fills as you climb — mid-week afternoons run hottest, which is why Thursdays feel draining.</p>
                 <p class="text-xs text-gray-500 mt-2">Behind the viz: a day-by-hour heatmap of meeting density, scaled by a seniority factor.</p>
             </div>
@@ -310,12 +310,12 @@
                 <p class="text-gray-600 mb-6">How quickly a made putt becomes a coin flip as distance grows.</p>
                 <div class="bg-gray-100 rounded-2xl p-5 mb-6 flex flex-wrap items-center gap-4">
                     <span class="text-sm text-gray-600 whitespace-nowrap">Distance:</span>
-                    <input id="puttSlider" type="range" min="3" max="30" value="8" step="1" class="flex-1 min-w-0 accent-[#e07a5f]">
+                    <input id="puttSlider" type="range" min="3" max="30" value="8" step="1" class="flex-1 min-w-0 accent-[#cf6146]">
                     <span class="text-sm font-medium whitespace-nowrap"><span id="puttDist">8</span> ft → <span id="puttPct" class="accent-coral">50%</span> made</span>
                 </div>
                 <div id="golfPlot" class="min-h-[420px]"></div>
             </div>
-            <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
+            <div class="bg-[#4790b3]/5 rounded-2xl px-6 py-4 mt-6">
                 <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> the 50/50 line lands right around eight feet — beyond that, pros are managing risk, not expecting makes.</p>
                 <p class="text-xs text-gray-500 mt-2">Behind the viz: Tour make-percentage by putt distance, drawn in a minimal, Tufte-inspired style.</p>
             </div>
@@ -329,7 +329,7 @@
                 <div class="bg-gray-100 rounded-2xl p-6 grid md:grid-cols-2 gap-6">
                     <div>
                         <p class="text-sm font-medium mb-2">Ball starts</p>
-                        <select id="sgFromLie" class="w-full px-3 py-2 rounded-xl border border-gray-300 mb-3 focus:outline-none focus:border-[#5da7c9]">
+                        <select id="sgFromLie" class="w-full px-3 py-2 rounded-xl border border-gray-300 mb-3 focus:outline-none focus:border-[#4790b3]">
                             <option value="tee">Tee</option>
                             <option value="fairway" selected>Fairway</option>
                             <option value="rough">Rough</option>
@@ -337,12 +337,12 @@
                             <option value="green">Green</option>
                         </select>
                         <label class="text-sm text-gray-600">Distance <span id="sgFromUnit">(yards)</span>
-                            <input id="sgFromDist" type="number" value="150" class="w-full px-3 py-2 rounded-xl border border-gray-300 mt-1 focus:outline-none focus:border-[#5da7c9]">
+                            <input id="sgFromDist" type="number" value="150" class="w-full px-3 py-2 rounded-xl border border-gray-300 mt-1 focus:outline-none focus:border-[#4790b3]">
                         </label>
                     </div>
                     <div>
                         <p class="text-sm font-medium mb-2">Ball ends</p>
-                        <select id="sgToLie" class="w-full px-3 py-2 rounded-xl border border-gray-300 mb-3 focus:outline-none focus:border-[#5da7c9]">
+                        <select id="sgToLie" class="w-full px-3 py-2 rounded-xl border border-gray-300 mb-3 focus:outline-none focus:border-[#4790b3]">
                             <option value="holed">Holed</option>
                             <option value="green" selected>Green</option>
                             <option value="fairway">Fairway</option>
@@ -350,14 +350,14 @@
                             <option value="sand">Sand</option>
                         </select>
                         <label class="text-sm text-gray-600">Distance <span id="sgToUnit">(feet)</span>
-                            <input id="sgToDist" type="number" value="8" class="w-full px-3 py-2 rounded-xl border border-gray-300 mt-1 focus:outline-none focus:border-[#5da7c9]">
+                            <input id="sgToDist" type="number" value="8" class="w-full px-3 py-2 rounded-xl border border-gray-300 mt-1 focus:outline-none focus:border-[#4790b3]">
                         </label>
                     </div>
                 </div>
-                <button onclick="runSG()" class="mt-6 px-8 py-4 bg-[#e07a5f] hover:bg-[#d16a50] text-white rounded-3xl font-medium inline-flex items-center gap-2 transition"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-3px"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg> Compute Strokes Gained</button>
+                <button onclick="runSG()" class="mt-6 px-8 py-4 bg-[#cf6146] hover:bg-[#c2543a] text-white rounded-3xl font-medium inline-flex items-center gap-2 transition"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-3px"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg> Compute Strokes Gained</button>
                 <div id="sgResult" class="mt-8 hidden grid sm:grid-cols-3 gap-4 text-center"></div>
             </div>
-            <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
+            <div class="bg-[#4790b3]/5 rounded-2xl px-6 py-4 mt-6">
                 <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> a “good” shot is simply one that beats the expectation for where you started — that's all Strokes Gained measures.</p>
                 <p class="text-xs text-gray-500 mt-2">Behind the viz: expected-strokes baselines approximated from Mark Broadie's PGA Tour data (“Every Shot Counts”). Green distances are in feet; all others in yards.</p>
             </div>
@@ -379,7 +379,7 @@
                 <div id="sgwonPlot" class="min-h-[420px]"></div>
                 <p id="sgwonNote" class="text-center text-lg font-medium mt-4"></p>
             </div>
-            <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
+            <div class="bg-[#4790b3]/5 rounded-2xl px-6 py-4 mt-6">
                 <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> the long game — off the tee plus approach — is where most strokes are lost; putting is the smallest slice. Broadie's most famous, most counterintuitive finding.</p>
                 <p class="text-xs text-gray-500 mt-2">Behind the viz: strokes lost per round vs. a tour pro by category; figures approximated from Mark Broadie's “Every Shot Counts.”</p>
             </div>
@@ -394,10 +394,10 @@
                 <div id="decoyStage1">
                     <p class="font-medium mb-3">Scenario 1 — pick a subscription:</p>
                     <div class="grid sm:grid-cols-2 gap-4">
-                        <button class="decoy-opt text-left bg-gray-100 rounded-2xl p-5 border-2 border-transparent transition hover:border-[#5da7c9]" data-k="web">
+                        <button class="decoy-opt text-left bg-gray-100 rounded-2xl p-5 border-2 border-transparent transition hover:border-[#4790b3]" data-k="web">
                             <span class="block font-medium">Digital only</span><span class="text-gray-500">$59 / year</span>
                         </button>
-                        <button class="decoy-opt text-left bg-gray-100 rounded-2xl p-5 border-2 border-transparent transition hover:border-[#5da7c9]" data-k="combo">
+                        <button class="decoy-opt text-left bg-gray-100 rounded-2xl p-5 border-2 border-transparent transition hover:border-[#4790b3]" data-k="combo">
                             <span class="block font-medium">Print + Digital</span><span class="text-gray-500">$125 / year</span>
                         </button>
                     </div>
@@ -406,13 +406,13 @@
                 <div id="decoyStage2" class="hidden mt-8">
                     <p class="font-medium mb-3">Scenario 2 — same offer, with one option added:</p>
                     <div class="grid sm:grid-cols-3 gap-4">
-                        <button class="decoy-opt2 text-left bg-gray-100 rounded-2xl p-5 border-2 border-transparent transition hover:border-[#5da7c9]" data-k="web">
+                        <button class="decoy-opt2 text-left bg-gray-100 rounded-2xl p-5 border-2 border-transparent transition hover:border-[#4790b3]" data-k="web">
                             <span class="block font-medium">Digital only</span><span class="text-gray-500">$59 / year</span>
                         </button>
-                        <button class="decoy-opt2 text-left bg-gray-100 rounded-2xl p-5 border-2 border-transparent transition hover:border-[#5da7c9]" data-k="print">
+                        <button class="decoy-opt2 text-left bg-gray-100 rounded-2xl p-5 border-2 border-transparent transition hover:border-[#4790b3]" data-k="print">
                             <span class="block font-medium">Print only</span><span class="text-gray-500">$125 / year</span>
                         </button>
-                        <button class="decoy-opt2 text-left bg-gray-100 rounded-2xl p-5 border-2 border-transparent transition hover:border-[#5da7c9]" data-k="combo">
+                        <button class="decoy-opt2 text-left bg-gray-100 rounded-2xl p-5 border-2 border-transparent transition hover:border-[#4790b3]" data-k="combo">
                             <span class="block font-medium">Print + Digital</span><span class="text-gray-500">$125 / year</span>
                         </button>
                     </div>
@@ -420,7 +420,7 @@
 
                 <div id="decoyResult" class="hidden mt-8"></div>
             </div>
-            <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
+            <div class="bg-[#4790b3]/5 rounded-2xl px-6 py-4 mt-6">
                 <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> a “useless” option you'd never choose can still reshape the choice you do make. Context creates value — design the menu, not just the products.</p>
                 <p class="text-xs text-gray-500 mt-2">Behind the viz: based on Dan Ariely's Economist-subscription experiment (“Predictably Irrational”). Adding the print-only decoy pushed combo sign-ups from 32% to 84%.</p>
             </div>
@@ -433,21 +433,21 @@
                 <p class="text-gray-600 mb-6">Pick a model and a workload, and see what generative AI actually costs per day, month, and year.</p>
                 <div class="bg-gray-100 rounded-2xl p-6 grid md:grid-cols-2 gap-5">
                     <label class="text-sm text-gray-600">Model
-                        <select id="gcModel" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#5da7c9]"></select>
+                        <select id="gcModel" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#4790b3]"></select>
                     </label>
                     <label class="text-sm text-gray-600">Requests per day
-                        <input id="gcReq" type="number" value="10000" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#5da7c9]">
+                        <input id="gcReq" type="number" value="10000" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#4790b3]">
                     </label>
                     <label class="text-sm text-gray-600">Input tokens / request
-                        <input id="gcIn" type="number" value="1000" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#5da7c9]">
+                        <input id="gcIn" type="number" value="1000" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#4790b3]">
                     </label>
                     <label class="text-sm text-gray-600">Output tokens / request
-                        <input id="gcOut" type="number" value="300" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#5da7c9]">
+                        <input id="gcOut" type="number" value="300" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#4790b3]">
                     </label>
                 </div>
                 <div id="gcResult" class="mt-8 grid sm:grid-cols-3 gap-4 text-center"></div>
             </div>
-            <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
+            <div class="bg-[#4790b3]/5 rounded-2xl px-6 py-4 mt-6">
                 <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> at scale, model choice and output length dominate the bill — a cheaper model or tighter outputs can cut cost by an order of magnitude.</p>
                 <p class="text-xs text-gray-500 mt-2">Behind the viz: cost = requests × (input_tokens × input_price + output_tokens × output_price), using published per-million-token list prices (approximate, mid-2025).</p>
             </div>
@@ -460,24 +460,24 @@
                 <p class="text-gray-600 mb-6">How much does an AI agent return when it resolves work autonomously? Set the workload and see.</p>
                 <div class="bg-gray-100 rounded-2xl p-6 grid md:grid-cols-2 gap-5">
                     <label class="text-sm text-gray-600">Tasks per day
-                        <input id="arTasks" type="number" value="500" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#5da7c9]">
+                        <input id="arTasks" type="number" value="500" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#4790b3]">
                     </label>
                     <label class="text-sm text-gray-600">Auto-resolved: <span id="arPctVal" class="font-medium">60%</span>
-                        <input id="arPct" type="range" min="0" max="100" value="60" step="5" class="w-full mt-2 accent-[#e07a5f]">
+                        <input id="arPct" type="range" min="0" max="100" value="60" step="5" class="w-full mt-2 accent-[#cf6146]">
                     </label>
                     <label class="text-sm text-gray-600">Minutes saved / task
-                        <input id="arMin" type="number" value="12" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#5da7c9]">
+                        <input id="arMin" type="number" value="12" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#4790b3]">
                     </label>
                     <label class="text-sm text-gray-600">Loaded cost ($/hr)
-                        <input id="arRate" type="number" value="60" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#5da7c9]">
+                        <input id="arRate" type="number" value="60" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#4790b3]">
                     </label>
                     <label class="text-sm text-gray-600">Agent cost ($/mo)
-                        <input id="arCost" type="number" value="2000" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#5da7c9]">
+                        <input id="arCost" type="number" value="2000" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#4790b3]">
                     </label>
                 </div>
                 <div id="arResult" class="mt-8 grid sm:grid-cols-3 gap-4 text-center"></div>
             </div>
-            <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
+            <div class="bg-[#4790b3]/5 rounded-2xl px-6 py-4 mt-6">
                 <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> agent ROI is driven by volume × resolution rate — automating even a slice of high-frequency work compounds fast.</p>
                 <p class="text-xs text-gray-500 mt-2">Behind the viz: hours saved = tasks × auto-rate × minutes ÷ 60 × 30.4; net = labor saved − agent cost; ROI = net ÷ agent cost.</p>
             </div>
@@ -490,31 +490,31 @@
                 <p class="text-gray-600 mb-6">Enter a baseline conversion rate, the lift you want to detect, and your traffic — get the sample size and how long the test must run.</p>
                 <div class="bg-gray-100 rounded-2xl p-6 grid md:grid-cols-3 gap-5">
                     <label class="text-sm text-gray-600">Baseline conversion (%)
-                        <input id="abBase" type="number" value="5" step="0.1" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#5da7c9]">
+                        <input id="abBase" type="number" value="5" step="0.1" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#4790b3]">
                     </label>
                     <label class="text-sm text-gray-600">Relative lift to detect (%)
-                        <input id="abLift" type="number" value="10" step="1" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#5da7c9]">
+                        <input id="abLift" type="number" value="10" step="1" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#4790b3]">
                     </label>
                     <label class="text-sm text-gray-600">Visitors per day (total)
-                        <input id="abVis" type="number" value="4000" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#5da7c9]">
+                        <input id="abVis" type="number" value="4000" class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-[#4790b3]">
                     </label>
                 </div>
                 <div id="abResult" class="mt-8 grid sm:grid-cols-3 gap-4 text-center"></div>
             </div>
-            <div class="bg-[#5da7c9]/5 rounded-2xl px-6 py-4 mt-6">
+            <div class="bg-[#4790b3]/5 rounded-2xl px-6 py-4 mt-6">
                 <p class="text-sm text-gray-700"><span class="font-medium accent-blue">Takeaway:</span> small lifts on low base rates need a lot of traffic — know your runtime before you start, not after.</p>
                 <p class="text-xs text-gray-500 mt-2">Behind the viz: two-proportion sample size at 95% confidence and 80% power, split evenly across two arms.</p>
             </div>
         </div>
     </div>
 
-    <footer class="bg-white border-t border-[#5da7c9]/10 py-12 mt-8">
+    <footer class="bg-white border-t border-[#4790b3]/10 py-12 mt-8">
         <div class="max-w-6xl mx-auto px-6 text-center text-sm text-gray-500">© James Svolos</div>
     </footer>
 
     <script>
-        var BLUE = '#5da7c9';
-        var CORAL = '#e07a5f';
+        var BLUE = '#4790b3';
+        var CORAL = '#cf6146';
         var hasPlotly = typeof Plotly !== 'undefined';
         var baseLayout = {
             font: { family: 'Inter, system-ui, sans-serif', color: '#374151' },
@@ -868,8 +868,8 @@
         (function () {
             var choice1 = null, choice2 = null;
             function mark(btn, group) {
-                document.querySelectorAll(group).forEach(function (b) { b.classList.remove('border-[#5da7c9]', 'bg-[#5da7c9]/5'); });
-                btn.classList.add('border-[#5da7c9]', 'bg-[#5da7c9]/5');
+                document.querySelectorAll(group).forEach(function (b) { b.classList.remove('border-[#4790b3]', 'bg-[#4790b3]/5'); });
+                btn.classList.add('border-[#4790b3]', 'bg-[#4790b3]/5');
             }
             function maybeResult() {
                 if (!choice1 || !choice2) return;

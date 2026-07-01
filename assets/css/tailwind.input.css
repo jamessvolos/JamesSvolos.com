@@ -4,8 +4,8 @@
 
 /* ---- James Svolos — shared component styles (coastal system) ---- */
 @layer components {
-  .accent-blue { color: #5da7c9; }
-  .accent-coral { color: #e07a5f; }
+  .accent-blue { color: #4790b3; }
+  .accent-coral { color: #cf6146; }
 
   /* Hero: soft sunlit wash over the cream background */
   .hero-bg {

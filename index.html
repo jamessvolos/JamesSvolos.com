@@ -57,21 +57,21 @@
 </head>
 <body class="text-gray-800">
     <!-- NAV -->
-    <nav class="sticky top-0 bg-white/95 backdrop-blur-md border-b border-[#5da7c9]/10 z-50">
+    <nav class="sticky top-0 bg-white/95 backdrop-blur-md border-b border-[#4790b3]/10 z-50">
         <div class="max-w-6xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-center sm:justify-between gap-3">
             <a href="/" class="text-3xl font-light tracking-tighter accent-blue">james svolos</a>
             <div class="flex gap-5 sm:gap-8 text-sm font-medium">
-                <a href="/" class="text-[#e07a5f] transition">Home</a>
-                <a href="/writing.html" class="hover:text-[#e07a5f] transition">Writing</a>
-                <a href="/lab/" class="hover:text-[#e07a5f] transition">Lab</a>
-                <a href="/about.html" class="hover:text-[#e07a5f] transition">About</a>
-                <a href="/connect.html" class="hover:text-[#e07a5f] transition">Connect</a>
+                <a href="/" class="text-[#cf6146] transition">Home</a>
+                <a href="/writing.html" class="hover:text-[#cf6146] transition">Writing</a>
+                <a href="/lab/" class="hover:text-[#cf6146] transition">Lab</a>
+                <a href="/about.html" class="hover:text-[#cf6146] transition">About</a>
+                <a href="/connect.html" class="hover:text-[#cf6146] transition">Connect</a>
             </div>
         </div>
     </nav>
 
     <!-- ============ EDITORIAL MASTHEAD (hero) ============ -->
-    <header class="hero-bg mast-wrap border-b border-[#5da7c9]/15">
+    <header class="hero-bg mast-wrap border-b border-[#4790b3]/15">
         <canvas id="mastCanvas" aria-hidden="true"></canvas>
         <div class="mast-inner max-w-6xl mx-auto px-6 pt-16 pb-10">
             <div class="flex items-center gap-3 text-xs font-medium uppercase tracking-[0.2em] text-gray-500 mb-6">
@@ -86,10 +86,10 @@
                 I build and lead data science teams that turn noisy data into decisions leaders trust.
             </p>
             <div class="mt-10 flex flex-col sm:flex-row gap-4">
-                <a href="/lab/" class="px-10 py-5 bg-[#e07a5f] hover:bg-[#d16a50] text-white text-lg rounded-3xl font-medium inline-flex items-center justify-center gap-3 transition">
+                <a href="/lab/" class="px-10 py-5 bg-[#cf6146] hover:bg-[#c2543a] text-white text-lg rounded-3xl font-medium inline-flex items-center justify-center gap-3 transition">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2v6l-5 9a2 2 0 0 0 1.8 3h12.4a2 2 0 0 0 1.8-3l-5-9V2"/><path d="M8 2h8"/><path d="M7 16h10"/></svg> Explore the Lab
                 </a>
-                <a href="/writing.html" class="px-10 py-5 border-2 border-[#5da7c9] text-[#5da7c9] hover:bg-[#5da7c9]/5 text-lg rounded-3xl font-medium inline-flex items-center justify-center transition">
+                <a href="/writing.html" class="px-10 py-5 border-2 border-[#4790b3] text-[#4790b3] hover:bg-[#4790b3]/5 text-lg rounded-3xl font-medium inline-flex items-center justify-center transition">
                     Read my writing →
                 </a>
             </div>
@@ -140,14 +140,14 @@
     <section class="max-w-6xl mx-auto px-6 pt-20 reveal">
         <div class="flex items-baseline justify-between mb-8">
             <h2 class="text-3xl font-light accent-blue">You draw it</h2>
-            <a href="/lab/" class="text-sm font-medium text-gray-500 hover:text-[#e07a5f] transition">More in the Lab →</a>
+            <a href="/lab/" class="text-sm font-medium text-gray-500 hover:text-[#cf6146] transition">More in the Lab →</a>
         </div>
         <div class="bg-white rounded-3xl p-8">
             <p class="text-gray-600 mb-6">Here's a product metric through June. <span class="font-medium">Drag across the shaded area</span> to draw where you think it went next — then reveal what actually happened.</p>
             <canvas id="drawCanvas" class="w-full rounded-2xl bg-gray-50" style="height:340px; touch-action:none; cursor:crosshair;"></canvas>
             <div class="mt-5 flex flex-wrap gap-3">
-                <button id="drawReveal" class="px-7 py-3 bg-[#e07a5f] hover:bg-[#d16a50] text-white rounded-3xl font-medium transition">Reveal actual</button>
-                <button id="drawReset" class="px-7 py-3 border-2 border-[#5da7c9] text-[#5da7c9] hover:bg-[#5da7c9]/5 rounded-3xl font-medium transition">Reset</button>
+                <button id="drawReveal" class="px-7 py-3 bg-[#cf6146] hover:bg-[#c2543a] text-white rounded-3xl font-medium transition">Reveal actual</button>
+                <button id="drawReset" class="px-7 py-3 border-2 border-[#4790b3] text-[#4790b3] hover:bg-[#4790b3]/5 rounded-3xl font-medium transition">Reset</button>
             </div>
             <p id="drawVerdict" class="mt-5 text-gray-700"></p>
         </div>
@@ -157,7 +157,7 @@
     <section class="max-w-6xl mx-auto px-6 pt-20 reveal">
         <div class="flex items-baseline justify-between mb-8">
             <h2 class="text-3xl font-light accent-blue">From the Lab</h2>
-            <a href="/lab/" class="text-sm font-medium text-gray-500 hover:text-[#e07a5f] transition">All experiments →</a>
+            <a href="/lab/" class="text-sm font-medium text-gray-500 hover:text-[#cf6146] transition">All experiments →</a>
         </div>
         <a href="/spot-the-lie.html" class="block bg-white rounded-3xl p-6 md:p-8 mb-6 card-hover">
             <div class="md:flex items-center gap-6">
@@ -166,7 +166,7 @@
                     <h3 class="text-2xl md:text-3xl font-light tracking-tight mb-2">Spot the Lie</h3>
                     <p class="text-gray-600">Honest chart or misleading? Judge each one, then watch the data get redrawn straight — a 60-second test of your chart radar.</p>
                 </div>
-                <span class="mt-5 md:mt-0 inline-flex flex-none items-center justify-center gap-2 px-8 py-4 bg-[#e07a5f] hover:bg-[#d16a50] text-white rounded-3xl font-medium transition">Play the game →</span>
+                <span class="mt-5 md:mt-0 inline-flex flex-none items-center justify-center gap-2 px-8 py-4 bg-[#cf6146] hover:bg-[#c2543a] text-white rounded-3xl font-medium transition">Play the game →</span>
             </div>
         </a>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -197,7 +197,7 @@
     <div class="max-w-6xl mx-auto px-6 pt-20 pb-4 reveal">
         <div class="flex items-baseline justify-between mb-8">
             <h2 class="text-3xl font-light accent-blue">Featured Writing</h2>
-            <a href="/writing.html" class="text-sm font-medium text-gray-500 hover:text-[#e07a5f] transition">All writing →</a>
+            <a href="/writing.html" class="text-sm font-medium text-gray-500 hover:text-[#cf6146] transition">All writing →</a>
         </div>
         <div id="featuredWriting" class="grid md:grid-cols-3 gap-6">
             <a href="https://jsvolos.substack.com/p/scaling-down-and-executing" target="_blank" rel="noopener" class="block bg-white rounded-3xl p-8 card-hover">
@@ -220,16 +220,16 @@
 
     <!-- CLOSING CTA -->
     <section class="max-w-6xl mx-auto px-6 py-20 reveal">
-        <div class="bg-[#5da7c9] rounded-3xl p-12 text-center text-white">
+        <div class="bg-[#4790b3] rounded-3xl p-12 text-center text-white">
             <h2 class="text-3xl md:text-4xl font-light mb-4">Let's solve a hard data problem together.</h2>
             <p class="text-white/90 max-w-xl mx-auto mb-8">Building out a data team, or just want to compare notes on forecasting and leadership? Happy to talk.</p>
-            <a href="/connect.html" class="inline-flex items-center justify-center gap-2 px-10 py-4 bg-white text-[#5da7c9] hover:bg-gray-100 rounded-3xl font-medium transition">
+            <a href="/connect.html" class="inline-flex items-center justify-center gap-2 px-10 py-4 bg-white text-[#4790b3] hover:bg-gray-100 rounded-3xl font-medium transition">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg> Get in touch
             </a>
         </div>
     </section>
 
-    <footer class="bg-white border-t border-[#5da7c9]/10 py-12">
+    <footer class="bg-white border-t border-[#4790b3]/10 py-12">
         <div class="max-w-6xl mx-auto px-6 text-center text-sm text-gray-500">© James Svolos</div>
     </footer>
 
@@ -305,10 +305,10 @@
             ctx.font = '11px Inter, sans-serif'; ctx.fillStyle = '#9ca3af';
             [30, 45, 60, 75].forEach(function (v) { var Y = yPx(v); ctx.strokeStyle = '#eee'; ctx.beginPath(); ctx.moveTo(pad.l, Y); ctx.lineTo(W - pad.r, Y); ctx.stroke(); ctx.fillText(v, 6, Y + 3); });
             for (var m = 0; m < 12; m += 2) ctx.fillText(MONTHS[m], xPx(m) - 8, H - 8);
-            plot(known, 0, 5, '#5da7c9', 3);
-            ctx.fillStyle = '#5da7c9'; ctx.beginPath(); ctx.arc(xPx(5), yPx(known[5]), 4, 0, 7); ctx.fill();
+            plot(known, 0, 5, '#4790b3', 3);
+            ctx.fillStyle = '#4790b3'; ctx.beginPath(); ctx.arc(xPx(5), yPx(known[5]), 4, 0, 7); ctx.fill();
             var u = user.slice(); u[5] = known[5];
-            plot(u, 5, 11, '#e07a5f', 3);
+            plot(u, 5, 11, '#cf6146', 3);
             if (revealed) plot(actual, 5, 11, '#16a34a', 3, [5, 4]);
         }
         function setAt(px, py) {

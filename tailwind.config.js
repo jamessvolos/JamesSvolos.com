@@ -10,8 +10,8 @@ module.exports = {
     extend: {
       colors: {
         cream: '#f8f4ed',
-        coastal: '#5da7c9',
-        coral: '#e07a5f'
+        coastal: '#4790b3',
+        coral: '#cf6146'
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif']

@@ -69,10 +69,10 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="/assets/css/site.css">
     <style>
-        .chip.active { background:#5da7c9; color:#fff; border-color:#5da7c9; }
+        .chip.active { background:#4790b3; color:#fff; border-color:#4790b3; }
         .cover-fallback { background: linear-gradient(135deg, rgba(93,167,201,.25), rgba(224,122,95,.25)); }
         .field { transition: border-color .2s ease, box-shadow .2s ease; }
-        .field:focus { outline: none; border-color: #5da7c9; box-shadow: 0 0 0 3px rgba(93,167,201,.15); }
+        .field:focus { outline: none; border-color: #4790b3; box-shadow: 0 0 0 3px rgba(93,167,201,.15); }
         @media (prefers-reduced-motion: reduce) { .skel, .skel::after { animation: none !important; } }
         /* loading skeleton shimmer */
         .skel { position: relative; overflow: hidden; background: #eee9e0; }
@@ -91,21 +91,21 @@
 <body class="text-gray-800">
 
     <!-- NAV (consistent with the rest of the site) -->
-    <nav class="sticky top-0 bg-white/95 backdrop-blur-md border-b border-[#5da7c9]/10 z-50">
+    <nav class="sticky top-0 bg-white/95 backdrop-blur-md border-b border-[#4790b3]/10 z-50">
         <div class="max-w-6xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-center sm:justify-between gap-3">
             <a href="/" class="text-3xl font-light tracking-tighter accent-blue">james svolos</a>
             <div class="flex gap-5 sm:gap-8 text-sm font-medium">
-                <a href="/" class="hover:text-[#e07a5f] transition">Home</a>
-                <a href="/writing.html" class="text-[#e07a5f] transition">Writing</a>
-                <a href="/lab/" class="hover:text-[#e07a5f] transition">Lab</a>
-                <a href="/about.html" class="hover:text-[#e07a5f] transition">About</a>
-                <a href="/connect.html" class="hover:text-[#e07a5f] transition">Connect</a>
+                <a href="/" class="hover:text-[#cf6146] transition">Home</a>
+                <a href="/writing.html" class="text-[#cf6146] transition">Writing</a>
+                <a href="/lab/" class="hover:text-[#cf6146] transition">Lab</a>
+                <a href="/about.html" class="hover:text-[#cf6146] transition">About</a>
+                <a href="/connect.html" class="hover:text-[#cf6146] transition">Connect</a>
             </div>
         </div>
     </nav>
 
     <!-- ============ EDITORIAL MASTHEAD ============ -->
-    <header class="mast-wrap border-b border-[#5da7c9]/15">
+    <header class="mast-wrap border-b border-[#4790b3]/15">
         <canvas id="mastCanvas" aria-hidden="true"></canvas>
         <div class="mast-inner max-w-6xl mx-auto px-6 pt-14 pb-10">
             <div class="flex items-center gap-3 text-xs font-medium uppercase tracking-[0.2em] text-gray-500 mb-6">
@@ -132,11 +132,11 @@
                     <p class="text-xs uppercase tracking-[0.2em] text-gray-500 mb-3">Collections</p>
                     <div id="tagbar" class="flex flex-wrap gap-2" role="group" aria-label="Filter essays by topic">
                         <!-- seeded with the four core themes; recomputed once the live feed loads -->
-                        <button class="chip active px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:border-[#5da7c9] transition" data-tag="all">All essays</button>
-                        <button class="chip px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:border-[#5da7c9] transition" data-tag="leadership">Leadership</button>
-                        <button class="chip px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:border-[#5da7c9] transition" data-tag="forecasting">Forecasting</button>
-                        <button class="chip px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:border-[#5da7c9] transition" data-tag="data lies">Data Lies</button>
-                        <button class="chip px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:border-[#5da7c9] transition" data-tag="behavioral">Behavioral</button>
+                        <button class="chip active px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:border-[#4790b3] transition" data-tag="all">All essays</button>
+                        <button class="chip px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:border-[#4790b3] transition" data-tag="leadership">Leadership</button>
+                        <button class="chip px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:border-[#4790b3] transition" data-tag="forecasting">Forecasting</button>
+                        <button class="chip px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:border-[#4790b3] transition" data-tag="data lies">Data Lies</button>
+                        <button class="chip px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:border-[#4790b3] transition" data-tag="behavioral">Behavioral</button>
                     </div>
                 </div>
                 <div class="relative w-full lg:max-w-xs">
@@ -158,7 +158,7 @@
                data-search="why great teams shrink the scope to ship reducing scope execute leadership"
                data-tags="leadership"
                class="filter-item group block bg-white rounded-3xl overflow-hidden lift md:flex mb-10">
-                <div class="md:w-1/2 h-56 md:h-auto cover-fallback flex items-center justify-center text-[#5da7c9]">
+                <div class="md:w-1/2 h-56 md:h-auto cover-fallback flex items-center justify-center text-[#4790b3]">
                     <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" x2="2" y1="8" y2="22"></line><line x1="17.5" x2="9" y1="15" y2="15"></line></svg>
                 </div>
                 <div class="p-8 md:p-10 md:w-1/2 flex flex-col justify-center">
@@ -215,14 +215,14 @@
                 <input id="subEmail" type="email" required placeholder="you@email.com"
                        class="field rounded-full border border-gray-200 bg-gray-50 px-5 py-3 text-sm sm:w-64">
                 <button type="submit"
-                        class="inline-flex items-center justify-center gap-2 px-7 py-3 bg-[#e07a5f] hover:bg-[#d16a50] text-white rounded-full font-medium transition whitespace-nowrap">
+                        class="inline-flex items-center justify-center gap-2 px-7 py-3 bg-[#cf6146] hover:bg-[#c2543a] text-white rounded-full font-medium transition whitespace-nowrap">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-3px"><path d="M21.2 8.4c.5.38.8.97.8 1.6v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10a2 2 0 0 1 .8-1.6l8-6a2 2 0 0 1 2.4 0z"/><path d="m22 10-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 10"/></svg> Subscribe
                 </button>
             </form>
         </section>
     </main>
 
-    <footer class="bg-white border-t border-[#5da7c9]/10 py-12 mt-8">
+    <footer class="bg-white border-t border-[#4790b3]/10 py-12 mt-8">
         <div class="max-w-6xl mx-auto px-6 text-center text-sm text-gray-500">© James Svolos</div>
     </footer>
 
@@ -338,7 +338,7 @@
         function cover(url, cls, iconSize) {
             if (url) return '<div class="' + cls + ' bg-cover bg-center" style="background-image:url(' + esc(url) + ')"></div>';
             var sz = iconSize || 28;
-            return '<div class="' + cls + ' cover-fallback flex items-center justify-center text-[#5da7c9]"><svg width="' + sz + '" height="' + sz + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" x2="2" y1="8" y2="22"></line><line x1="17.5" x2="9" y1="15" y2="15"></line></svg></div>';
+            return '<div class="' + cls + ' cover-fallback flex items-center justify-center text-[#4790b3]"><svg width="' + sz + '" height="' + sz + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" x2="2" y1="8" y2="22"></line><line x1="17.5" x2="9" y1="15" y2="15"></line></svg></div>';
         }
         function meta(post) {
             var bits = [];
@@ -430,9 +430,9 @@
             posts.forEach(function (p) { p.themes.forEach(function (t) { counts[t] = (counts[t] || 0) + 1; }); });
             var present = THEMES.filter(function (th) { return counts[th.key]; });
             if (!present.length) return;
-            var html = '<button class="chip active px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:border-[#5da7c9] transition" data-tag="all">All essays</button>';
+            var html = '<button class="chip active px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:border-[#4790b3] transition" data-tag="all">All essays</button>';
             html += present.map(function (th) {
-                return '<button class="chip px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:border-[#5da7c9] transition" data-tag="' + esc(th.key) + '">' + esc(th.label) + '</button>';
+                return '<button class="chip px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:border-[#4790b3] transition" data-tag="' + esc(th.key) + '">' + esc(th.label) + '</button>';
             }).join('');
             tagbar.innerHTML = html;
             currentTag = 'all';
@@ -527,7 +527,7 @@
         // Curated static fallback (re-injected only if a skeleton replaced the original markup).
         var STATIC_FALLBACK =
             '<a href="https://jsvolos.substack.com/p/scaling-down-and-executing" target="_blank" rel="noopener" data-search="why great teams shrink the scope to ship reducing scope execute leadership" data-tags="leadership" class="filter-item group block bg-white rounded-3xl overflow-hidden lift md:flex mb-10">' +
-                '<div class="md:w-1/2 h-56 md:h-auto cover-fallback flex items-center justify-center text-[#5da7c9]"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" x2="2" y1="8" y2="22"></line><line x1="17.5" x2="9" y1="15" y2="15"></line></svg></div>' +
+                '<div class="md:w-1/2 h-56 md:h-auto cover-fallback flex items-center justify-center text-[#4790b3]"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" x2="2" y1="8" y2="22"></line><line x1="17.5" x2="9" y1="15" y2="15"></line></svg></div>' +
                 '<div class="p-8 md:p-10 md:w-1/2 flex flex-col justify-center">' +
                     '<p class="text-xs uppercase tracking-[0.2em] accent-coral mb-3">Lead essay · Leadership</p>' +
                     '<h2 class="text-3xl font-light tracking-tight mb-3 leading-tight">Why great teams shrink the scope to ship</h2>' +
