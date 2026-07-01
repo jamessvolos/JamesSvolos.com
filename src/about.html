@@ -51,47 +51,6 @@
     }
     </script>
 <!-- @include head-assets -->
-    <style>
-        /* ===== Career: The Approach Plate ===== */
-        .tj-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; align-items: start; }
-        @media (min-width: 900px) { .tj-grid { grid-template-columns: 300px 1fr; gap: 2.5rem; } }
-        .tj-chart { position: sticky; top: 2rem; }
-        @media (max-width: 899px) { .tj-chart { position: static; } }
-        .tj-chart-inner { position: relative; background: #fffdf9; border: 1px solid rgba(71,144,179,.18); border-radius: 1.5rem; padding: .75rem; box-shadow: 0 1px 0 rgba(207,97,70,.06), 0 20px 40px -32px rgba(55,65,81,.35); overflow: hidden; }
-        .tj-chart-inner::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(71,144,179,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(71,144,179,.05) 1px, transparent 1px); background-size: 22px 22px; pointer-events: none; }
-        .tj-corner { position: absolute; z-index: 2; top: .85rem; font-size: .5rem; letter-spacing: .18em; text-transform: uppercase; color: #4790b3; opacity: .7; font-weight: 600; }
-        .tj-corner--tl { left: 1rem; }
-        .tj-corner--tr { right: 1rem; color: #cf6146; }
-        .tj-svg { position: relative; z-index: 1; width: 100%; height: auto; display: block; }
-        @media (max-width: 899px) { .tj-svg { max-width: 320px; margin: 0 auto; } }
-        .tj-grid-lines line { stroke: rgba(55,65,81,.14); stroke-width: 1; }
-        .tj-alt text { fill: #9ca3af; font-size: 8px; letter-spacing: .12em; text-anchor: end; font-weight: 600; }
-        .tj-runway polygon { fill: #cf6146; opacity: .85; }
-        .tj-path { stroke: rgba(55,65,81,.22); stroke-width: 1.5; stroke-dasharray: 3 4; }
-        .tj-path-fill { stroke: url(#tjGlide); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; transition: stroke-dashoffset .7s cubic-bezier(.65,0,.35,1); }
-        .tj-fix { fill: #fffdf9; stroke: #4790b3; stroke-width: 2; cursor: pointer; transition: transform .35s cubic-bezier(.34,1.56,.64,1), fill .35s, stroke .35s; transform-box: fill-box; transform-origin: center; }
-        .tj-fix:hover { stroke: #cf6146; }
-        .tj-fix.is-active { fill: #cf6146; stroke: #cf6146; transform: scale(1.35); }
-        .tj-fix.is-passed { fill: #4790b3; stroke: #4790b3; }
-        .tj-plane { fill: #fffdf9; stroke: #cf6146; stroke-width: 1.5; transition: transform .7s cubic-bezier(.65,0,.35,1); transform-box: fill-box; transform-origin: center; }
-        .tj-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .9rem; }
-        .tj-card { position: relative; display: flex; flex-direction: column; width: 100%; text-align: left; background: #fff; border: 1px solid rgba(55,65,81,.08); border-radius: 1.5rem; padding: 1.25rem 1.35rem 1.35rem 1.6rem; cursor: pointer; color: #374151; transition: border-color .3s, box-shadow .3s, transform .3s; }
-        .tj-card::before { content: ""; position: absolute; left: 0; top: 1.25rem; bottom: 1.25rem; width: 3px; border-radius: 3px; background: rgba(71,144,179,.25); transition: background .3s, top .3s, bottom .3s; }
-        .tj-card:hover { border-color: rgba(71,144,179,.35); box-shadow: 0 16px 36px -30px rgba(55,65,81,.5); }
-        .tj-card[aria-pressed="true"] { border-color: rgba(207,97,70,.45); box-shadow: 0 20px 44px -30px rgba(207,97,70,.45); }
-        .tj-card[aria-pressed="true"]::before { background: #cf6146; top: .9rem; bottom: .9rem; }
-        .tj-card:focus-visible { outline: 2px solid #4790b3; outline-offset: 3px; }
-        .tj-when { display: flex; align-items: center; gap: .55rem; font-size: .7rem; letter-spacing: .16em; text-transform: uppercase; color: #6b7280; font-weight: 600; margin-bottom: .35rem; }
-        .tj-badge { display: inline-block; font-size: .6rem; letter-spacing: .12em; background: #cf6146; color: #fff; padding: .12rem .45rem; border-radius: 999px; }
-        .tj-role { font-size: 1.15rem; font-weight: 300; letter-spacing: -.02em; color: #4790b3; margin-bottom: .4rem; }
-        .tj-desc { font-size: .95rem; line-height: 1.5; color: #374151; }
-        .tj-detail { font-size: .85rem; line-height: 1.55; color: #6b7280; font-weight: 300; max-height: 0; opacity: 0; overflow: hidden; transition: max-height .45s ease, opacity .35s ease, margin-top .45s ease; }
-        .tj-card[aria-pressed="true"] .tj-detail { max-height: 8rem; opacity: 1; margin-top: .6rem; }
-        @media (prefers-reduced-motion: reduce) {
-            .tj-path-fill, .tj-fix, .tj-plane, .tj-card, .tj-card::before, .tj-detail { transition: none !important; }
-            .tj-detail { max-height: none; opacity: 1; margin-top: .6rem; }
-        }
-    </style>
 </head>
 <body class="text-gray-800">
 
@@ -161,180 +120,6 @@
         </div>
         <p class="text-gray-600 mt-6 max-w-3xl">Both ideas — and a dozen more — are playable over in the <a href="/lab/" class="accent-coral font-medium hover:underline">Lab</a>.</p>
     </section>
-
-    <!-- TIMELINE -->
-    <section class="max-w-5xl mx-auto px-6 pt-20">
-        <div class="max-w-3xl">
-            <p class="text-xs uppercase tracking-[0.2em] text-gray-500 mb-3">Career</p>
-            <h2 id="trajectory-heading" class="text-3xl md:text-4xl font-light tracking-tighter accent-blue mb-2">The trajectory</h2>
-            <p class="text-gray-600 max-w-xl mb-10">The path from Penn State to the work I lead today. Select a milestone to follow it.</p>
-        </div>
-
-        <div class="tj-grid">
-            <div class="tj-chart">
-                <div class="tj-chart-inner">
-                    <span class="tj-corner tj-corner--tl" aria-hidden="true">Fig. 01</span>
-                    <span class="tj-corner tj-corner--tr" aria-hidden="true">Rwy · Dir/VP</span>
-                    <svg class="tj-svg" viewBox="0 0 340 510" role="img" aria-label="Career approach path from Penn State down to a Director or VP runway.">
-                        <defs>
-                            <linearGradient id="tjGlide" gradientUnits="userSpaceOnUse" x1="300" y1="60" x2="78" y2="470">
-                                <stop offset="0" stop-color="#4790b3" />
-                                <stop offset="1" stop-color="#cf6146" />
-                            </linearGradient>
-                        </defs>
-
-                        <g class="tj-grid-lines" aria-hidden="true">
-                            <line x1="48" y1="60"  x2="322" y2="60"  />
-                            <line x1="48" y1="150" x2="322" y2="150" />
-                            <line x1="48" y1="260" x2="322" y2="260" />
-                            <line x1="48" y1="370" x2="322" y2="370" />
-                            <line x1="48" y1="470" x2="322" y2="470" />
-                        </g>
-                        <g class="tj-alt" aria-hidden="true">
-                            <text x="42" y="63">FL04</text>
-                            <text x="42" y="153">FL03</text>
-                            <text x="42" y="263">FL02</text>
-                            <text x="42" y="373">FL01</text>
-                            <text x="42" y="473">GND</text>
-                        </g>
-
-                        <!-- planned course + flown glide path -->
-                        <path class="tj-path" d="M 300 60 L 240 150 L 175 260 L 110 370 L 78 470" fill="none" />
-                        <path class="tj-path-fill" id="tj-path-fill" d="M 300 60 L 240 150 L 175 260 L 110 370 L 78 470" fill="none" />
-
-                        <!-- runway -->
-                        <g class="tj-runway" aria-hidden="true">
-                            <polygon points="68,486 88,486 82,462 74,462" />
-                        </g>
-
-                        <!-- fixes (waypoints) -->
-                        <circle class="tj-fix" data-fix="3" cx="300" cy="60"  r="6" />
-                        <circle class="tj-fix" data-fix="2" cx="240" cy="150" r="6" />
-                        <circle class="tj-fix" data-fix="1" cx="175" cy="260" r="6" />
-                        <circle class="tj-fix" data-fix="0" cx="110" cy="370" r="6" />
-
-                        <!-- aircraft -->
-                        <path class="tj-plane" id="tj-plane" d="M 9 0 L -7 -6 L -3 0 L -7 6 Z" aria-hidden="true" />
-                    </svg>
-                </div>
-            </div>
-
-            <ol class="tj-list" aria-label="Career milestones, most recent first">
-                <li>
-                    <button type="button" class="tj-card" data-fix="0" aria-pressed="true" aria-controls="tj-path-fill">
-                        <span class="tj-when"><span class="tj-badge">Now</span> Microsoft</span>
-                        <span class="tj-role">Principal Data Science Manager</span>
-                        <span class="tj-desc">Lead data science teams turning product signals into strategy, forecasts, and risk reduction.</span>
-                        <span class="tj-detail">Partnering directly with product and executive leaders to set direction — and to decide what's worth building next.</span>
-                    </button>
-                </li>
-                <li>
-                    <button type="button" class="tj-card" data-fix="1" aria-pressed="false" aria-controls="tj-path-fill">
-                        <span class="tj-when">Microsoft · Security</span>
-                        <span class="tj-role">Data science across a flagship area</span>
-                        <span class="tj-desc">Built measurement and forecasting that helped leadership see risk early and act with confidence.</span>
-                        <span class="tj-detail">At the scale of one of Microsoft's largest businesses, where a clear read on risk is worth more than another dashboard.</span>
-                    </button>
-                </li>
-                <li>
-                    <button type="button" class="tj-card" data-fix="2" aria-pressed="false" aria-controls="tj-path-fill">
-                        <span class="tj-when">Microsoft · Productivity</span>
-                        <span class="tj-role">From signals to growth decisions</span>
-                        <span class="tj-desc">Translated trillions of product signals into the insight behind growth and engagement decisions.</span>
-                        <span class="tj-detail">And grew the analysts and leaders who carry that work forward — the part of the job that compounds.</span>
-                    </button>
-                </li>
-                <li>
-                    <button type="button" class="tj-card" data-fix="3" aria-pressed="false" aria-controls="tj-path-fill">
-                        <span class="tj-when">Penn State</span>
-                        <span class="tj-role">Information Science &amp; Behavioral Psychology</span>
-                        <span class="tj-desc">The foundation for how I think — data and human behavior, together.</span>
-                        <span class="tj-detail">It's why I care as much about how a decision gets made as what the number says.</span>
-                    </button>
-                </li>
-            </ol>
-        </div>
-    </section>
-
-    <script>
-    // ---- Career trajectory: the Approach Plate ----
-    (function () {
-        var head = document.getElementById('trajectory-heading');
-        if (!head) return;
-        var root = head.closest('section');
-        if (!root) return;
-        var fill  = root.querySelector('#tj-path-fill');
-        var plane = root.querySelector('#tj-plane');
-        var fixes = Array.prototype.slice.call(root.querySelectorAll('.tj-fix'));
-        var cards = Array.prototype.slice.call(root.querySelectorAll('.tj-card'));
-        if (!fill || !plane || !cards.length) return;
-
-        // Path vertices in draw order: fix3 -> fix2 -> fix1 -> fix0 -> runway
-        var V = [
-            { x: 300, y: 60  },  // fix 3  Penn State
-            { x: 240, y: 150 },  // fix 2  Productivity
-            { x: 175, y: 260 },  // fix 1  Security
-            { x: 110, y: 370 },  // fix 0  Now
-            { x: 78,  y: 470 }   // runway
-        ];
-        var cum = [0];
-        for (var i = 1; i < V.length; i++) {
-            var dx = V[i].x - V[i - 1].x, dy = V[i].y - V[i - 1].y;
-            cum[i] = cum[i - 1] + Math.sqrt(dx * dx + dy * dy);
-        }
-        var total = cum[cum.length - 1];
-        fill.style.strokeDasharray = total;
-        fill.style.strokeDashoffset = total;
-
-        function vertexForFix(idx) { return 3 - idx; }
-
-        var current = 0;
-
-        function select(idx) {
-            current = idx;
-            var vi = vertexForFix(idx);
-            cards.forEach(function (c) {
-                c.setAttribute('aria-pressed', String(Number(c.dataset.fix) === idx));
-            });
-            fixes.forEach(function (f) {
-                var fx = Number(f.dataset.fix);
-                f.classList.toggle('is-active', fx === idx);
-                f.classList.toggle('is-passed', fx > idx);
-            });
-            fill.style.strokeDashoffset = String(total - cum[vi]);
-            var p = V[vi];
-            var n = V[Math.min(vi + 1, V.length - 1)];
-            var deg = Math.atan2(n.y - p.y, n.x - p.x) * 180 / Math.PI;
-            plane.style.transform = 'translate(' + p.x + 'px,' + p.y + 'px) rotate(' + deg + 'deg)';
-        }
-
-        cards.forEach(function (c) {
-            c.addEventListener('click', function () { select(Number(c.dataset.fix)); });
-        });
-        fixes.forEach(function (f) {
-            f.addEventListener('click', function () { select(Number(f.dataset.fix)); });
-            f.addEventListener('mouseenter', function () { select(Number(f.dataset.fix)); });
-        });
-
-        var list = root.querySelector('.tj-list');
-        if (list) {
-            list.addEventListener('keydown', function (e) {
-                var next = null;
-                if (e.key === 'ArrowDown' || e.key === 'ArrowRight') next = Math.min(current + 1, 3);
-                else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') next = Math.max(current - 1, 0);
-                else if (e.key === 'Home') next = 0;
-                else if (e.key === 'End') next = 3;
-                if (next === null) return;
-                e.preventDefault();
-                select(next);
-                var btn = list.querySelector('.tj-card[data-fix="' + next + '"]');
-                if (btn) btn.focus();
-            });
-        }
-
-        select(0);
-    })();
-    </script>
 
     <!-- HOW I LEAD -->
     <style>
@@ -572,6 +357,99 @@
         })();
     })();
     </script>
+
+    <!-- CAREER TIMELINE -->
+    <style>
+        .cts-spine{--cts-blue:#4790b3;--cts-blue-h:#3f84a6;--cts-coral:#cf6146;--cts-ink:#374151;--cts-muted:#6b7280;--cts-card:#fffdf9;--cts-hair:rgba(71,144,179,.15);color:var(--cts-ink);-webkit-font-smoothing:antialiased}
+        .cts-spine *{box-sizing:border-box}
+        .cts-rail{position:relative;display:flex;gap:.5rem;height:clamp(20rem,44vw,24rem);border-top:1px solid var(--cts-hair);border-bottom:1px solid var(--cts-hair);padding:1.25rem 0}
+        .cts-slat{position:relative;flex:1 1 0;min-width:0;background:var(--cts-card);border:1px solid var(--cts-hair);border-radius:14px;cursor:pointer;text-align:left;color:inherit;font:inherit;overflow:hidden;padding:1.15rem;display:flex;flex-direction:column;transition:flex-grow .55s cubic-bezier(.16,1.2,.3,1),box-shadow .45s ease,transform .45s cubic-bezier(.16,1.2,.3,1),background .3s;box-shadow:0 1px 2px rgba(55,65,81,.04)}
+        .cts-slat:hover{background:#ffffff}
+        .cts-slat:focus-visible{outline:2.5px solid var(--cts-blue);outline-offset:3px}
+        .cts-slat[aria-expanded="true"]{flex-grow:6.5;background:#ffffff;transform:translateY(-6px);box-shadow:0 18px 40px -14px rgba(63,132,166,.35),0 4px 10px rgba(55,65,81,.06);border-color:rgba(71,144,179,.28)}
+        .cts-era{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--cts-blue);writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin-top:auto;transition:.4s ease}
+        .cts-slat[aria-expanded="true"] .cts-era{writing-mode:horizontal-tb;transform:none;margin-top:0;margin-bottom:.9rem;order:-1;color:var(--cts-coral);font-size:.72rem}
+        .cts-idx{position:absolute;top:1.1rem;left:1.15rem;font-size:.78rem;font-weight:700;color:var(--cts-muted);opacity:.5;transition:.3s}
+        .cts-slat[aria-expanded="true"] .cts-idx{opacity:0}
+        .cts-body{position:absolute;left:1.15rem;right:1.15rem;top:3rem;opacity:0;visibility:hidden;transform:translateX(10px);transition:opacity .35s ease .12s,transform .45s cubic-bezier(.16,1.2,.3,1) .12s,visibility 0s .5s;max-width:26rem}
+        .cts-slat[aria-expanded="true"] .cts-body{position:relative;left:0;right:0;top:0;opacity:1;visibility:visible;transform:none;transition:opacity .4s ease .18s,transform .5s cubic-bezier(.16,1.2,.3,1) .18s,visibility 0s}
+        .cts-role{font-size:clamp(1.15rem,2.2vw,1.5rem);font-weight:700;letter-spacing:-.015em;line-height:1.2;margin:.5rem 0 .75rem}
+        .cts-desc{font-size:1rem;line-height:1.5;margin:0 0 1rem;color:var(--cts-ink)}
+        .cts-detail{font-size:.9rem;line-height:1.5;color:var(--cts-muted);padding-left:.85rem;border-left:2px solid var(--cts-coral);margin:0}
+        .cts-hint{margin:1rem 0 0;font-size:.8rem;color:var(--cts-muted)}
+        .cts-hint kbd{font:inherit;background:var(--cts-card);border:1px solid var(--cts-hair);border-radius:5px;padding:.05rem .4rem;font-size:.75rem}
+        @media(max-width:720px){
+          .cts-rail{flex-direction:column;height:auto;gap:.65rem;border:0;padding:0}
+          .cts-slat{flex:none;transform:none!important;box-shadow:0 1px 3px rgba(55,65,81,.06)}
+          .cts-era{writing-mode:horizontal-tb!important;transform:none!important;margin-top:0;order:-1;margin-bottom:.6rem;color:var(--cts-coral)}
+          .cts-idx{display:none}
+          .cts-body{position:static!important;left:auto!important;right:auto!important;top:auto!important;opacity:1!important;visibility:visible!important;transform:none!important;max-width:none}
+        }
+        @media(prefers-reduced-motion:reduce){
+          .cts-rail{flex-direction:column;height:auto;gap:.65rem;border:0;padding:0}
+          .cts-slat{flex:none;transform:none!important;transition:none;box-shadow:0 1px 3px rgba(55,65,81,.06)}
+          .cts-slat[aria-expanded]{background:#fff}
+          .cts-era{writing-mode:horizontal-tb!important;transform:none!important;margin-top:0;order:-1;margin-bottom:.6rem;color:var(--cts-coral)}
+          .cts-idx{display:none}
+          .cts-body{position:static!important;left:auto!important;right:auto!important;top:auto!important;opacity:1!important;visibility:visible!important;transform:none!important;transition:none;max-width:none}
+          .cts-hint{display:none}
+        }
+    </style>
+    <section class="max-w-5xl mx-auto px-6 pt-20" aria-labelledby="cts-heading">
+        <div class="max-w-3xl">
+            <p class="text-xs uppercase tracking-[0.2em] text-gray-500 mb-3">Career</p>
+            <h2 id="cts-heading" class="text-3xl md:text-4xl font-light tracking-tighter accent-blue mb-2">The trajectory</h2>
+            <p class="text-gray-600 max-w-xl mb-10">From Penn State to the work I lead today — most recent first.</p>
+        </div>
+        <div class="cts-spine">
+            <div class="cts-rail" role="tablist" aria-label="Career milestones" id="cts-rail"></div>
+            <p class="cts-hint" aria-hidden="true">Hover, tap, or use <kbd>&larr;</kbd> <kbd>&rarr;</kbd> to move through milestones.</p>
+        </div>
+        <script>
+        (function(){
+          var data=[
+            {era:"NOW · Microsoft",role:"Principal Data Science Manager",desc:"Lead data science teams turning product signals into strategy, forecasts, and risk reduction.",detail:"Partnering directly with product and executive leaders to set direction — and to decide what's worth building next."},
+            {era:"Microsoft · Security",role:"Data science across a flagship area",desc:"Built measurement and forecasting that helped leadership see risk early and act with confidence.",detail:"At the scale of one of Microsoft's largest businesses, where a clear read on risk is worth more than another dashboard."},
+            {era:"Microsoft · Productivity",role:"From signals to growth decisions",desc:"Translated trillions of product signals into the insight behind growth and engagement decisions.",detail:"And grew the analysts and leaders who carry that work forward — the part of the job that compounds."},
+            {era:"Penn State",role:"Information Science &amp; Behavioral Psychology",desc:"The foundation for how I think — data and human behavior, together.",detail:"It's why I care as much about how a decision gets made as what the number says."}
+          ];
+          var rail=document.getElementById("cts-rail");
+          var slats=data.map(function(d,i){
+            var b=document.createElement("button");
+            b.className="cts-slat";b.type="button";b.setAttribute("role","tab");
+            b.id="cts-slat-"+i;b.setAttribute("aria-expanded",i===0?"true":"false");
+            b.setAttribute("aria-selected",i===0?"true":"false");b.tabIndex=i===0?0:-1;
+            b.innerHTML='<span class="cts-idx">0'+(i+1)+'</span>'+
+              '<div class="cts-body"><h3 class="cts-role">'+d.role+'</h3>'+
+              '<p class="cts-desc">'+d.desc+'</p><p class="cts-detail">'+d.detail+'</p></div>'+
+              '<span class="cts-era">'+d.era+'</span>';
+            rail.appendChild(b);return b;
+          });
+          var active=0;
+          function open(i,focus){
+            slats.forEach(function(s,j){
+              var on=j===i;
+              s.setAttribute("aria-expanded",on?"true":"false");
+              s.setAttribute("aria-selected",on?"true":"false");
+              s.tabIndex=on?0:-1;
+            });
+            active=i;if(focus)slats[i].focus();
+          }
+          slats.forEach(function(s,i){
+            s.addEventListener("click",function(){open(i,false);});
+            s.addEventListener("mouseenter",function(){open(i,false);});
+            s.addEventListener("focus",function(){open(i,false);});
+            s.addEventListener("keydown",function(e){
+              var k=e.key,n=null;
+              if(k==="ArrowRight"||k==="ArrowDown")n=(active+1)%slats.length;
+              else if(k==="ArrowLeft"||k==="ArrowUp")n=(active-1+slats.length)%slats.length;
+              else if(k==="Home")n=0;else if(k==="End")n=slats.length-1;
+              if(n!==null){e.preventDefault();open(n,true);}
+            });
+          });
+        })();
+        </script>
+    </section>
 
     <div class="max-w-5xl mx-auto px-6 pt-8 pb-16 text-sm text-gray-500 text-center">© James Svolos</div>
 
