@@ -57,73 +57,44 @@
     <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-500.woff2" crossorigin>
     <link rel="stylesheet" href="/assets/css/site.css">
     <style>
-        /* ---- Career trajectory ("the spine") ---- */
-        .cv-trajectory { position: relative; }
-        .cv-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-        .cv-fallback-svg { position: absolute; top: 0; bottom: 0; left: 0; width: 80px; pointer-events: none; z-index: 0; }
-        .cv-js .cv-fallback-svg { display: none; }
-        .cv-track { position: relative; z-index: 1; display: grid; gap: 1.5rem; padding-top: 5.5rem; }
-        @media (min-width: 768px) { .cv-track { gap: 2.5rem; } }
-        .cv-node { position: relative; }
-        .cv-marker {
-            position: absolute; left: 0; top: 0.35rem; width: 1.5rem; height: 1.5rem;
-            border-radius: 999px; background: #f8f4ed; border: 2px solid #4790b3;
-            display: flex; align-items: center; justify-content: center; z-index: 2;
-            transition: transform .35s cubic-bezier(.22,1,.36,1), border-color .35s ease, box-shadow .35s ease;
-        }
-        .cv-marker::after {
-            content: ''; width: 0.45rem; height: 0.45rem; border-radius: 999px;
-            background: #4790b3; transition: background .35s ease, transform .35s ease;
-        }
-        .cv-node--now .cv-marker { border-color: #cf6146; }
-        .cv-node--now .cv-marker::after { background: #cf6146; }
-        .cv-node--now .cv-marker::before {
-            content: ''; position: absolute; inset: -4px; border-radius: 999px;
-            border: 1px solid rgba(224,122,95,.5); animation: cv-pulse 2.6s ease-out infinite;
-        }
-        @keyframes cv-pulse {
-            0%   { transform: scale(.8); opacity: .7; }
-            70%  { transform: scale(1.6); opacity: 0; }
-            100% { transform: scale(1.6); opacity: 0; }
-        }
-        .cv-card {
-            background: #fff; border-radius: 1.5rem; padding: 1.5rem 1.75rem;
-            box-shadow: 0 1px 2px rgba(45,55,72,.04), 0 8px 24px -16px rgba(45,55,72,.18);
-            transition: transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s ease; will-change: transform;
-        }
-        @media (hover: hover) {
-            .cv-node:hover .cv-card, .cv-node:focus-within .cv-card {
-                transform: translateY(-3px);
-                box-shadow: 0 1px 2px rgba(45,55,72,.05), 0 18px 40px -20px rgba(45,55,72,.28);
-            }
-            .cv-node:hover .cv-marker, .cv-node:focus-within .cv-marker {
-                transform: scale(1.18); box-shadow: 0 0 0 5px rgba(93,167,201,.10);
-            }
-            .cv-node--now:hover .cv-marker, .cv-node--now:focus-within .cv-marker {
-                box-shadow: 0 0 0 5px rgba(224,122,95,.12);
-            }
-        }
-        .cv-detail {
-            max-height: 0; opacity: 0; overflow: hidden; margin-top: 0;
-            transition: max-height .45s cubic-bezier(.22,1,.36,1), opacity .35s ease, margin-top .35s ease;
-        }
-        @media (hover: hover) {
-            .cv-node:hover .cv-detail, .cv-node:focus-within .cv-detail {
-                max-height: 6rem; opacity: 1; margin-top: 0.85rem;
-            }
-        }
-        @media (hover: none) { .cv-detail { max-height: none; opacity: 1; margin-top: 0.85rem; } }
-        .cv-reveal {
-            opacity: 0; transform: translateY(22px);
-            transition: opacity .6s ease, transform .6s cubic-bezier(.22,1,.36,1);
-        }
-        .cv-reveal.cv-in { opacity: 1; transform: none; }
+        /* ===== Career: The Approach Plate ===== */
+        .tj-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; align-items: start; }
+        @media (min-width: 900px) { .tj-grid { grid-template-columns: 300px 1fr; gap: 2.5rem; } }
+        .tj-chart { position: sticky; top: 2rem; }
+        @media (max-width: 899px) { .tj-chart { position: static; } }
+        .tj-chart-inner { position: relative; background: #fffdf9; border: 1px solid rgba(71,144,179,.18); border-radius: 1.5rem; padding: .75rem; box-shadow: 0 1px 0 rgba(207,97,70,.06), 0 20px 40px -32px rgba(55,65,81,.35); overflow: hidden; }
+        .tj-chart-inner::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(71,144,179,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(71,144,179,.05) 1px, transparent 1px); background-size: 22px 22px; pointer-events: none; }
+        .tj-corner { position: absolute; z-index: 2; top: .85rem; font-size: .5rem; letter-spacing: .18em; text-transform: uppercase; color: #4790b3; opacity: .7; font-weight: 600; }
+        .tj-corner--tl { left: 1rem; }
+        .tj-corner--tr { right: 1rem; color: #cf6146; }
+        .tj-svg { position: relative; z-index: 1; width: 100%; height: auto; display: block; }
+        @media (max-width: 899px) { .tj-svg { max-width: 320px; margin: 0 auto; } }
+        .tj-grid-lines line { stroke: rgba(55,65,81,.14); stroke-width: 1; }
+        .tj-alt text { fill: #9ca3af; font-size: 8px; letter-spacing: .12em; text-anchor: end; font-weight: 600; }
+        .tj-runway polygon { fill: #cf6146; opacity: .85; }
+        .tj-path { stroke: rgba(55,65,81,.22); stroke-width: 1.5; stroke-dasharray: 3 4; }
+        .tj-path-fill { stroke: url(#tjGlide); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; transition: stroke-dashoffset .7s cubic-bezier(.65,0,.35,1); }
+        .tj-fix { fill: #fffdf9; stroke: #4790b3; stroke-width: 2; cursor: pointer; transition: transform .35s cubic-bezier(.34,1.56,.64,1), fill .35s, stroke .35s; transform-box: fill-box; transform-origin: center; }
+        .tj-fix:hover { stroke: #cf6146; }
+        .tj-fix.is-active { fill: #cf6146; stroke: #cf6146; transform: scale(1.35); }
+        .tj-fix.is-passed { fill: #4790b3; stroke: #4790b3; }
+        .tj-plane { fill: #fffdf9; stroke: #cf6146; stroke-width: 1.5; transition: transform .7s cubic-bezier(.65,0,.35,1); transform-box: fill-box; transform-origin: center; }
+        .tj-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .9rem; }
+        .tj-card { position: relative; display: flex; flex-direction: column; width: 100%; text-align: left; background: #fff; border: 1px solid rgba(55,65,81,.08); border-radius: 1.5rem; padding: 1.25rem 1.35rem 1.35rem 1.6rem; cursor: pointer; color: #374151; transition: border-color .3s, box-shadow .3s, transform .3s; }
+        .tj-card::before { content: ""; position: absolute; left: 0; top: 1.25rem; bottom: 1.25rem; width: 3px; border-radius: 3px; background: rgba(71,144,179,.25); transition: background .3s, top .3s, bottom .3s; }
+        .tj-card:hover { border-color: rgba(71,144,179,.35); box-shadow: 0 16px 36px -30px rgba(55,65,81,.5); }
+        .tj-card[aria-pressed="true"] { border-color: rgba(207,97,70,.45); box-shadow: 0 20px 44px -30px rgba(207,97,70,.45); }
+        .tj-card[aria-pressed="true"]::before { background: #cf6146; top: .9rem; bottom: .9rem; }
+        .tj-card:focus-visible { outline: 2px solid #4790b3; outline-offset: 3px; }
+        .tj-when { display: flex; align-items: center; gap: .55rem; font-size: .7rem; letter-spacing: .16em; text-transform: uppercase; color: #6b7280; font-weight: 600; margin-bottom: .35rem; }
+        .tj-badge { display: inline-block; font-size: .6rem; letter-spacing: .12em; background: #cf6146; color: #fff; padding: .12rem .45rem; border-radius: 999px; }
+        .tj-role { font-size: 1.15rem; font-weight: 300; letter-spacing: -.02em; color: #4790b3; margin-bottom: .4rem; }
+        .tj-desc { font-size: .95rem; line-height: 1.5; color: #374151; }
+        .tj-detail { font-size: .85rem; line-height: 1.55; color: #6b7280; font-weight: 300; max-height: 0; opacity: 0; overflow: hidden; transition: max-height .45s ease, opacity .35s ease, margin-top .45s ease; }
+        .tj-card[aria-pressed="true"] .tj-detail { max-height: 8rem; opacity: 1; margin-top: .6rem; }
         @media (prefers-reduced-motion: reduce) {
-            .cv-reveal { opacity: 1; transform: none; transition: none; }
-            .cv-card, .cv-marker, .cv-detail { transition: none; }
-            .cv-node--now .cv-marker::before { animation: none; }
-            .cv-canvas { display: none; }
-            .cv-detail { max-height: none; opacity: 1; margin-top: 0.85rem; }
+            .tj-path-fill, .tj-fix, .tj-plane, .tj-card, .tj-card::before, .tj-detail { transition: none !important; }
+            .tj-detail { max-height: none; opacity: 1; margin-top: .6rem; }
         }
     </style>
 </head>
@@ -211,65 +182,175 @@
     <section class="max-w-5xl mx-auto px-6 pt-20">
         <div class="max-w-3xl">
             <p class="text-xs uppercase tracking-[0.2em] text-gray-500 mb-3">Career</p>
-            <h2 class="text-3xl md:text-4xl font-light tracking-tighter accent-blue mb-10">The trajectory</h2>
+            <h2 id="trajectory-heading" class="text-3xl md:text-4xl font-light tracking-tighter accent-blue mb-2">The trajectory</h2>
+            <p class="text-gray-600 max-w-xl mb-10">The path from Penn State to the work I lead today. Select a milestone to follow it.</p>
         </div>
 
-        <div class="cv-trajectory">
-            <canvas class="cv-canvas" id="cvCanvas" aria-hidden="true"></canvas>
+        <div class="tj-grid">
+            <div class="tj-chart">
+                <div class="tj-chart-inner">
+                    <span class="tj-corner tj-corner--tl" aria-hidden="true">Fig. 01</span>
+                    <span class="tj-corner tj-corner--tr" aria-hidden="true">Rwy · Dir/VP</span>
+                    <svg class="tj-svg" viewBox="0 0 340 510" role="img" aria-label="Career approach path from Penn State down to a Director or VP runway.">
+                        <defs>
+                            <linearGradient id="tjGlide" gradientUnits="userSpaceOnUse" x1="300" y1="60" x2="78" y2="470">
+                                <stop offset="0" stop-color="#4790b3" />
+                                <stop offset="1" stop-color="#cf6146" />
+                            </linearGradient>
+                        </defs>
 
-            <svg class="cv-fallback-svg" viewBox="0 0 80 400" preserveAspectRatio="none" aria-hidden="true">
-                <path d="M 50 392 C 50 320, 50 230, 50 150" fill="none" stroke="#4790b3" stroke-opacity="0.4" stroke-width="2" stroke-linecap="round" />
-                <path d="M 50 150 L 50 20" fill="none" stroke="#cf6146" stroke-opacity="0.55" stroke-width="2" stroke-dasharray="5 7" stroke-linecap="round" />
-            </svg>
+                        <g class="tj-grid-lines" aria-hidden="true">
+                            <line x1="48" y1="60"  x2="322" y2="60"  />
+                            <line x1="48" y1="150" x2="322" y2="150" />
+                            <line x1="48" y1="260" x2="322" y2="260" />
+                            <line x1="48" y1="370" x2="322" y2="370" />
+                            <line x1="48" y1="470" x2="322" y2="470" />
+                        </g>
+                        <g class="tj-alt" aria-hidden="true">
+                            <text x="42" y="63">FL04</text>
+                            <text x="42" y="153">FL03</text>
+                            <text x="42" y="263">FL02</text>
+                            <text x="42" y="373">FL01</text>
+                            <text x="42" y="473">GND</text>
+                        </g>
 
-            <ol class="cv-track list-none m-0 p-0 pl-10 md:pl-14" aria-label="Career milestones, most recent first">
+                        <!-- planned course + flown glide path -->
+                        <path class="tj-path" d="M 300 60 L 240 150 L 175 260 L 110 370 L 78 470" fill="none" />
+                        <path class="tj-path-fill" id="tj-path-fill" d="M 300 60 L 240 150 L 175 260 L 110 370 L 78 470" fill="none" />
 
-                <li class="cv-node cv-node--now cv-reveal pl-8">
-                    <span class="cv-marker" aria-hidden="true"></span>
-                    <article class="cv-card" tabindex="0">
-                        <p class="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] accent-coral mb-2">
-                            <span class="inline-block w-1.5 h-1.5 rounded-full bg-[#cf6146]"></span>
-                            Now · Microsoft
-                        </p>
-                        <h3 class="text-xl font-medium mb-1">Principal Data Science Manager</h3>
-                        <p class="text-gray-600">Lead data science teams turning product signals into strategy, forecasts, and risk reduction.</p>
-                        <p class="cv-detail text-gray-600 border-t border-gray-100 pt-3">Partnering directly with product and executive leaders to set direction — and to decide what's worth building next.</p>
-                    </article>
+                        <!-- runway -->
+                        <g class="tj-runway" aria-hidden="true">
+                            <polygon points="68,486 88,486 82,462 74,462" />
+                        </g>
+
+                        <!-- fixes (waypoints) -->
+                        <circle class="tj-fix" data-fix="3" cx="300" cy="60"  r="6" />
+                        <circle class="tj-fix" data-fix="2" cx="240" cy="150" r="6" />
+                        <circle class="tj-fix" data-fix="1" cx="175" cy="260" r="6" />
+                        <circle class="tj-fix" data-fix="0" cx="110" cy="370" r="6" />
+
+                        <!-- aircraft -->
+                        <path class="tj-plane" id="tj-plane" d="M 9 0 L -7 -6 L -3 0 L -7 6 Z" aria-hidden="true" />
+                    </svg>
+                </div>
+            </div>
+
+            <ol class="tj-list" aria-label="Career milestones, most recent first">
+                <li>
+                    <button type="button" class="tj-card" data-fix="0" aria-pressed="true" aria-controls="tj-path-fill">
+                        <span class="tj-when"><span class="tj-badge">Now</span> Microsoft</span>
+                        <span class="tj-role">Principal Data Science Manager</span>
+                        <span class="tj-desc">Lead data science teams turning product signals into strategy, forecasts, and risk reduction.</span>
+                        <span class="tj-detail">Partnering directly with product and executive leaders to set direction — and to decide what's worth building next.</span>
+                    </button>
                 </li>
-
-                <li class="cv-node cv-reveal pl-8">
-                    <span class="cv-marker" aria-hidden="true"></span>
-                    <article class="cv-card" tabindex="0">
-                        <p class="text-xs font-medium uppercase tracking-[0.18em] accent-blue mb-2">Microsoft · Security</p>
-                        <h3 class="text-xl font-medium mb-1">Data science across a flagship area</h3>
-                        <p class="text-gray-600">Built measurement and forecasting that helped leadership see risk early and act with confidence.</p>
-                        <p class="cv-detail text-gray-600 border-t border-gray-100 pt-3">At the scale of one of Microsoft's largest businesses, where a clear read on risk is worth more than another dashboard.</p>
-                    </article>
+                <li>
+                    <button type="button" class="tj-card" data-fix="1" aria-pressed="false" aria-controls="tj-path-fill">
+                        <span class="tj-when">Microsoft · Security</span>
+                        <span class="tj-role">Data science across a flagship area</span>
+                        <span class="tj-desc">Built measurement and forecasting that helped leadership see risk early and act with confidence.</span>
+                        <span class="tj-detail">At the scale of one of Microsoft's largest businesses, where a clear read on risk is worth more than another dashboard.</span>
+                    </button>
                 </li>
-
-                <li class="cv-node cv-reveal pl-8">
-                    <span class="cv-marker" aria-hidden="true"></span>
-                    <article class="cv-card" tabindex="0">
-                        <p class="text-xs font-medium uppercase tracking-[0.18em] accent-blue mb-2">Microsoft · Productivity</p>
-                        <h3 class="text-xl font-medium mb-1">From signals to growth decisions</h3>
-                        <p class="text-gray-600">Translated trillions of product signals into the insight behind growth and engagement decisions.</p>
-                        <p class="cv-detail text-gray-600 border-t border-gray-100 pt-3">And grew the analysts and leaders who carry that work forward — the part of the job that compounds.</p>
-                    </article>
+                <li>
+                    <button type="button" class="tj-card" data-fix="2" aria-pressed="false" aria-controls="tj-path-fill">
+                        <span class="tj-when">Microsoft · Productivity</span>
+                        <span class="tj-role">From signals to growth decisions</span>
+                        <span class="tj-desc">Translated trillions of product signals into the insight behind growth and engagement decisions.</span>
+                        <span class="tj-detail">And grew the analysts and leaders who carry that work forward — the part of the job that compounds.</span>
+                    </button>
                 </li>
-
-                <li class="cv-node cv-reveal pl-8">
-                    <span class="cv-marker" aria-hidden="true"></span>
-                    <article class="cv-card" tabindex="0">
-                        <p class="text-xs font-medium uppercase tracking-[0.18em] accent-blue mb-2">Penn State</p>
-                        <h3 class="text-xl font-medium mb-1">Information Science &amp; Behavioral Psychology</h3>
-                        <p class="text-gray-600">The foundation for how I think — data and human behavior, together.</p>
-                        <p class="cv-detail text-gray-600 border-t border-gray-100 pt-3">It's why I care as much about how a decision gets made as what the number says.</p>
-                    </article>
+                <li>
+                    <button type="button" class="tj-card" data-fix="3" aria-pressed="false" aria-controls="tj-path-fill">
+                        <span class="tj-when">Penn State</span>
+                        <span class="tj-role">Information Science &amp; Behavioral Psychology</span>
+                        <span class="tj-desc">The foundation for how I think — data and human behavior, together.</span>
+                        <span class="tj-detail">It's why I care as much about how a decision gets made as what the number says.</span>
+                    </button>
                 </li>
-
             </ol>
         </div>
     </section>
+
+    <script>
+    // ---- Career trajectory: the Approach Plate ----
+    (function () {
+        var head = document.getElementById('trajectory-heading');
+        if (!head) return;
+        var root = head.closest('section');
+        if (!root) return;
+        var fill  = root.querySelector('#tj-path-fill');
+        var plane = root.querySelector('#tj-plane');
+        var fixes = Array.prototype.slice.call(root.querySelectorAll('.tj-fix'));
+        var cards = Array.prototype.slice.call(root.querySelectorAll('.tj-card'));
+        if (!fill || !plane || !cards.length) return;
+
+        // Path vertices in draw order: fix3 -> fix2 -> fix1 -> fix0 -> runway
+        var V = [
+            { x: 300, y: 60  },  // fix 3  Penn State
+            { x: 240, y: 150 },  // fix 2  Productivity
+            { x: 175, y: 260 },  // fix 1  Security
+            { x: 110, y: 370 },  // fix 0  Now
+            { x: 78,  y: 470 }   // runway
+        ];
+        var cum = [0];
+        for (var i = 1; i < V.length; i++) {
+            var dx = V[i].x - V[i - 1].x, dy = V[i].y - V[i - 1].y;
+            cum[i] = cum[i - 1] + Math.sqrt(dx * dx + dy * dy);
+        }
+        var total = cum[cum.length - 1];
+        fill.style.strokeDasharray = total;
+        fill.style.strokeDashoffset = total;
+
+        function vertexForFix(idx) { return 3 - idx; }
+
+        var current = 0;
+
+        function select(idx) {
+            current = idx;
+            var vi = vertexForFix(idx);
+            cards.forEach(function (c) {
+                c.setAttribute('aria-pressed', String(Number(c.dataset.fix) === idx));
+            });
+            fixes.forEach(function (f) {
+                var fx = Number(f.dataset.fix);
+                f.classList.toggle('is-active', fx === idx);
+                f.classList.toggle('is-passed', fx > idx);
+            });
+            fill.style.strokeDashoffset = String(total - cum[vi]);
+            var p = V[vi];
+            var n = V[Math.min(vi + 1, V.length - 1)];
+            var deg = Math.atan2(n.y - p.y, n.x - p.x) * 180 / Math.PI;
+            plane.style.transform = 'translate(' + p.x + 'px,' + p.y + 'px) rotate(' + deg + 'deg)';
+        }
+
+        cards.forEach(function (c) {
+            c.addEventListener('click', function () { select(Number(c.dataset.fix)); });
+        });
+        fixes.forEach(function (f) {
+            f.addEventListener('click', function () { select(Number(f.dataset.fix)); });
+            f.addEventListener('mouseenter', function () { select(Number(f.dataset.fix)); });
+        });
+
+        var list = root.querySelector('.tj-list');
+        if (list) {
+            list.addEventListener('keydown', function (e) {
+                var next = null;
+                if (e.key === 'ArrowDown' || e.key === 'ArrowRight') next = Math.min(current + 1, 3);
+                else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') next = Math.max(current - 1, 0);
+                else if (e.key === 'Home') next = 0;
+                else if (e.key === 'End') next = 3;
+                if (next === null) return;
+                e.preventDefault();
+                select(next);
+                var btn = list.querySelector('.tj-card[data-fix="' + next + '"]');
+                if (btn) btn.focus();
+            });
+        }
+
+        select(0);
+    })();
+    </script>
 
     <!-- HOW I LEAD -->
     <style>
@@ -563,179 +644,6 @@
         draw();
     })();
 
-    // ---- Career trajectory: staggered reveal + scroll-drawn forecast curve ----
-    (function () {
-        var root = document.querySelector('.cv-trajectory');
-        if (!root) return;
-
-        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        var nodes = Array.prototype.slice.call(root.querySelectorAll('.cv-reveal'));
-        var canvas = document.getElementById('cvCanvas');
-
-        if (!reduce && canvas) document.body.classList.add('cv-js');
-
-        if (reduce || !('IntersectionObserver' in window)) {
-            nodes.forEach(function (n) { n.classList.add('cv-in'); });
-        } else {
-            var io = new IntersectionObserver(function (entries) {
-                entries.forEach(function (e) {
-                    if (!e.isIntersecting) return;
-                    var idx = nodes.indexOf(e.target);
-                    setTimeout(function () { e.target.classList.add('cv-in'); }, Math.max(0, idx) * 110);
-                    io.unobserve(e.target);
-                });
-            }, { threshold: 0.18 });
-            nodes.forEach(function (n) { io.observe(n); });
-        }
-
-        if (reduce || !canvas) return;
-        var ctx = canvas.getContext('2d');
-        if (!ctx) return;
-
-        var W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
-        var markersY = [];
-
-        function measure() {
-            var r = root.getBoundingClientRect();
-            W = r.width; H = r.height;
-            canvas.width = Math.round(W * dpr);
-            canvas.height = Math.round(H * dpr);
-            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-            markersY = [];
-            var ms = root.querySelectorAll('.cv-marker');
-            for (var i = 0; i < ms.length; i++) {
-                var mr = ms[i].getBoundingClientRect();
-                markersY.push((mr.top + mr.height / 2) - r.top);
-            }
-        }
-
-        // Historical points: oldest (bottom) -> Now (top), drifting gently right as they rise.
-        function histPoints() {
-            var n = markersY.length;
-            if (!n) return [];
-            var xLeft = 14, pts = [];
-            for (var i = n - 1; i >= 0; i--) {
-                var prog = (n - 1 - i) / Math.max(1, n - 1);
-                pts.push({ x: xLeft + prog * Math.min(46, W * 0.12), y: markersY[i] });
-            }
-            return pts;
-        }
-        // Extrapolate the last segment up into the "future" zone above the Now marker.
-        function projPoint(pts) {
-            var a = pts[pts.length - 2], b = pts[pts.length - 1], projY = 14;
-            var dy = b.y - a.y;
-            var t = dy !== 0 ? (projY - b.y) / dy : 0;
-            var projX = b.x + (b.x - a.x) * t;
-            return { x: Math.max(10, Math.min(projX, W * 0.32)), y: projY };
-        }
-        function bezierThrough(pts) {
-            ctx.beginPath();
-            ctx.moveTo(pts[0].x, pts[0].y);
-            for (var i = 0; i < pts.length - 1; i++) {
-                var p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
-                ctx.bezierCurveTo(p1.x + (p2.x - p0.x) / 6, p1.y + (p2.y - p0.y) / 6,
-                                  p2.x - (p3.x - p1.x) / 6, p2.y - (p3.y - p1.y) / 6, p2.x, p2.y);
-            }
-        }
-
-        function drawCurve(progress) {
-            ctx.clearRect(0, 0, W, H);
-            var pts = histPoints();
-            if (pts.length < 2) return;
-            var now = pts[pts.length - 1], proj = projPoint(pts);
-
-            // --- The forecast: confidence cone + dashed projection above "Now" ---
-            var pa = Math.max(0, Math.min(1, (progress - 0.5) / 0.4));
-            if (pa > 0) {
-                var coneW = 34;
-                ctx.beginPath();
-                ctx.moveTo(now.x, now.y);
-                ctx.lineTo(proj.x - coneW, proj.y);
-                ctx.lineTo(proj.x + coneW, proj.y);
-                ctx.closePath();
-                ctx.fillStyle = 'rgba(207,97,70,' + (0.12 * pa) + ')';
-                ctx.fill();
-
-                ctx.beginPath();
-                ctx.moveTo(now.x, now.y);
-                ctx.lineTo(proj.x, proj.y);
-                ctx.setLineDash([5, 5]);
-                ctx.strokeStyle = 'rgba(207,97,70,' + (0.7 * pa) + ')';
-                ctx.lineWidth = 2; ctx.lineCap = 'round';
-                ctx.stroke();
-                ctx.setLineDash([]);
-
-                ctx.beginPath();
-                ctx.arc(proj.x, proj.y, 3.5, 0, 7);
-                ctx.fillStyle = '#f8f4ed'; ctx.fill();
-                ctx.lineWidth = 2; ctx.strokeStyle = 'rgba(207,97,70,' + pa + ')'; ctx.stroke();
-            }
-
-            // --- Solid historical curve, revealed on scroll ---
-            bezierThrough(pts);
-            var grad = ctx.createLinearGradient(0, H, 0, 0);
-            grad.addColorStop(0, 'rgba(71,144,179,0.15)');
-            grad.addColorStop(0.75, 'rgba(71,144,179,0.55)');
-            grad.addColorStop(1, 'rgba(207,97,70,0.75)');
-            var approxLen = 0;
-            for (var k = 1; k < pts.length; k++) approxLen += Math.hypot(pts[k].x - pts[k - 1].x, pts[k].y - pts[k - 1].y);
-            approxLen *= 1.3;
-            var hp = Math.max(0, Math.min(1, progress / 0.7));
-            ctx.setLineDash([approxLen, approxLen]);
-            ctx.lineDashOffset = approxLen * (1 - hp);
-            ctx.strokeStyle = grad;
-            ctx.lineWidth = 2.5; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-            ctx.stroke();
-            ctx.setLineDash([]);
-        }
-
-        var drawn = 0;
-        var rendered = -1;
-
-        function targetProgress() {
-            var r = root.getBoundingClientRect();
-            var vh = window.innerHeight || document.documentElement.clientHeight;
-            var start = vh * 0.9;
-            var end = vh * 0.25;
-            var p = (start - r.top) / (start - end + (r.height * 0.4));
-            return Math.max(0, Math.min(1, p));
-        }
-
-        var ticking = false;
-        function onScroll() {
-            if (ticking) return;
-            ticking = true;
-            requestAnimationFrame(function () {
-                drawn = targetProgress();
-                if (Math.abs(drawn - rendered) > 0.004) {
-                    drawCurve(drawn);
-                    rendered = drawn;
-                }
-                ticking = false;
-            });
-        }
-
-        var ro;
-        function init() {
-            measure();
-            drawCurve(targetProgress());
-            rendered = drawn = targetProgress();
-        }
-
-        if (document.readyState === 'complete') {
-            init();
-        } else {
-            window.addEventListener('load', init);
-            init();
-        }
-
-        window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', function () { measure(); drawCurve(drawn); }, { passive: true });
-        if ('ResizeObserver' in window) {
-            ro = new ResizeObserver(function () { measure(); drawCurve(drawn); });
-            ro.observe(root);
-        }
-    })();
     </script>
 
 </body>
