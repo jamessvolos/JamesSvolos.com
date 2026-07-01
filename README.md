@@ -49,8 +49,15 @@ Edit files in `src/`, then run `npm run build` and commit both the source and th
 regenerated root files. `tailwind.config.js` scans all `*.html` (including class
 names inside inline `<script>` strings). Page-specific CSS/JS stays inline per page.
 
-Fonts and Plotly are **self-hosted** (no third-party runtime dependencies); the Lab
-lazy-loads the Plotly bundle only when an experiment nears the viewport.
+`build:html` also **minifies** each page (whitespace + inline CSS/JS) and
+**regenerates `sitemap.xml`** from the canonical page list — both deterministic, so
+the CI build check stays green.
+
+Fonts and Plotly are **self-hosted** (no third-party runtime dependencies); Inter
+ships weights 300–700 (300 is preloaded for the hero); the Lab lazy-loads the Plotly
+bundle only when an experiment nears the viewport. A strict **Content-Security-Policy**
+(`default-src 'self'`, plus the writing-feed proxy origins in `connect-src`) is set via
+`<meta>` in the shared head partial.
 
 ## Deploy
 
