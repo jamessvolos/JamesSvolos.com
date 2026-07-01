@@ -272,44 +272,241 @@
     </section>
 
     <!-- HOW I LEAD -->
-    <section class="max-w-5xl mx-auto px-6 pt-20">
+    <style>
+        .lead-console { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+        @media (min-width: 860px) { .lead-console { grid-template-columns: 1.05fr 0.95fr; gap: 2.5rem; align-items: stretch; } }
+        .lead-index { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .5rem; }
+        .lead-item { position: relative; display: flex; gap: 1rem; align-items: flex-start; width: 100%; text-align: left; background: transparent; border: 0; cursor: pointer; padding: 1rem 1rem 1rem 1.1rem; border-radius: 1.25rem; color: #374151; transition: background .4s ease, transform .4s cubic-bezier(.22,1,.36,1); -webkit-tap-highlight-color: transparent; }
+        .lead-item::before { content: ""; position: absolute; left: 0; top: 14%; bottom: 14%; width: 2px; border-radius: 2px; background: #cf6146; transform: scaleY(0); transform-origin: top; transition: transform .5s cubic-bezier(.22,1,.36,1); }
+        .lead-item:hover { background: rgba(255,255,255,.6); }
+        .lead-item[aria-selected="true"] { background: #fff; box-shadow: 0 1px 0 rgba(23,42,58,.04), 0 18px 40px -28px rgba(23,42,58,.4); transform: translateX(2px); }
+        .lead-item[aria-selected="true"]::before { transform: scaleY(1); }
+        .lead-item:focus-visible { outline: 2px solid #4790b3; outline-offset: 3px; }
+        .lead-num { font-variant-numeric: tabular-nums; font-size: .72rem; letter-spacing: .18em; font-weight: 600; color: #b7c9d3; padding-top: .3rem; min-width: 1.6rem; transition: color .4s ease; }
+        .lead-item[aria-selected="true"] .lead-num { color: #cf6146; }
+        .lead-body { display: flex; flex-direction: column; gap: .3rem; }
+        .lead-title { font-size: 1.02rem; line-height: 1.3; font-weight: 500; color: #1f2b36; letter-spacing: -.01em; }
+        .lead-desc { font-size: .86rem; line-height: 1.5; color: #6b7280; max-height: 0; overflow: hidden; opacity: 0; transition: max-height .5s cubic-bezier(.22,1,.36,1), opacity .4s ease; }
+        .lead-item[aria-selected="true"] .lead-desc, .lead-item:hover .lead-desc { max-height: 7rem; opacity: 1; }
+        .lead-stage { position: relative; border-radius: 1.5rem; background: radial-gradient(120% 90% at 30% 20%, rgba(71,144,179,.10), transparent 60%), radial-gradient(120% 120% at 85% 90%, rgba(207,97,70,.08), transparent 55%), #fffdf9; box-shadow: inset 0 0 0 1px rgba(23,42,58,.06), 0 30px 60px -40px rgba(23,42,58,.45); overflow: hidden; min-height: 320px; aspect-ratio: 1 / 1; }
+        @media (min-width: 860px) { .lead-stage { aspect-ratio: auto; } }
+        .lead-canvas { display: block; width: 100%; height: 100%; position: absolute; inset: 0; }
+        .lead-caption { position: absolute; left: 1.25rem; bottom: 1.15rem; right: 1.25rem; display: flex; flex-direction: column; gap: .25rem; pointer-events: none; }
+        .lead-caption-kicker { font-size: .62rem; text-transform: uppercase; letter-spacing: .22em; color: #4790b3; font-weight: 600; }
+        .lead-caption-text { font-size: .9rem; color: #4b5563; letter-spacing: -.01em; max-width: 32ch; transition: opacity .35s ease; }
+        @media (prefers-reduced-motion: reduce) { .lead-item, .lead-item::before, .lead-desc, .lead-caption-text { transition: none; } .lead-desc { max-height: none; opacity: 1; } }
+    </style>
+    <section class="max-w-5xl mx-auto px-6 pt-20" aria-labelledby="lead-heading">
         <p class="text-xs uppercase tracking-[0.2em] text-gray-500 mb-3">Leadership</p>
-        <h2 class="text-3xl md:text-4xl font-light tracking-tighter accent-blue mb-8">How I lead</h2>
-        <div class="grid sm:grid-cols-2 gap-6">
-            <div class="bg-white rounded-3xl p-7 reveal">
-                <div class="flex items-center justify-between mb-3">
-                    <span class="text-4xl font-light" style="color:#c3dceb">01</span>
-                    <svg class="accent-coral" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 2v20"/></svg>
+        <h2 id="lead-heading" class="text-3xl md:text-4xl font-light tracking-tighter accent-blue mb-2">How I lead</h2>
+        <p class="text-gray-600 max-w-xl mb-10">I sit between the data and the decision. Each of these turns raw signal into something a leader can act on — pick one to see it resolve.</p>
+
+        <div class="lead-console">
+            <ol class="lead-index" role="tablist" aria-label="Leadership principles">
+                <li role="presentation"><button class="lead-item" id="lead-tab-0" role="tab" aria-selected="true" aria-controls="lead-panel" data-idx="0">
+                    <span class="lead-num" aria-hidden="true">01</span>
+                    <span class="lead-body"><span class="lead-title">Build simple, trusted solutions</span>
+                    <span class="lead-desc">The goal isn't more dashboards — it's earning trust and giving leaders something they can act on with confidence.</span></span>
+                </button></li>
+                <li role="presentation"><button class="lead-item" id="lead-tab-1" role="tab" aria-selected="false" tabindex="-1" aria-controls="lead-panel" data-idx="1">
+                    <span class="lead-num" aria-hidden="true">02</span>
+                    <span class="lead-body"><span class="lead-title">Translate data into strategy</span>
+                    <span class="lead-desc">I sit between the data and the decision, turning analysis into direction for product and executive partners.</span></span>
+                </button></li>
+                <li role="presentation"><button class="lead-item" id="lead-tab-2" role="tab" aria-selected="false" tabindex="-1" aria-controls="lead-panel" data-idx="2">
+                    <span class="lead-num" aria-hidden="true">03</span>
+                    <span class="lead-body"><span class="lead-title">Grow people, not just models</span>
+                    <span class="lead-desc">I help teams focus on what matters, develop the next layer of leaders, and ship outcomes that compound.</span></span>
+                </button></li>
+                <li role="presentation"><button class="lead-item" id="lead-tab-3" role="tab" aria-selected="false" tabindex="-1" aria-controls="lead-panel" data-idx="3">
+                    <span class="lead-num" aria-hidden="true">04</span>
+                    <span class="lead-body"><span class="lead-title">Apply AI where it pays off</span>
+                    <span class="lead-desc">I put AI to work where it creates real, measurable value — and skip it where it doesn't.</span></span>
+                </button></li>
+            </ol>
+
+            <div class="lead-stage" id="lead-panel" role="tabpanel" aria-labelledby="lead-tab-0">
+                <canvas class="lead-canvas" aria-hidden="true"></canvas>
+                <div class="lead-caption">
+                    <span class="lead-caption-kicker">Signal → Clarity</span>
+                    <span class="lead-caption-text" data-caption>A trusted form, resolved from noise.</span>
                 </div>
-                <h3 class="font-medium text-lg mb-2">Build simple, trusted solutions</h3>
-                <p class="text-gray-600">The goal isn't more dashboards — it's earning trust and giving leaders something they can act on with confidence.</p>
-            </div>
-            <div class="bg-white rounded-3xl p-7 reveal">
-                <div class="flex items-center justify-between mb-3">
-                    <span class="text-4xl font-light" style="color:#c3dceb">02</span>
-                    <svg class="accent-coral" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
-                </div>
-                <h3 class="font-medium text-lg mb-2">Translate data into strategy</h3>
-                <p class="text-gray-600">I sit between the data and the decision, turning analysis into direction for product and executive partners.</p>
-            </div>
-            <div class="bg-white rounded-3xl p-7 reveal">
-                <div class="flex items-center justify-between mb-3">
-                    <span class="text-4xl font-light" style="color:#c3dceb">03</span>
-                    <svg class="accent-coral" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20v-8"/><path d="M12 12c0-3 2-5 5-5 0 3-2 5-5 5z"/><path d="M12 13c0-2.5-2-4.5-5-4.5 0 2.5 2 4.5 5 4.5z"/></svg>
-                </div>
-                <h3 class="font-medium text-lg mb-2">Grow people, not just models</h3>
-                <p class="text-gray-600">I help teams focus on what matters, develop the next layer of leaders, and ship outcomes that compound.</p>
-            </div>
-            <div class="bg-white rounded-3xl p-7 reveal">
-                <div class="flex items-center justify-between mb-3">
-                    <span class="text-4xl font-light" style="color:#c3dceb">04</span>
-                    <svg class="accent-coral" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>
-                </div>
-                <h3 class="font-medium text-lg mb-2">Apply AI where it pays off</h3>
-                <p class="text-gray-600">I put AI to work where it creates real, measurable value — and skip it where it doesn't.</p>
             </div>
         </div>
     </section>
+    <script>
+    (function () {
+        "use strict";
+        var stage = document.getElementById("lead-panel");
+        if (!stage) return;
+        var canvas = stage.querySelector(".lead-canvas");
+        var tabs = Array.prototype.slice.call(document.querySelectorAll(".lead-item"));
+        var captionEl = stage.querySelector("[data-caption]");
+        if (!canvas || !tabs.length) return;
+        var ctx = canvas.getContext("2d");
+        if (!ctx) return;
+
+        var BLUE = "#4790b3", CORAL = "#cf6146";
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+        var captions = [
+            "Order from noise — a form you can trust.",
+            "Scatter resolves to a single decision.",
+            "A lattice that grows its next layer.",
+            "A dense field, pruned to what pays off."
+        ];
+
+        var W = 0, H = 0, DPR = 1, cx = 0, cy = 0, R = 0;
+        var N = 190;
+        var particles = [], current = 0, raf = null, resizeTimer = 0;
+
+        function rand(a, b) { return a + Math.random() * (b - a); }
+
+        function initParticles() {
+            particles = [];
+            for (var i = 0; i < N; i++) {
+                var hx = rand(0.08 * W, 0.92 * W), hy = rand(0.1 * H, 0.9 * H);
+                particles.push({ x: hx, y: hy, tx: hx, ty: hy, color: BLUE, size: rand(1.1, 2.2), on: true, seed: Math.random() * 6.28 });
+            }
+        }
+
+        function computeTargets(idx) {
+            var i, p, a;
+            if (idx === 0) {                       // TRUST — concentric seal
+                for (i = 0; i < N; i++) {
+                    p = particles[i]; a = (i / N) * Math.PI * 2;
+                    var ring = (i % 3 === 0) ? R * 0.6 : R;
+                    p.tx = cx + Math.cos(a) * ring; p.ty = cy + Math.sin(a) * ring;
+                    p.color = BLUE; p.on = true; p.size = 1.9;
+                }
+            } else if (idx === 1) {                // DECISION — scatter converges to one point
+                for (i = 0; i < N; i++) {
+                    p = particles[i]; a = rand(0, Math.PI * 2);
+                    var rr = (i % 8 === 0) ? rand(R * 0.7, R * 1.02) : Math.pow(Math.random(), 2.2) * R * 0.5;
+                    p.tx = cx + Math.cos(a) * rr; p.ty = cy + Math.sin(a) * rr;
+                    var core = rr < R * 0.12; p.on = true;
+                    p.color = core ? CORAL : BLUE; p.size = core ? 2.8 : 1.6;
+                }
+            } else if (idx === 2) {                // GROWTH — a lattice, outer layer coral
+                var cols = 7, rows = 7, k = 0, gx = R * 2 / (cols - 1), gy = R * 2 / (rows - 1);
+                for (i = 0; i < N; i++) {
+                    p = particles[i]; var r = k % rows, c = (k / rows) | 0, off = (c % 2) * (gy / 2);
+                    p.tx = cx - R + c * gx + rand(-2, 2); p.ty = cy - R + r * gy + off + rand(-2, 2);
+                    var d = Math.hypot(p.tx - cx, p.ty - cy);
+                    p.on = d < R * 1.12 && c < cols;
+                    p.color = (d > R * 0.72 && d < R * 1.12) ? CORAL : BLUE; p.size = 2;
+                    k++;
+                }
+            } else {                               // AI — dense field pruned to a few high-value points
+                for (i = 0; i < N; i++) {
+                    p = particles[i]; a = rand(0, Math.PI * 2);
+                    var rad = Math.sqrt(Math.random()) * R * 1.02;
+                    p.tx = cx + Math.cos(a) * rad; p.ty = cy + Math.sin(a) * rad;
+                    var keep = (i % 12 === 0); p.on = true;
+                    p.color = keep ? CORAL : BLUE; p.size = keep ? 3.2 : 1.3; p.dim = !keep;
+                }
+            }
+            for (i = 0; i < N; i++) if (idx !== 3) particles[i].dim = false;
+        }
+
+        function resize() {
+            var rect = canvas.getBoundingClientRect();
+            if (!rect.width || !rect.height) return;
+            DPR = Math.min(window.devicePixelRatio || 1, 2);
+            W = rect.width; H = rect.height;
+            canvas.width = Math.round(W * DPR); canvas.height = Math.round(H * DPR);
+            ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+            cx = W / 2; cy = H / 2; R = Math.min(W, H) * 0.34;
+            computeTargets(current);
+            if (reduce.matches) { snap(); render(1); }
+        }
+        function snap() { for (var i = 0; i < N; i++) { particles[i].x = particles[i].tx; particles[i].y = particles[i].ty; } }
+
+        function render(settle) {
+            ctx.clearRect(0, 0, W, H);
+            if (settle > 0.55 && current === 2) {          // connective filaments for the lattice
+                ctx.lineWidth = 1;
+                for (var i = 0; i < N; i++) {
+                    var p = particles[i]; if (!p.on) continue;
+                    for (var j = i + 1; j < i + 5 && j < N; j++) {
+                        var q = particles[j]; if (!q.on) continue;
+                        var d = Math.hypot(p.x - q.x, p.y - q.y);
+                        if (d < R * 0.42) { ctx.strokeStyle = "rgba(71,144,179," + (0.1 * (1 - d / (R * 0.42)) * settle) + ")"; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke(); }
+                    }
+                }
+            }
+            for (var k = 0; k < N; k++) {
+                var pt = particles[k];
+                var base = pt.dim ? 0.16 : (0.35 + 0.6 * settle);
+                if (pt.color === CORAL && !pt.dim && settle > 0.6) {
+                    ctx.beginPath(); ctx.fillStyle = "rgba(207,97,70,0.12)"; ctx.arc(pt.x, pt.y, pt.size * 3.2, 0, Math.PI * 2); ctx.fill();
+                }
+                ctx.beginPath();
+                ctx.fillStyle = (pt.color === CORAL ? "rgba(207,97,70," : "rgba(71,144,179,") + base + ")";
+                ctx.arc(pt.x, pt.y, pt.size, 0, Math.PI * 2); ctx.fill();
+            }
+        }
+
+        var t0 = 0;
+        function animate(ts) {
+            if (!t0) t0 = ts;
+            var e = 1 - Math.pow(1 - Math.min(1, (ts - t0) / 1000), 3), moving = false;
+            for (var i = 0; i < N; i++) {
+                var p = particles[i], dx = p.tx - p.x, dy = p.ty - p.y;
+                p.x += dx * 0.12; p.y += dy * 0.12;
+                if (Math.abs(dx) > 0.3 || Math.abs(dy) > 0.3) moving = true;
+                var br = Math.sin(ts / 950 + p.seed) * 0.5;
+                p.x += Math.cos(p.seed) * br * 0.12; p.y += Math.sin(p.seed) * br * 0.12;
+            }
+            render(e);
+            raf = requestAnimationFrame(animate);
+        }
+        function start() { if (reduce.matches) { snap(); render(1); return; } t0 = 0; if (raf) cancelAnimationFrame(raf); raf = requestAnimationFrame(animate); }
+
+        function select(idx, focusTab) {
+            current = idx;
+            tabs.forEach(function (tab, i) {
+                var sel = i === idx;
+                tab.setAttribute("aria-selected", sel ? "true" : "false");
+                tab.setAttribute("tabindex", sel ? "0" : "-1");
+                if (sel && focusTab) tab.focus();
+            });
+            stage.setAttribute("aria-labelledby", tabs[idx].id);
+            if (captionEl) { captionEl.style.opacity = "0"; setTimeout(function () { captionEl.textContent = captions[idx]; captionEl.style.opacity = "1"; }, 170); }
+            computeTargets(idx); start();
+        }
+
+        tabs.forEach(function (tab, i) {
+            tab.addEventListener("click", function () { select(i, false); });
+            tab.addEventListener("mouseenter", function () { if (!reduce.matches && i !== current) select(i, false); });
+            tab.addEventListener("keydown", function (ev) {
+                if (ev.key === "ArrowDown" || ev.key === "ArrowRight") { ev.preventDefault(); select((i + 1) % tabs.length, true); }
+                else if (ev.key === "ArrowUp" || ev.key === "ArrowLeft") { ev.preventDefault(); select((i - 1 + tabs.length) % tabs.length, true); }
+                else if (ev.key === "Home") { ev.preventDefault(); select(0, true); }
+                else if (ev.key === "End") { ev.preventDefault(); select(tabs.length - 1, true); }
+            });
+        });
+
+        window.addEventListener("resize", function () { clearTimeout(resizeTimer); resizeTimer = setTimeout(resize, 130); });
+        if (reduce.addEventListener) reduce.addEventListener("change", function () { resize(); start(); });
+
+        if ("IntersectionObserver" in window) {
+            var io = new IntersectionObserver(function (ents) {
+                ents.forEach(function (en) {
+                    if (reduce.matches) return;
+                    if (en.isIntersecting) { if (!raf) start(); } else if (raf) { cancelAnimationFrame(raf); raf = null; }
+                });
+            }, { threshold: 0.05 });
+            io.observe(stage);
+        }
+
+        (function boot() {
+            var rect = canvas.getBoundingClientRect();
+            if (!rect.width) { requestAnimationFrame(boot); return; }
+            initParticles(); resize(); computeTargets(0);
+            if (reduce.matches) { snap(); render(1); } else { start(); }
+        })();
+    })();
+    </script>
 
     <!-- CTA -->
     <section class="max-w-5xl mx-auto px-6 pt-16 pb-8">
