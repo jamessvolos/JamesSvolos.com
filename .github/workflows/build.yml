@@ -1,0 +1,32 @@
+name: Build check
+
+# Recompiles the CSS and regenerates the flat HTML from src/, then fails if the
+# committed output is out of date. GitHub Pages still deploys from the branch
+# (deploy-from-branch); this workflow only guards against forgetting to rebuild.
+
+on:
+  push:
+    branches: [main, "claude/**"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Fail if generated output is out of date
+        run: |
+          if ! git diff --quiet; then
+            echo "::error::Build output is stale — run 'npm run build' and commit the result."
+            git --no-pager diff --stat
+            exit 1
+          fi

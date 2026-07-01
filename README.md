@@ -7,41 +7,53 @@ via `CNAME`, `.nojekyll` disables Jekyll processing).
 ## Structure
 
 ```
-index.html          Home
-about.html          About — bio, timeline, philosophy
-writing.html        Writing ("The Dispatch") — live Substack feed
-lab/index.html      Lab — 12 interactive data experiments
-connect.html        Connect — direct channels
+src/                Authoring source — edit HERE, not the root .html
+  *.html            Page sources with @include directives for shared chrome
+  lab/index.html
+  partials/
+    head-fav.html   Favicon + theme-color (shared by every page)
+    head-assets.html  Font preloads + stylesheet link (auto-stamped cache hash)
+    nav.html        Top navigation (active link set per page)
+build.mjs           Expands src/ → flat HTML at the repo root
+index.html          Home              ┐
+about.html          About             │ generated from src/ — do not edit by hand
+writing.html        Writing feed      │ (deploy-from-branch serves these directly)
+lab/index.html      Lab (12 experiments) │
+connect.html        Connect           ┘
 assets/css/
   site.css          Compiled, minified Tailwind + components (the only stylesheet)
-  tailwind.input.css  Source for the build (@tailwind layers + custom components)
-favicon.svg         Site icon (SVG; modern browsers)
+  tailwind.input.css  Source for the CSS build (@tailwind layers + @font-face + components)
+assets/fonts/       Self-hosted Inter (woff2, weights 400/500/600)
+assets/js/          Self-hosted Plotly cartesian bundle (lazy-loaded by the Lab)
+favicon.svg         Site icon (SVG; modern browsers use this)
 og-image.png        1200×630 social share card
 robots.txt · sitemap.xml · llms.txt · llms-full.txt   Discoverability (search + LLMs)
 ```
 
-## Styling / build
+## Build
 
-The site uses a **precompiled Tailwind stylesheet** (`assets/css/site.css`) rather
-than the Tailwind Play CDN — smaller payload, no runtime class generation, no FOUC.
-
-When you change markup/classes, regenerate the CSS:
+Pages are authored in `src/` with `<!-- @include name -->` directives; `build.mjs`
+inlines the shared partials (nav, favicon, font/stylesheet links) so the chrome has
+a **single source of truth**, and stamps `site.css` with a content hash for
+cache-busting automatically. CSS is a **precompiled Tailwind stylesheet** (no Play
+CDN — smaller payload, no runtime class generation, no FOUC).
 
 ```bash
-npm install        # first time only (installs tailwindcss)
-npm run build:css  # rebuilds assets/css/site.css from the HTML it scans
-# or, while editing:
+npm install        # first time only
+npm run build      # build:css (Tailwind) + build:html (expand src/ → root)
+# while editing styles:
 npm run watch:css
 ```
 
-`tailwind.config.js` scans all `*.html` (including class names inside inline
-`<script>` strings), so dynamically-rendered cards keep their styles. Page-specific
-CSS (mastheads, canvases, skeletons) stays in each page's inline `<style>`.
+Edit files in `src/`, then run `npm run build` and commit both the source and the
+regenerated root files. `tailwind.config.js` scans all `*.html` (including class
+names inside inline `<script>` strings). Page-specific CSS/JS stays inline per page.
 
-Fonts load via `<link>` (Google Fonts, Inter). Font Awesome is CDN-loaded.
-The Lab loads Plotly at the end of `<body>` so it doesn't block first paint.
+Fonts and Plotly are **self-hosted** (no third-party runtime dependencies); the Lab
+lazy-loads the Plotly bundle only when an experiment nears the viewport.
 
 ## Deploy
 
-Commit to `main`; GitHub Pages publishes the root automatically. No CI build runs
-on deploy — `site.css` is built locally and committed.
+Commit to `main`; GitHub Pages publishes the root automatically (deploy-from-branch).
+The `Build check` GitHub Action recompiles everything on push and fails if the
+committed output is out of date — so the deployed files always match `src/`.

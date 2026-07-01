@@ -5,6 +5,8 @@
   "description": "Personal site for James Svolos — static HTML on GitHub Pages, styled with a compiled Tailwind build.",
   "scripts": {
     "build:css": "tailwindcss -c tailwind.config.js -i assets/css/tailwind.input.css -o assets/css/site.css --minify",
+    "build:html": "node build.mjs",
+    "build": "npm run build:css && npm run build:html",
     "watch:css": "tailwindcss -c tailwind.config.js -i assets/css/tailwind.input.css -o assets/css/site.css --watch"
   },
   "devDependencies": {
